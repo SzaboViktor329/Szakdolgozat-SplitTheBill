@@ -21,12 +21,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.splitthebill.ui.common.sharedcomponents.TextFieldWithValidation
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
-fun RegistrationScreen(){
+fun RegistrationScreen(navController: NavHostController){
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -80,7 +81,9 @@ fun RegistrationScreen(){
                 Spacer(modifier = Modifier.height(8.dp))
 
 
-                TextButton(onClick = {}) {
+                TextButton(onClick = {
+                    navController.navigate("LoginScreen")
+                }) {
                     Text(
                         text = "Already have an account? Log in",
                         color = Color.Blue,
@@ -97,7 +100,7 @@ fun RegistrationScreen(){
 @Composable
 fun RegisterPreview() {
     SplitTheBillTheme {
-        RegistrationScreen()
+        //RegistrationScreen()
     }
 }
 

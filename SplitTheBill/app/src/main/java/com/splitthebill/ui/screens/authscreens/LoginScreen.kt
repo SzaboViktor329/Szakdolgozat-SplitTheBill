@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.splitthebill.R
 import com.splitthebill.ui.common.sharedcomponents.TextFieldWithValidation
 import com.splitthebill.ui.theme.BlueTheme
@@ -35,7 +36,7 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController: NavHostController){
     Box(modifier = Modifier.fillMaxSize().background(BlueTheme)){
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -91,7 +92,9 @@ fun LoginScreen(){
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = {
+                        navController.navigate("RegistrationScreen")
+                    }) {
                         Text(
                             text = "Create a new account",
                             color = Color.Blue,
@@ -109,6 +112,6 @@ fun LoginScreen(){
 @Composable
 fun DefaultPreview() {
     SplitTheBillTheme {
-        LoginScreen()
+        //LoginScreen(NavHostController())
     }
 }

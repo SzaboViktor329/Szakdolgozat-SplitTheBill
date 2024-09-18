@@ -10,7 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.screens.authscreens.LoginScreen
+import com.splitthebill.ui.screens.authscreens.RegistrationScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,8 +24,16 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             SplitTheBillTheme {
-                LoginScreen()
-                //RegistrationScreen()
+                val navController = rememberNavController()
+
+                NavHost(navController = navController, startDestination = "LoginScreen") {
+                    composable("LoginScreen") {
+                        LoginScreen(navController)
+                    }
+                    composable("RegistrationScreen") {
+                        RegistrationScreen(navController)
+                    }
+                }
             }
         }
     }
