@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.splitthebill.R
 import com.splitthebill.ui.common.sharedcomponents.TextFieldWithValidation
 import com.splitthebill.ui.theme.BlueTheme
@@ -81,7 +82,9 @@ fun LoginScreen(navController: NavHostController){
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Button(
-                        onClick = {},
+                        onClick = {
+                            navController.navigate("MainScreen")
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = BlueTheme
@@ -112,6 +115,6 @@ fun LoginScreen(navController: NavHostController){
 @Composable
 fun DefaultPreview() {
     SplitTheBillTheme {
-        //LoginScreen(NavHostController())
+        LoginScreen(rememberNavController())
     }
 }

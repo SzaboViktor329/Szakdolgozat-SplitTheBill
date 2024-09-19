@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.sharedcomponents.TextFieldWithValidation
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -100,7 +101,7 @@ fun RegistrationScreen(navController: NavHostController){
 @Composable
 fun RegisterPreview() {
     SplitTheBillTheme {
-        //RegistrationScreen()
+        RegistrationScreen(rememberNavController())
     }
 }
 
