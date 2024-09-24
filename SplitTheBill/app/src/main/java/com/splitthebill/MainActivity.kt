@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         installSplashScreen()
+        actionBar?.hide()
         setContent {
             SplitTheBillTheme {
                 val navController = rememberNavController()

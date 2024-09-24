@@ -1,11 +1,13 @@
 package com.splitthebill.ui.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -30,26 +32,30 @@ fun MainScreen(){
 
     Scaffold(
         bottomBar = {
-            BottomAppBar(containerColor = Color.White) {
-                IconButton(
-                    onClick = {
-                        selected.value = Icons.Default.Home
-                        navController.navigate("HomeScreen")
-                    },
-                    modifier = Modifier.weight(1f)){
-                    Icon(Icons.Default.Home, contentDescription = null, modifier = Modifier.size(36.dp),
-                        tint = if(selected.value == Icons.Default.Home) BlueTheme else Color.DarkGray)
-                }
-                IconButton(
-                    onClick = {
-                        selected.value = Icons.Default.Person
-                        navController.navigate("UserScreen")
-                    },
-                    modifier = Modifier.weight(1f)){
-                    Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(36.dp),
-                        tint = if(selected.value == Icons.Default.Person) BlueTheme else Color.DarkGray)
+            Column {
+                HorizontalDivider(thickness = 1.dp, color = Color.Gray)
+                BottomAppBar(containerColor = Color.White) {
+                    IconButton(
+                        onClick = {
+                            selected.value = Icons.Default.Home
+                            navController.navigate("HomeScreen")
+                        },
+                        modifier = Modifier.weight(1f)){
+                        Icon(Icons.Default.Home, contentDescription = null, modifier = Modifier.size(36.dp),
+                            tint = if(selected.value == Icons.Default.Home) BlueTheme else Color.DarkGray)
+                    }
+                    IconButton(
+                        onClick = {
+                            selected.value = Icons.Default.Person
+                            navController.navigate("UserScreen")
+                        },
+                        modifier = Modifier.weight(1f)){
+                        Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(36.dp),
+                            tint = if(selected.value == Icons.Default.Person) BlueTheme else Color.DarkGray)
+                    }
                 }
             }
+
         }
     ) { paddingValues ->
         NavHost(navController = navController, startDestination = "HomeScreen", modifier = Modifier.padding(paddingValues)){
