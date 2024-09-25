@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.splitthebill.ui.common.eventcomponents.CompactEventListItem
+import com.splitthebill.ui.common.eventcomponents.DetailedEventListItem
 import com.splitthebill.ui.common.sharedcomponents.WeightedBoxLayout
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -38,43 +39,20 @@ fun EventCollectionScreen() {
         topWeight = 1f,
         bottomWeight = 4f,
         topColor = BlueTheme,
-        bottomColor = Color.White,
+        bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
             EventsTitleBar()
         },
         bottomContent = {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = "Recent events",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-
                 LazyColumn(
-                    modifier = Modifier.wrapContentHeight()
+                    modifier = Modifier.fillMaxSize().padding(10.dp)
                 ) {
-                    items(items = listOf("Event 1", "Event 2", "Event 3", "Event 4")) { eventName ->
-                        CompactEventListItem(eventName, Random.nextInt(0, 3))
-                        HorizontalDivider(thickness = 2.dp)
+                    items(20) {
+                        DetailedEventListItem("Event name","2022.02.20", "2022.04.04", Random.nextInt(0, 3))
                     }
                 }
 
-                Text(
-                    text = "Show More",
-                    color = Color.Blue,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 16.dp)
-                )
-            }
         }
     )
 }
@@ -100,7 +78,7 @@ fun EventsTitleBar() {
         Box(modifier =  Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
             Text(
                 text = "Events",
-                fontSize = 24.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 modifier = Modifier.padding(horizontal = 15.dp)
