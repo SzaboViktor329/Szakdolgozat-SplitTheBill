@@ -1,5 +1,6 @@
 package com.splitthebill.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,16 +22,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.ui.screens.authscreens.TestScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(){
     val selected = remember { mutableStateOf(Icons.Default.Home) }
     val navController = rememberNavController()
 
-    Scaffold(
+    Scaffold(containerColor = BlueTheme,
         bottomBar = {
             Column {
                 HorizontalDivider(thickness = 1.dp, color = Color.Gray)
@@ -57,10 +60,11 @@ fun MainScreen(){
             }
 
         }
-    ) { paddingValues ->
-        NavHost(navController = navController, startDestination = "HomeScreen", modifier = Modifier.padding(paddingValues)){
-            composable("HomeScreen") { HomeScreen() }
+    ) {
+        NavHost(navController = navController, startDestination = "HomeScreen"){
+            composable("HomeScreen") { HomeScreen(navController) }
             composable("UserScreen") { UserScreen() }
+            composable("EventCollectionScreen") { EventCollectionScreen() }
         }
     }
 }
