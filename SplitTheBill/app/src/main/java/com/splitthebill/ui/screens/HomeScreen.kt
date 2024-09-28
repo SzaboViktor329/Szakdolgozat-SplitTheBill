@@ -2,12 +2,13 @@ package com.splitthebill.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -37,7 +38,7 @@ fun HomeScreen(navController: NavHostController) {
 
     WeightedBoxLayout(
         topWeight = 1f,
-        bottomWeight = 3f,
+        bottomWeight = 4f,
         topColor = BlueTheme,
         bottomColor = Color.White,
         mainColor = BlueTheme,
@@ -82,6 +83,16 @@ fun HomeScreen(navController: NavHostController) {
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
                         )
+                    }
+                }
+                Box(modifier = Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
+                    Button(onClick = {},
+                        modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = BlueTheme
+                        )
+                    ) {
+                        Text("Add event", fontSize = 16.sp)
                     }
                 }
             }
