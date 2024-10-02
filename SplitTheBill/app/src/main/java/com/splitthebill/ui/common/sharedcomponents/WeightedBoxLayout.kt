@@ -45,7 +45,7 @@ fun WeightedBoxLayout(
                     .fillMaxWidth()
                     .weight(bottomWeight)
                     .background(bottomColor),
-                contentAlignment = Alignment.TopCenter
+                //contentAlignment = Alignment.TopCenter
             ) {
                 bottomContent()
             }

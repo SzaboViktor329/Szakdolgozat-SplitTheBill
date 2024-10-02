@@ -1,6 +1,9 @@
 package com.splitthebill.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.ui.common.eventcomponents.BillListItem
 import com.splitthebill.ui.common.eventcomponents.DebtListItem
 import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
 import com.splitthebill.ui.common.sharedcomponents.WeightedBoxLayout
@@ -57,29 +61,42 @@ fun EventScreen(navController: NavHostController) {
         mainColor = Color.LightGray,
         topContent = {
             EventTitleBar("Event name", "2022.02.02", "2023.03.03", navController)
-            //EventsTitleBar()
         }
     ) {
+        var showDebts by remember { mutableStateOf(true) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
+            Row(Modifier.fillMaxWidth().background(Color.White).padding(5.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Text("Debts", modifier = Modifier.then(if(showDebts) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
+                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
+                        showDebts = true
+                    })
+                )
+                Text("Bills", modifier = Modifier.then(if(!showDebts) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
+                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
+                        showDebts = false
+                    })
+                )
+            }
             LazyColumn(
-                modifier = Modifier.weight(1f).padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
             ) {
-                items(20) {
-                    DebtListItem()
+                if(showDebts){
+                    items(20) {
+                        DebtListItem()
+                    }
                 }
+                else {
+                    items(20) {
+                        BillListItem()
+                    }
+                }
+
             }
             Box(Modifier.fillMaxWidth().wrapContentHeight().background(Color.White)){
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(25.dp,10.dp,25.dp,10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(
-                        containerColor = BlueTheme
-                    )) {
-                        Text("View Bills")
-                    }
                     Button(
                         onClick = { },
                         colors = ButtonDefaults.buttonColors(
