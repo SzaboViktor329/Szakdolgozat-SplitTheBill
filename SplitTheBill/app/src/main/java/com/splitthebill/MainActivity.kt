@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                         MainScreen()
                     }
                     composable("TestScreen") {
-                        EventCollectionScreen()
+                        //EventCollectionScreen()
                     }
                 }
             }

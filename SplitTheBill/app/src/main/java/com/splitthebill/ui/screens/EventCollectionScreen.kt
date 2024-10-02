@@ -43,14 +43,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.eventcomponents.DetailedEventListItem
+import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
 import com.splitthebill.ui.common.sharedcomponents.WeightedBoxLayout
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import kotlin.random.Random
 
 @Composable
-fun EventCollectionScreen() {
+fun EventCollectionScreen(navController: NavHostController) {
     WeightedBoxLayout(
         topWeight = 1f,
         bottomWeight = 4f,
@@ -58,7 +61,7 @@ fun EventCollectionScreen() {
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
-            EventsTitleBar()
+            EventsTitleBar(navController)
         },
         bottomContent = {
             Column {
@@ -66,7 +69,7 @@ fun EventCollectionScreen() {
                     modifier = Modifier.weight(1f).padding(top = 10.dp, start = 10.dp, end = 10.dp)
                 ) {
                     items(20) {
-                        DetailedEventListItem("Event name","2022.02.20", "2022.04.04", Random.nextInt(0, 3))
+                        DetailedEventListItem("Event name","2022.02.20", "2022.04.04", Random.nextInt(0, 3), navController)
                     }
                 }
                 Box(modifier = Modifier.fillMaxWidth().padding(0.dp,16.dp), contentAlignment = Alignment.Center) {
@@ -86,22 +89,8 @@ fun EventCollectionScreen() {
 
 
 @Composable
-fun EventsTitleBar() {
-    Row(
-        modifier = Modifier
-            .fillMaxSize().statusBarsPadding()
-            .padding(10.dp)
-    ) {
-        IconButton(
-            onClick = { },
-            modifier = Modifier.align(Alignment.Top).border(2.dp,Color.White, RoundedCornerShape(5.dp))
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.White
-            )
-        }
+fun EventsTitleBar(navController: NavHostController) {
+    TitleBarWithBackButton(navController) {
         Box(modifier =  Modifier.weight(1f).fillMaxHeight(), contentAlignment = Alignment.Center){
             Text(
                 text = "Events",
@@ -123,7 +112,6 @@ fun EventsTitleBar() {
                 FilterOptionsDialog(onDismiss = { showDialog = false })
             }
         }
-
     }
 }
 
@@ -191,10 +179,10 @@ fun FilterOption(label: String, icon: ImageVector, isChecked: Boolean, onClick: 
 
 
 
-@Preview(showBackground = true, widthDp = 360, heightDp = 800)
+@Preview(showBackground = true, widthDp = 360, heightDp = 640)
 @Composable
 fun EventCollectionScreenPreview(){
     SplitTheBillTheme {
-        EventCollectionScreen()
+        EventCollectionScreen(rememberNavController())
     }
 }

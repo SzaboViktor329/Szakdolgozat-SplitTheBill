@@ -29,15 +29,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.screens.HomeScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
-fun DetailedEventListItem(eventName: String, startDate: String, endDate: String, eventStatus: Int) {
+fun DetailedEventListItem(eventName: String, startDate: String, endDate: String, eventStatus: Int, navController: NavHostController) {
     Card(
         modifier = Modifier
             .wrapContentSize()
-            .padding(10.dp),
+            .padding(10.dp)
+            .clickable { navController.navigate("EventScreen") },
         elevation = CardDefaults.elevatedCardElevation(),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     )
@@ -100,6 +103,6 @@ fun DetailedEventListItem(eventName: String, startDate: String, endDate: String,
 @Composable
 fun DetailedEventListItemPreview(){
     SplitTheBillTheme {
-        DetailedEventListItem("Event name", "2022.02.02", "2022.03.11", 0)
+        DetailedEventListItem("Event name", "2022.02.02", "2022.03.11", 0, rememberNavController())
     }
 }

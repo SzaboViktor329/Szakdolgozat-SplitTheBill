@@ -67,7 +67,8 @@ fun MainScreen(){
         NavHost(navController = navController, startDestination = "HomeScreen", modifier = Modifier.padding(padding)){
             composable("HomeScreen") { HomeScreen(navController) }
             composable("UserScreen") { UserScreen() }
-            composable("EventCollectionScreen") { EventCollectionScreen() }
+            composable("EventCollectionScreen") { EventCollectionScreen(navController) }
+            composable("EventScreen") { EventScreen(navController) }
         }
     }
 }
