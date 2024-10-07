@@ -87,7 +87,7 @@ fun EventScreen(navController: NavHostController) {
                 }
                 else {
                     items(20) {
-                        BillListItem()
+                        BillListItem(navController)
                     }
                 }
 
@@ -98,7 +98,7 @@ fun EventScreen(navController: NavHostController) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = { navController.navigate("AddBillScreen") },
                         colors = ButtonDefaults.buttonColors(
                         containerColor = BlueTheme
                     )) {
