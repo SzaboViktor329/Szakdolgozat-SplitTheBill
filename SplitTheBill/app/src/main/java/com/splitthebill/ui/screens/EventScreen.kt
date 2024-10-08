@@ -8,14 +8,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -45,7 +43,7 @@ import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.eventcomponents.BillListItem
 import com.splitthebill.ui.common.eventcomponents.DebtListItem
 import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
-import com.splitthebill.ui.common.sharedcomponents.WeightedBoxLayout
+import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import kotlin.random.Random
@@ -53,9 +51,7 @@ import kotlin.random.Random
 
 @Composable
 fun EventScreen(navController: NavHostController) {
-    WeightedBoxLayout(
-        topWeight = 1f,
-        bottomWeight = 5f,
+    HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
@@ -114,10 +110,10 @@ fun EventScreen(navController: NavHostController) {
 @Composable
 fun EventTitleBar(eventName: String, startDate: String, endDate: String, navController: NavHostController){
     TitleBarWithBackButton(navController) {
-        Box(modifier =  Modifier.weight(1f).fillMaxHeight()){
+        Box(modifier = Modifier.weight(1f).wrapContentHeight()){
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .statusBarsPadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -127,33 +123,30 @@ fun EventTitleBar(eventName: String, startDate: String, endDate: String, navCont
             }
         }
         var showDialog by remember { mutableStateOf(false) }
-        Box(modifier = Modifier.wrapContentWidth().fillMaxHeight().padding(end = 10.dp)){
-            IconButton(
-                onClick = { showDialog = true },
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 10.dp)
+        IconButton(
+            onClick = { showDialog = true },
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .clip(RoundedCornerShape(15.dp))
+                .background(Color.White)
 
-                    .clip(RoundedCornerShape(15.dp))
-                    .background(Color.White)
-
-            ) {
-                Icon(
-                    imageVector = when(Random.nextInt(0,3)){
-                        0 -> Icons.Default.Check
-                        1 -> Icons.Default.Payments
-                        2 -> Icons.Default.PendingActions
-                        else -> Icons.Default.Android
-                    },
-                    contentDescription = "Event Status",
-                    modifier = Modifier.size(30.dp)
-                )
-            }
-            if (showDialog) {
-                //FilterOptionsDialog(onDismiss = { showDialog = false })
-                //TODO status picker dialog
-            }
+        ) {
+            Icon(
+                imageVector = when(Random.nextInt(0,3)){
+                    0 -> Icons.Default.Check
+                    1 -> Icons.Default.Payments
+                    2 -> Icons.Default.PendingActions
+                    else -> Icons.Default.Android
+                },
+                contentDescription = "Event Status",
+                modifier = Modifier.size(30.dp)
+            )
         }
+        if (showDialog) {
+            //FilterOptionsDialog(onDismiss = { showDialog = false })
+            //TODO status picker dialog
+        }
+
     }
 
 }

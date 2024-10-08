@@ -6,15 +6,15 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun WeightedBoxLayout(
-    topWeight: Float,
-    bottomWeight: Float,
+fun HeaderContentLayout(
     topColor: Color,
     bottomColor: Color,
     mainColor: Color,
@@ -33,8 +33,9 @@ fun WeightedBoxLayout(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(topWeight)
-                    .background(topColor),
+                    .wrapContentHeight()
+                    .background(topColor)
+                    .statusBarsPadding(),
                 contentAlignment = Alignment.CenterStart
             ) {
                 topContent()
@@ -43,7 +44,7 @@ fun WeightedBoxLayout(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(bottomWeight)
+                    .weight(1f)
                     .background(bottomColor),
                 //contentAlignment = Alignment.TopCenter
             ) {

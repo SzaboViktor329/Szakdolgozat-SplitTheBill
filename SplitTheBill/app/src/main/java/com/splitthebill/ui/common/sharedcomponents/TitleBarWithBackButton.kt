@@ -4,8 +4,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -28,7 +30,8 @@ fun TitleBarWithBackButton(
 ){
     Row(
         modifier = Modifier
-            .fillMaxSize().statusBarsPadding()
+            .fillMaxWidth()
+            .wrapContentHeight()
             .padding(10.dp)
     ) {
         IconButton(
@@ -43,7 +46,10 @@ fun TitleBarWithBackButton(
                 tint = Color.White
             )
         }
-        contents()
+        Row(modifier = Modifier.wrapContentHeight().weight(1f), verticalAlignment = Alignment.CenterVertically) {
+            contents()
+        }
+
     }
 }
 

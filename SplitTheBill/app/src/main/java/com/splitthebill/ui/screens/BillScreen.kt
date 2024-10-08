@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme.typography
@@ -31,18 +31,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.billcomponents.ItemListItem
 import com.splitthebill.ui.common.billcomponents.PayerListItem
-import com.splitthebill.ui.common.eventcomponents.BillListItem
-import com.splitthebill.ui.common.eventcomponents.DebtListItem
 import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
-import com.splitthebill.ui.common.sharedcomponents.WeightedBoxLayout
+import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
 fun BillScreen(navController: NavHostController) {
-    WeightedBoxLayout(
-        topWeight = 1f,
-        bottomWeight = 3f,
+    HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
@@ -85,10 +81,10 @@ fun BillScreen(navController: NavHostController) {
 @Composable
 fun BillTitleBar(billName: String, date: String, navController: NavHostController){
     TitleBarWithBackButton(navController) {
-        Box(modifier =  Modifier.weight(1f).fillMaxHeight()){
+        Box(modifier =  Modifier.weight(1f).wrapContentHeight()){
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .statusBarsPadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
