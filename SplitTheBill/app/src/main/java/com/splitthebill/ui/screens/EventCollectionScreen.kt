@@ -41,7 +41,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.eventcomponents.DetailedEventListItem
+import com.splitthebill.ui.common.sharedcomponents.BottomWhiteStrip
 import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
+import com.splitthebill.ui.common.sharedcomponents.DialogWithTitle
 import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
 import com.splitthebill.ui.theme.BlueTheme
@@ -66,7 +68,7 @@ fun EventCollectionScreen(navController: NavHostController) {
                         DetailedEventListItem("Event name","2022.02.20", "2022.04.04", Random.nextInt(0, 3), navController)
                     }
                 }
-                Box(modifier = Modifier.fillMaxWidth().padding(0.dp,16.dp), contentAlignment = Alignment.Center) {
+                BottomWhiteStrip {
                     Button(onClick = {},
                         modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -107,40 +109,21 @@ fun EventsTitleBar(navController: NavHostController) {
 
 @Composable
 fun FilterOptionsDialog(onDismiss: () -> Unit) {
-    Dialog(onDismissRequest = onDismiss) {
-        Surface(
-            shape = MaterialTheme.shapes.medium,
-            tonalElevation = 8.dp,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text("Select Filter Options", fontSize = 20.sp, modifier = Modifier.padding(bottom = 8.dp))
+    DialogWithTitle("Select Filter Options", onDismiss) {
+        var selectedPending by remember { mutableStateOf(true) }
+        var selectedPaying by remember { mutableStateOf(true) }
+        var selectedSettled by remember { mutableStateOf(true) }
 
-                var selectedPending by remember { mutableStateOf(true) }
-                var selectedPaying by remember { mutableStateOf(true) }
-                var selectedSettled by remember { mutableStateOf(true) }
-
-                // Example filter options
-                FilterOption("Pending",Icons.Default.PendingActions,selectedPending) {
-                    selectedPending = !selectedPending
-                }
-                FilterOption("Paying",Icons.Default.Payments,selectedPaying) {
-                    selectedPaying = !selectedPaying
-                }
-                FilterOption("Settled",Icons.Default.Check,selectedSettled) {
-                    selectedSettled = !selectedSettled
-                }
-
-
-                Button(
-                    onClick = onDismiss,
-                    modifier = Modifier.align(Alignment.End),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = BlueTheme
-                    )
-                ) {
-                    Text("Close")
-                }
+        Column(modifier = Modifier.padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
+            // Example filter options
+            FilterOption("Pending",Icons.Default.PendingActions,selectedPending) {
+                selectedPending = !selectedPending
+            }
+            FilterOption("Paying",Icons.Default.Payments,selectedPaying) {
+                selectedPaying = !selectedPaying
+            }
+            FilterOption("Settled",Icons.Default.Check,selectedSettled) {
+                selectedSettled = !selectedSettled
             }
         }
     }

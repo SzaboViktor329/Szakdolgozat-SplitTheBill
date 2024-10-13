@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.ui.common.sharedcomponents.DialogWithTitle
 import com.splitthebill.ui.common.sharedcomponents.FriendNameWithIcon
 import com.splitthebill.ui.screens.EventScreen
 import com.splitthebill.ui.theme.BlueTheme
@@ -41,50 +42,31 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
 fun UserSettingsModal(onDismiss: () -> Unit) {
-    Dialog(onDismissRequest = onDismiss) {
-        Card(
-            modifier = Modifier
-                .wrapContentSize()
-                .padding(10.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
-        ) {
-            Column(Modifier.fillMaxWidth().wrapContentHeight()) {
-                IconButton(
-                    onClick = onDismiss,
-                    modifier = Modifier.align(Alignment.End)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Close"
-                    )
-                }
-                Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
-                    Text("FullName", style = typography.titleLarge)
-                    Text("@UserName")
-                    Spacer(Modifier.height(4.dp))
-                    Text("Email:")
-                    Text("user@randomeamail.com")
-                    Spacer(Modifier.height(4.dp))
-                    Button(
-                        onClick = {  },
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = BlueTheme
-                        )) {
-                        Text("Reset password")
-                    }
-                    Spacer(Modifier.height(4.dp))
-                    Button(
-                        onClick = {  },
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Red
-                        )) {
-                        Text("Log out ")
-                        Icon(imageVector = Icons.AutoMirrored.Filled.Logout, contentDescription = null, modifier = Modifier.size(20.dp))
-                    }
-                }
-
+    DialogWithTitle("",onDismiss) {
+        Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
+            Text("FullName", style = typography.titleLarge)
+            Text("@UserName")
+            Spacer(Modifier.height(4.dp))
+            Text("Email:")
+            Text("user@randomeamail.com")
+            Spacer(Modifier.height(4.dp))
+            Button(
+                onClick = {  },
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = BlueTheme
+                )) {
+                Text("Reset password")
+            }
+            Spacer(Modifier.height(4.dp))
+            Button(
+                onClick = {  },
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red
+                )) {
+                Text("Log out ")
+                Icon(imageVector = Icons.AutoMirrored.Filled.Logout, contentDescription = null, modifier = Modifier.size(20.dp))
             }
         }
     }

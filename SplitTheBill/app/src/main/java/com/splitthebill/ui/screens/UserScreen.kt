@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.splitthebill.ui.common.friendcomponents.FindFriendModal
 import com.splitthebill.ui.common.friendcomponents.FriendListItem
 import com.splitthebill.ui.common.friendcomponents.FriendRequestListItem
+import com.splitthebill.ui.common.sharedcomponents.BottomWhiteStrip
 import com.splitthebill.ui.common.sharedcomponents.ComponentNavBar
 import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
@@ -76,21 +77,15 @@ fun UserScreen(){
                     UserScreenComponentNavBarOption.FRIENDS -> { items(20) { FriendListItem() } }
                 }
             }
-
             var showFindFriendDialog by remember { mutableStateOf(false) }
-            Box(Modifier.fillMaxWidth().wrapContentHeight().background(Color.White)){
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(25.dp,10.dp,25.dp,10.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(
-                        onClick = { showFindFriendDialog = !showFindFriendDialog },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = BlueTheme
-                        )) {
-                        Text("Find friend")
-                        Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier.size(20.dp))
-                    }
+            BottomWhiteStrip {
+                Button(
+                    onClick = { showFindFriendDialog = !showFindFriendDialog },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = BlueTheme
+                    )) {
+                    Text("Find friend")
+                    Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier.size(20.dp))
                 }
             }
             if(showFindFriendDialog) {
