@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
@@ -47,6 +48,15 @@ fun MainScreen(){
                     }
                     IconButton(
                         onClick = {
+                            selected.value = Icons.Default.Groups
+                            navController.navigate("GroupScreen")
+                        },
+                        modifier = Modifier.weight(1f)){
+                        Icon(Icons.Default.Groups, contentDescription = null, modifier = Modifier.size(36.dp),
+                            tint = if(selected.value == Icons.Default.Groups) BlueTheme else Color.DarkGray)
+                    }
+                    IconButton(
+                        onClick = {
                             selected.value = Icons.Default.Person
                             navController.navigate("UserScreen")
                         },
@@ -71,6 +81,7 @@ fun MainScreen(){
             composable("EventScreen") { EventScreen(navController) }
             composable("BillScreen") { BillScreen(navController) }
             composable("AddBillScreen") { AddBillScreen(navController) }
+            composable("GroupScreen") { GroupScreen() }
         }
     }
 }
