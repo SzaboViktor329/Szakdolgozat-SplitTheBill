@@ -31,10 +31,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.billcomponents.ItemListItem
 import com.splitthebill.ui.common.billcomponents.PayerListItem
+import com.splitthebill.ui.common.eventcomponents.BillListItem
+import com.splitthebill.ui.common.eventcomponents.DebtListItem
+import com.splitthebill.ui.common.sharedcomponents.ComponentNavBar
 import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
+import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+
+enum class BillScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
+    PAYERS("Payers"),
+    ITEMS("Items")
+}
 
 @Composable
 fun BillScreen(navController: NavHostController) {
@@ -46,33 +55,20 @@ fun BillScreen(navController: NavHostController) {
             BillTitleBar("Bill name", "2022.02.02", navController)
         }
     ) {
-        var showPayers by remember { mutableStateOf(true) }
+        var selectedOption by remember { mutableStateOf(BillScreenComponentNavBarOption.PAYERS) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(Modifier.fillMaxWidth().background(Color.White).padding(5.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Text("Payers", modifier = Modifier.then(if(showPayers) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                        showPayers = true
-                    })
-                )
-                Text("Items", modifier = Modifier.then(if(!showPayers) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                        showPayers = false
-                    })
-                )
-            }
+            ComponentNavBar(
+                BillScreenComponentNavBarOption.entries.toTypedArray(),
+                selectedOption = selectedOption,
+                onOptionSelected = { option -> selectedOption = option }
+            )
             LazyColumn(
                 modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
             ) {
-                if (showPayers) {
-                    items(20) {
-                        PayerListItem()
-                    }
-                } else {
-                    items(20) {
-                        ItemListItem()
-                    }
+                when(selectedOption) {
+                    BillScreenComponentNavBarOption.PAYERS -> { items(20) { PayerListItem() } }
+                    BillScreenComponentNavBarOption.ITEMS -> { items(20) { ItemListItem() } }
                 }
-
             }
         }
     }

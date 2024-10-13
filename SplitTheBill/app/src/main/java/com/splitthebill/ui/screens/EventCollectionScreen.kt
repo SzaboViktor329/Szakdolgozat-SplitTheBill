@@ -41,6 +41,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.eventcomponents.DetailedEventListItem
+import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
 import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
 import com.splitthebill.ui.theme.BlueTheme
@@ -93,17 +94,14 @@ fun EventsTitleBar(navController: NavHostController) {
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
         }
-        var showDialog by remember { mutableStateOf(false) }
-            IconButton(
-                onClick = { showDialog = true },
-                modifier = Modifier.padding(end = 4.dp).border(2.dp, Color.White)
-            ) {
-                Icon(Icons.Default.FilterList, contentDescription = "Filter", tint = Color.White, modifier = Modifier.size(30.dp))
-            }
-            if (showDialog) {
-                FilterOptionsDialog(onDismiss = { showDialog = false })
-            }
-
+        DialogIconButton(
+            modifier = Modifier.padding(end = 4.dp).border(2.dp, Color.White),
+            iconImageVector = Icons.Default.FilterList,
+            iconContentDescription = "Filter",
+            iconModifier = Modifier.size(30.dp)
+        ) { onDismiss ->
+            FilterOptionsDialog(onDismiss)
+        }
     }
 }
 

@@ -2,7 +2,9 @@ package com.splitthebill.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -51,11 +53,7 @@ fun HomeScreen(navController: NavHostController) {
             )
         },
         bottomContent = {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
+            Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
                 Text(
                     text = "Recent events",
                     fontSize = 24.sp,
@@ -71,27 +69,26 @@ fun HomeScreen(navController: NavHostController) {
                         HorizontalDivider(thickness = 2.dp)
                     }
                 }
-                Box(modifier =  Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
-                    TextButton(onClick = {
-                        navController.navigate("EventCollectionScreen")
-                    }) {
-                        Text(
-                            text = "Show More",
-                            color = Color.Blue,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                Spacer(Modifier.height(16.dp))
+                TextButton(
+                    onClick = { navController.navigate("EventCollectionScreen") },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ){
+                    Text(
+                        text = "Show More",
+                        color = Color.Blue,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
-                Box(modifier = Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
-                    Button(onClick = {},
-                        modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = BlueTheme
-                        )
-                    ) {
-                        Text("Add event", fontSize = 16.sp)
-                    }
+                Spacer(Modifier.height(16.dp))
+                Button(onClick = {},
+                    modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = BlueTheme
+                    )
+                ) {
+                    Text("Add event", fontSize = 16.sp)
                 }
             }
         }

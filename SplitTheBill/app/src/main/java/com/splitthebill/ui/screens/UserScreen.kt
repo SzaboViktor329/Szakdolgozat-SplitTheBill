@@ -2,8 +2,6 @@ package com.splitthebill.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +22,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,14 +35,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.splitthebill.ui.common.eventcomponents.DebtListItem
 import com.splitthebill.ui.common.friendcomponents.FindFriendModal
 import com.splitthebill.ui.common.friendcomponents.FriendListItem
 import com.splitthebill.ui.common.friendcomponents.FriendRequestListItem
+import com.splitthebill.ui.common.sharedcomponents.ComponentNavBar
+import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
 import com.splitthebill.ui.common.usercomponents.UserSettingsModal
+import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+
+
+
+enum class UserScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
+    FRIEND_REQUESTS("Friend Requests"),
+    FRIENDS("Friends")
+}
 
 @Composable
 fun UserScreen(){
@@ -55,35 +61,22 @@ fun UserScreen(){
         mainColor = Color.LightGray,
         topContent = { UserScreenHeader() }
     ) {
-        var showFriendRequests by remember { mutableStateOf(true) }
+        var selectedOption by remember { mutableStateOf(UserScreenComponentNavBarOption.FRIEND_REQUESTS) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(Modifier.fillMaxWidth().background(Color.White).padding(5.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Text("Friend requests", modifier = Modifier.then(if(showFriendRequests) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                        showFriendRequests = true
-                    })
-                )
-                Text("Friends", modifier = Modifier.then(if(!showFriendRequests) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                        showFriendRequests = false
-                    })
-                )
-            }
+            ComponentNavBar(
+                options = UserScreenComponentNavBarOption.entries.toTypedArray(),
+                selectedOption = selectedOption,
+                onOptionSelected = { option -> selectedOption = option }
+            )
             LazyColumn(
                 modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
             ) {
-                if(showFriendRequests){
-                    items(20) {
-                        FriendRequestListItem()
-                    }
+                when(selectedOption) {
+                    UserScreenComponentNavBarOption.FRIEND_REQUESTS -> { items(20) { FriendRequestListItem() } }
+                    UserScreenComponentNavBarOption.FRIENDS -> { items(20) { FriendListItem() } }
                 }
-                else {
-                    items(20) {
-                        FriendListItem()
-                    }
-                }
-
             }
+
             var showFindFriendDialog by remember { mutableStateOf(false) }
             Box(Modifier.fillMaxWidth().wrapContentHeight().background(Color.White)){
                 Row(
@@ -110,11 +103,7 @@ fun UserScreen(){
 
 @Composable
 fun UserScreenHeader() {
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
-    val iconSize = screenWidth / 6
-
-    var showUserSettingsDialog by remember { mutableStateOf(false) }
+    val iconSize = LocalConfiguration.current.screenWidthDp.dp / 6
 
     Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
         Box(
@@ -133,19 +122,16 @@ fun UserScreenHeader() {
             Spacer(Modifier.height(8.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(text = "@Username", style = typography.titleLarge, color = Color.White)
-                IconButton(
-                    onClick = { showUserSettingsDialog = !showUserSettingsDialog },
-                    modifier = Modifier.padding(end = 4.dp).border(2.dp, Color.White, RoundedCornerShape(15.dp))
-                ) {
-                    Icon(Icons.Default.Settings, contentDescription = "Filter", tint = Color.White, modifier = Modifier.size(30.dp))
+                DialogIconButton(
+                    modifier = Modifier.padding(end = 4.dp).border(2.dp, Color.White, RoundedCornerShape(15.dp)),
+                    iconImageVector = Icons.Default.Settings,
+                    iconContentDescription = "User settings",
+                    iconModifier = Modifier.size(30.dp)
+                ) { onDismiss ->
+                    UserSettingsModal(onDismiss)
                 }
             }
         }
-        if(showUserSettingsDialog){
-            UserSettingsModal { showUserSettingsDialog = false }
-        }
-
-
     }
 }
 
@@ -156,10 +142,3 @@ fun UserScreenPreview(){
         UserScreen()
     }
 }
-
-/*
-Box(Modifier.border(2.dp, Color.Black, RoundedCornerShape(15.dp))){
-    Icon(Icons.Default.GroupAdd, contentDescription = "Filter", modifier = Modifier.padding(5.dp).size(30.dp))
-}
-
- */

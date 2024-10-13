@@ -42,11 +42,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.eventcomponents.BillListItem
 import com.splitthebill.ui.common.eventcomponents.DebtListItem
+import com.splitthebill.ui.common.friendcomponents.FriendListItem
+import com.splitthebill.ui.common.friendcomponents.FriendRequestListItem
+import com.splitthebill.ui.common.sharedcomponents.ComponentNavBar
+import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
 import com.splitthebill.ui.common.sharedcomponents.TitleBarWithBackButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
+import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import kotlin.random.Random
+
+
+enum class EventScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
+    DEBTS("Debts"),
+    BILLS("Bills")
+}
 
 
 @Composable
@@ -59,34 +70,20 @@ fun EventScreen(navController: NavHostController) {
             EventTitleBar("Event name", "2022.02.02", "2023.03.03", navController)
         }
     ) {
-        var showDebts by remember { mutableStateOf(true) }
+        var selectedOption by remember { mutableStateOf(EventScreenComponentNavBarOption.DEBTS) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(Modifier.fillMaxWidth().background(Color.White).padding(5.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Text("Debts", modifier = Modifier.then(if(showDebts) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                        showDebts = true
-                    })
-                )
-                Text("Bills", modifier = Modifier.then(if(!showDebts) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-                    .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                        showDebts = false
-                    })
-                )
-            }
+            ComponentNavBar(
+                EventScreenComponentNavBarOption.entries.toTypedArray(),
+                selectedOption = selectedOption,
+                onOptionSelected = { option -> selectedOption = option }
+            )
             LazyColumn(
                 modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
             ) {
-                if(showDebts){
-                    items(20) {
-                        DebtListItem()
-                    }
+                when(selectedOption) {
+                    EventScreenComponentNavBarOption.DEBTS -> { items(20) { DebtListItem() } }
+                    EventScreenComponentNavBarOption.BILLS -> { items(20) { BillListItem(navController) } }
                 }
-                else {
-                    items(20) {
-                        BillListItem(navController)
-                    }
-                }
-
             }
             Box(Modifier.fillMaxWidth().wrapContentHeight().background(Color.White)){
                 Row(
@@ -122,31 +119,18 @@ fun EventTitleBar(eventName: String, startDate: String, endDate: String, navCont
                 Text(text = "$startDate - $endDate", style = typography.titleMedium, color = Color.White)
             }
         }
-        var showDialog by remember { mutableStateOf(false) }
-        IconButton(
-            onClick = { showDialog = true },
-            modifier = Modifier
-                .padding(end = 4.dp)
-                .clip(RoundedCornerShape(15.dp))
-                .background(Color.White)
-
-        ) {
-            Icon(
-                imageVector = when(Random.nextInt(0,3)){
-                    0 -> Icons.Default.Check
-                    1 -> Icons.Default.Payments
-                    2 -> Icons.Default.PendingActions
-                    else -> Icons.Default.Android
-                },
-                contentDescription = "Event Status",
-                modifier = Modifier.size(30.dp)
-            )
-        }
-        if (showDialog) {
-            //FilterOptionsDialog(onDismiss = { showDialog = false })
-            //TODO status picker dialog
-        }
-
+        DialogIconButton(
+            modifier = Modifier.padding(end = 4.dp).clip(RoundedCornerShape(15.dp)).background(Color.White),
+            iconImageVector = when(Random.nextInt(0,3)){
+                0 -> Icons.Default.Check
+                1 -> Icons.Default.Payments
+                2 -> Icons.Default.PendingActions
+                else -> Icons.Default.Android
+            },
+            iconColor = Color.Black,
+            iconContentDescription = "Event Status",
+            iconModifier = Modifier.size(30.dp),
+        ) { }
     }
 
 }

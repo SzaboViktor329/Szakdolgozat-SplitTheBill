@@ -17,7 +17,6 @@ import com.splitthebill.ui.screens.EventCollectionScreen
 import com.splitthebill.ui.screens.MainScreen
 import com.splitthebill.ui.screens.authscreens.LoginScreen
 import com.splitthebill.ui.screens.authscreens.RegistrationScreen
-import com.splitthebill.ui.screens.authscreens.TestScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,39 +30,19 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 NavHost(navController = navController, startDestination = "LoginScreen") {
-                    composable("LoginScreen") {
-                        LoginScreen(navController)
-                    }
-                    composable("RegistrationScreen") {
-                        RegistrationScreen(navController)
-                    }
-                    composable("MainScreen") {
-                        MainScreen()
-                    }
-                    composable("TestScreen") {
-                        //EventCollectionScreen()
-                    }
+                    composable("LoginScreen") { LoginScreen(navController) }
+                    composable("RegistrationScreen") { RegistrationScreen(navController) }
+                    composable("MainScreen") { MainScreen() }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column {
-        Text(
-            text = "Hello $name!",
-            modifier = modifier
-        )
-    }
-
-}
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     SplitTheBillTheme {
-        Greeting("Android")
+
     }
 }
