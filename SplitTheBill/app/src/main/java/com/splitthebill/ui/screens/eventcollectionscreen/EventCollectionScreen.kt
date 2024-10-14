@@ -38,9 +38,11 @@ import com.splitthebill.ui.screens.eventcollectionscreen.listitems.DetailedEvent
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
 import com.splitthebill.ui.components.buttons.DialogIconButton
+import com.splitthebill.ui.components.dialogs.FilterOptionsDialog
 import com.splitthebill.ui.components.templates.DialogWithTitle
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.screens.eventcollectionscreen.header.EventCollectionScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import kotlin.random.Random
@@ -52,7 +54,7 @@ fun EventCollectionScreen(navController: NavHostController) {
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
-            EventsTitleBar(navController)
+            EventCollectionScreenHeader(navController)
         },
         bottomContent = {
             Column {
@@ -74,73 +76,6 @@ fun EventCollectionScreen(navController: NavHostController) {
             }
         }
     )
-}
-
-
-@Composable
-fun EventsTitleBar(navController: NavHostController) {
-    HeaderWithBackButton(navController) {
-        Box(modifier =  Modifier.weight(1f).wrapContentHeight().padding(0.dp,16.dp), contentAlignment = Alignment.Center){
-            Text(
-                text = "Events",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier.padding(horizontal = 15.dp)
-            )
-        }
-        DialogIconButton(
-            modifier = Modifier.padding(end = 4.dp).border(2.dp, Color.White),
-            iconImageVector = Icons.Default.FilterList,
-            iconContentDescription = "Filter",
-            iconModifier = Modifier.size(30.dp)
-        ) { onDismiss ->
-            FilterOptionsDialog(onDismiss)
-        }
-    }
-}
-
-@Composable
-fun FilterOptionsDialog(onDismiss: () -> Unit) {
-    DialogWithTitle("Select Filter Options", onDismiss) {
-        var selectedPending by remember { mutableStateOf(true) }
-        var selectedPaying by remember { mutableStateOf(true) }
-        var selectedSettled by remember { mutableStateOf(true) }
-
-        Column(modifier = Modifier.padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
-            // Example filter options
-            FilterOption("Pending",Icons.Default.PendingActions,selectedPending) {
-                selectedPending = !selectedPending
-            }
-            FilterOption("Paying",Icons.Default.Payments,selectedPaying) {
-                selectedPaying = !selectedPaying
-            }
-            FilterOption("Settled",Icons.Default.Check,selectedSettled) {
-                selectedSettled = !selectedSettled
-            }
-        }
-    }
-}
-
-@Composable
-fun FilterOption(label: String, icon: ImageVector, isChecked: Boolean, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Checkbox(
-            checked = isChecked,
-            onCheckedChange = { onClick() },
-            colors = CheckboxDefaults.colors(
-                checkedColor = BlueTheme
-            )
-        )
-        Icon(icon, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
-        Text(text = label, fontSize = 16.sp)
-    }
 }
 
 

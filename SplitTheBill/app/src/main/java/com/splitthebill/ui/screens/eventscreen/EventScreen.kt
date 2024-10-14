@@ -41,6 +41,7 @@ import com.splitthebill.ui.components.buttons.DialogIconButton
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
+import com.splitthebill.ui.screens.eventscreen.header.EventScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import kotlin.random.Random
@@ -59,7 +60,7 @@ fun EventScreen(navController: NavHostController) {
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
-            EventTitleBar("Event name", "2022.02.02", "2023.03.03", navController)
+            EventScreenHeader("Event name", "2022.02.02", "2023.03.03", navController)
         }
     ) {
         var selectedOption by remember { mutableStateOf(EventScreenComponentNavBarOption.DEBTS) }
@@ -86,37 +87,6 @@ fun EventScreen(navController: NavHostController) {
 
         }
     }
-}
-
-@Composable
-fun EventTitleBar(eventName: String, startDate: String, endDate: String, navController: NavHostController){
-    HeaderWithBackButton(navController) {
-        Box(modifier = Modifier.weight(1f).wrapContentHeight()){
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = eventName, style = typography.headlineLarge, color = Color.White)
-                Text(text = "$startDate - $endDate", style = typography.titleMedium, color = Color.White)
-            }
-        }
-        DialogIconButton(
-            modifier = Modifier.padding(end = 4.dp).clip(RoundedCornerShape(15.dp)).background(Color.White),
-            iconImageVector = when(Random.nextInt(0,3)){
-                0 -> Icons.Default.Check
-                1 -> Icons.Default.Payments
-                2 -> Icons.Default.PendingActions
-                else -> Icons.Default.Android
-            },
-            iconColor = Color.Black,
-            iconContentDescription = "Event Status",
-            iconModifier = Modifier.size(30.dp),
-        ) { }
-    }
-
 }
 
 

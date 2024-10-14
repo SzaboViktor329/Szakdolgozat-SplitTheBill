@@ -40,6 +40,7 @@ import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.screens.userscreen.modals.UserSettingsModal
 import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
+import com.splitthebill.ui.screens.userscreen.header.UserScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
@@ -86,35 +87,6 @@ fun UserScreen(){
                 FindFriendModal { showFindFriendDialog = false }
             }
 
-        }
-    }
-}
-
-@Composable
-fun UserScreenHeader() {
-    val iconSize = LocalConfiguration.current.screenWidthDp.dp / 6
-
-    Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-        ProfilePicture(
-            placeholderText = "FU",
-            size = iconSize,
-            placeholderStyle = typography.titleLarge
-        )
-        Spacer(Modifier.width(16.dp))
-        Column(Modifier.weight(1f).padding()) {
-            Text(text = "FullName", style = typography.headlineLarge, color = Color.White)
-            Spacer(Modifier.height(8.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = "@Username", style = typography.titleLarge, color = Color.White)
-                DialogIconButton(
-                    modifier = Modifier.padding(end = 4.dp).border(2.dp, Color.White, RoundedCornerShape(15.dp)),
-                    iconImageVector = Icons.Default.Settings,
-                    iconContentDescription = "User settings",
-                    iconModifier = Modifier.size(30.dp)
-                ) { onDismiss ->
-                    UserSettingsModal(onDismiss)
-                }
-            }
         }
     }
 }

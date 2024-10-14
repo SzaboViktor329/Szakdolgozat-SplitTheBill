@@ -29,6 +29,7 @@ import com.splitthebill.ui.components.navbars.ComponentNavBar
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
+import com.splitthebill.ui.screens.billscreen.header.BillScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
@@ -44,7 +45,7 @@ fun BillScreen(navController: NavHostController) {
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
-            BillTitleBar("Bill name", "2022.02.02", navController)
+            BillScreenHeader("Bill name", "2022.02.02", navController)
         }
     ) {
         var selectedOption by remember { mutableStateOf(BillScreenComponentNavBarOption.PAYERS) }
@@ -65,27 +66,6 @@ fun BillScreen(navController: NavHostController) {
         }
     }
 }
-
-@Composable
-fun BillTitleBar(billName: String, date: String, navController: NavHostController){
-    HeaderWithBackButton(navController) {
-        Box(modifier =  Modifier.weight(1f).wrapContentHeight()){
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = billName, style = typography.headlineLarge, color = Color.White)
-                Text(text = date, style = typography.titleMedium, color = Color.White)
-                Text(text = "Total: 10000 Ft", style = typography.headlineMedium, color = Color.White)
-            }
-        }
-    }
-
-}
-
 
 
 @Preview(showBackground = true, widthDp = 360, heightDp = 640)
