@@ -24,15 +24,10 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 fun FriendNameWithIcon(modifier: Modifier, horizontal: Arrangement.Horizontal) {
     Row(modifier = modifier, horizontalArrangement = horizontal, verticalAlignment = Alignment.CenterVertically) {
         Text("FullName", style = typography.titleLarge)
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .border(1.dp, Color.Black, shape = RoundedCornerShape(20.dp))
-                .background(Color.LightGray, shape = RoundedCornerShape(20.dp)),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "AD")
-        }
+        ProfilePicture(
+            placeholderText = "AD",
+            size = 40.dp
+        )
     }
 }
 

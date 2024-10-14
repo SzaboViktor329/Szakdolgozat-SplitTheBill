@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.R
+import com.splitthebill.ui.common.sharedcomponents.BlueButton
+import com.splitthebill.ui.common.sharedcomponents.BlueTextButton
 import com.splitthebill.ui.common.sharedcomponents.TextFieldWithValidation
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -81,30 +83,19 @@ fun LoginScreen(navController: NavHostController){
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    Button(
-                        onClick = {
-                            navController.navigate("MainScreen")
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = BlueTheme
-                        )
-                    ) {
-                        Text(text = "Login", fontSize = 16.sp)
-                    }
+                    BlueButton(
+                        onClick = { navController.navigate("MainScreen") },
+                        text = "Login",
+                        iconFontSize = 16.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    TextButton(onClick = {
-                        navController.navigate("RegistrationScreen")
-                    }) {
-                        Text(
-                            text = "Create a new account",
-                            color = Color.Blue,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                    }
+                    BlueTextButton(
+                        onClick = { navController.navigate("RegistrationScreen") },
+                        text = "Create a new account",
+                    )
                 }
             }
         }

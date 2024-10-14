@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.splitthebill.ui.common.sharedcomponents.BlueButton
 import com.splitthebill.ui.common.sharedcomponents.DatePickerModal
 import com.splitthebill.ui.theme.BlueTheme
 import java.text.SimpleDateFormat
@@ -107,17 +108,10 @@ fun BasicBillInformationComponent(
                 }
             }
         }
-
-        Button(
+        BlueButton(
             onClick = { onProceed() },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = BlueTheme
-            ),
-            modifier = Modifier.padding(bottom = 30.dp)) {
-            Text("Continue")
-        }
-
-
-
+            text = "Continue",
+            modifier = Modifier.padding(bottom = 30.dp)
+        )
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.splitthebill.ui.common.sharedcomponents.BlueButton
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
@@ -49,22 +50,14 @@ fun AddItemsComponent(
             }
         }
         Row(modifier = Modifier.fillMaxWidth().padding(top = 10.dp ,bottom = 0.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Button(
+            BlueButton(
                 onClick = { itemCount++ },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = BlueTheme
-                )
-            ) {
-                Text("New item")
-            }
-            Button(
+                text = "New item"
+            )
+            BlueButton(
                 onClick = { onProceed() },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = BlueTheme
-                )
-            ) {
-                Text("Continue")
-            }
+                text = "Continue"
+            )
         }
     }
 }

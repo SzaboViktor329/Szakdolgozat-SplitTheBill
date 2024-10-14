@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.splitthebill.ui.common.sharedcomponents.ProfilePicture
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
@@ -60,15 +61,10 @@ fun PayerItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            Box(
-                modifier = Modifier
-                    .size(50.dp)
-                    .border(1.dp, Color.Black, shape = RoundedCornerShape(25.dp))
-                    .background(Color.LightGray, shape = RoundedCornerShape(25.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                //Text(text = "AD")
-            }
+            ProfilePicture(
+                placeholderText = "",
+                size = 50.dp
+            )
             OutlinedTextField(
                 value = "",
                 onValueChange = {  },

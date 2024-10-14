@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.eventcomponents.CompactEventListItem
+import com.splitthebill.ui.common.sharedcomponents.BlueButton
+import com.splitthebill.ui.common.sharedcomponents.BlueTextButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -70,26 +72,19 @@ fun HomeScreen(navController: NavHostController) {
                     }
                 }
                 Spacer(Modifier.height(16.dp))
-                TextButton(
+                BlueTextButton(
                     onClick = { navController.navigate("EventCollectionScreen") },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ){
-                    Text(
-                        text = "Show More",
-                        color = Color.Blue,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                    text = "Show More",
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    fontWeight = FontWeight.Bold
+                )
                 Spacer(Modifier.height(16.dp))
-                Button(onClick = {},
-                    modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = BlueTheme
-                    )
-                ) {
-                    Text("Add event", fontSize = 16.sp)
-                }
+                BlueButton(
+                    onClick = {},
+                    text = "Add event",
+                    iconFontSize = 16.sp,
+                    modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp)
+                )
             }
         }
     )

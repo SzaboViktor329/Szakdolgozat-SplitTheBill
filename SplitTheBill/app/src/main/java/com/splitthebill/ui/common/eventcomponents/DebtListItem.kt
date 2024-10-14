@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.splitthebill.ui.common.sharedcomponents.ProfilePicture
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 
@@ -51,29 +52,20 @@ fun DebtListItem() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.width(8.dp))
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .border(1.dp, Color.Black, shape = RoundedCornerShape(20.dp))
-                    .background(Color.LightGray, shape = RoundedCornerShape(20.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "AD")
-            }
+
+            ProfilePicture(
+                placeholderText = "AD",
+                size = 40.dp
+            )
 
             Spacer(modifier = Modifier.width(8.dp))
             Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
 
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .border(1.dp, Color.Black, shape = RoundedCornerShape(20.dp))
-                    .background(Color.LightGray, shape = RoundedCornerShape(20.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "DA")
-            }
+            ProfilePicture(
+                placeholderText = "DA",
+                size = 40.dp
+            )
 
             Spacer(modifier = Modifier.weight(1f))
 

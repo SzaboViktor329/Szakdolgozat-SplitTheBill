@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.splitthebill.ui.common.sharedcomponents.ProfilePicture
 import com.splitthebill.ui.theme.DarkGreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
@@ -48,16 +49,10 @@ fun ItemListItem() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
-                Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .border(1.dp, Color.Black, shape = RoundedCornerShape(20.dp))
-                        .background(Color.LightGray, shape = RoundedCornerShape(20.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "AD")
-                }
+                ProfilePicture(
+                    placeholderText = "AD",
+                    size = 40.dp
+                )
                 Text(text = "5000 Ft", style = typography.titleLarge, color = Color.Red)
             }
         }

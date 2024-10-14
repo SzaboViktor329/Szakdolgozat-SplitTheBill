@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +42,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.common.eventcomponents.DetailedEventListItem
+import com.splitthebill.ui.common.sharedcomponents.BlueButton
 import com.splitthebill.ui.common.sharedcomponents.BottomWhiteStrip
 import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
 import com.splitthebill.ui.common.sharedcomponents.DialogWithTitle
@@ -69,14 +71,12 @@ fun EventCollectionScreen(navController: NavHostController) {
                     }
                 }
                 BottomWhiteStrip {
-                    Button(onClick = {},
-                        modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = BlueTheme
-                        )
-                    ) {
-                        Text("Add event", fontSize = 16.sp)
-                    }
+                    BlueButton(
+                        onClick = {},
+                        text = "Add event",
+                        iconFontSize = 16.sp,
+                        modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp)
+                    )
                 }
             }
         }

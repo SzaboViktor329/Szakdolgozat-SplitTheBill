@@ -44,6 +44,7 @@ import com.splitthebill.ui.common.eventcomponents.BillListItem
 import com.splitthebill.ui.common.eventcomponents.DebtListItem
 import com.splitthebill.ui.common.friendcomponents.FriendListItem
 import com.splitthebill.ui.common.friendcomponents.FriendRequestListItem
+import com.splitthebill.ui.common.sharedcomponents.BlueButton
 import com.splitthebill.ui.common.sharedcomponents.BottomWhiteStrip
 import com.splitthebill.ui.common.sharedcomponents.ComponentNavBar
 import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
@@ -87,13 +88,10 @@ fun EventScreen(navController: NavHostController) {
                 }
             }
             BottomWhiteStrip {
-                Button(
+                BlueButton(
                     onClick = { navController.navigate("AddBillScreen") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = BlueTheme
-                    )) {
-                    Text("Add Bill")
-                }
+                    text = "Add Bill"
+                )
             }
 
         }

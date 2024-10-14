@@ -38,10 +38,12 @@ import androidx.compose.ui.unit.dp
 import com.splitthebill.ui.common.friendcomponents.FindFriendModal
 import com.splitthebill.ui.common.friendcomponents.FriendListItem
 import com.splitthebill.ui.common.friendcomponents.FriendRequestListItem
+import com.splitthebill.ui.common.sharedcomponents.BlueButton
 import com.splitthebill.ui.common.sharedcomponents.BottomWhiteStrip
 import com.splitthebill.ui.common.sharedcomponents.ComponentNavBar
 import com.splitthebill.ui.common.sharedcomponents.DialogIconButton
 import com.splitthebill.ui.common.sharedcomponents.HeaderContentLayout
+import com.splitthebill.ui.common.sharedcomponents.ProfilePicture
 import com.splitthebill.ui.common.usercomponents.UserSettingsModal
 import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 import com.splitthebill.ui.theme.BlueTheme
@@ -79,14 +81,12 @@ fun UserScreen(){
             }
             var showFindFriendDialog by remember { mutableStateOf(false) }
             BottomWhiteStrip {
-                Button(
+                BlueButton(
                     onClick = { showFindFriendDialog = !showFindFriendDialog },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = BlueTheme
-                    )) {
-                    Text("Find friend")
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier.size(20.dp))
-                }
+                    text = "Find friend ",
+                    iconImageVector = Icons.Default.Search,
+                    iconModifier = Modifier.size(20.dp)
+                )
             }
             if(showFindFriendDialog) {
                 FindFriendModal { showFindFriendDialog = false }
@@ -101,16 +101,11 @@ fun UserScreenHeader() {
     val iconSize = LocalConfiguration.current.screenWidthDp.dp / 6
 
     Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-        Box(
-            modifier = Modifier
-
-                .size(iconSize)
-                .border(1.dp, Color.Black, shape = RoundedCornerShape(iconSize/2))
-                .background(Color.LightGray, shape = RoundedCornerShape(iconSize/2)),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "FU", style = typography.titleLarge)
-        }
+        ProfilePicture(
+            placeholderText = "FU",
+            size = iconSize,
+            placeholderStyle = typography.titleLarge
+        )
         Spacer(Modifier.width(16.dp))
         Column(Modifier.weight(1f).padding()) {
             Text(text = "FullName", style = typography.headlineLarge, color = Color.White)
