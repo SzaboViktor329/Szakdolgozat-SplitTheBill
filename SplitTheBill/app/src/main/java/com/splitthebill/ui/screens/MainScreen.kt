@@ -87,7 +87,9 @@ fun MainScreen(){
             composable("EventScreen") { EventScreen(navController) }
             composable("BillScreen") { BillScreen(navController) }
             composable("AddBillScreen") { AddBillScreen(navController) }
-            composable("GroupScreen") { GroupScreen() }
+            composable("GroupScreen") { GroupScreen(navController) }
+            composable("GroupDetailsScreen") { GroupDetailsScreen(navController) }
+            composable("CreateGroupScreen") { CreateGroupScreen(navController) }
         }
     }
 }
