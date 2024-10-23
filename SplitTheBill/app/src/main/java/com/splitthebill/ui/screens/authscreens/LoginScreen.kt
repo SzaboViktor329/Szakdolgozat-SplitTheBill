@@ -29,6 +29,7 @@ import com.splitthebill.R
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.buttons.BlueTextButton
 import com.splitthebill.ui.components.textfields.TextFieldWithValidation
+import com.splitthebill.ui.navigation.navscreens.AuthNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
@@ -37,7 +38,6 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 fun LoginScreen(navController: NavHostController){
     Box(modifier = Modifier.fillMaxSize().background(BlueTheme)){
         Column(modifier = Modifier.fillMaxSize()) {
-
             BoxWithConstraints(
                 modifier = Modifier
                     .weight(1f)
@@ -79,7 +79,11 @@ fun LoginScreen(navController: NavHostController){
                     Spacer(modifier = Modifier.height(16.dp))
 
                     BlueButton(
-                        onClick = { navController.navigate("MainScreen") },
+                        onClick = {
+                            navController.navigate(AuthNavScreen.Main.route) {
+                                popUpTo("AuthGraph") { inclusive = true }
+                            }
+                        },
                         text = "Login",
                         iconFontSize = 16.sp,
                         modifier = Modifier.fillMaxWidth()
@@ -88,7 +92,7 @@ fun LoginScreen(navController: NavHostController){
                     Spacer(modifier = Modifier.height(16.dp))
 
                     BlueTextButton(
-                        onClick = { navController.navigate("RegistrationScreen") },
+                        onClick = { navController.navigate(AuthNavScreen.Registration.route) },
                         text = "Create a new account",
                     )
                 }

@@ -20,12 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.components.templates.DialogWithTitle
+import com.splitthebill.ui.navigation.navscreens.AuthNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
-fun UserSettingsModal(onDismiss: () -> Unit) {
+fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostController) {
     DialogWithTitle("",onDismiss) {
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
             Text("FullName", style = typography.titleLarge)
@@ -44,7 +47,12 @@ fun UserSettingsModal(onDismiss: () -> Unit) {
             }
             Spacer(Modifier.height(4.dp))
             Button(
-                onClick = {  },
+                onClick = {
+                    onDismiss()
+                    authNavController.navigate(AuthNavScreen.Login.route) {
+                        popUpTo("MainGraph") { inclusive = true }
+                    }
+                },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red
@@ -60,6 +68,6 @@ fun UserSettingsModal(onDismiss: () -> Unit) {
 @Composable
 fun UserSettingsModalPreview(){
     SplitTheBillTheme {
-        UserSettingsModal({})
+        UserSettingsModal({},rememberNavController())
     }
 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
@@ -38,7 +39,7 @@ fun DetailedEventListItem(eventName: String, startDate: String, endDate: String,
         modifier = Modifier
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigate("EventScreen") },
+            .clickable { navController.navigate(MainNavScreen.Event.route) },
         elevation = CardDefaults.elevatedCardElevation(),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     )

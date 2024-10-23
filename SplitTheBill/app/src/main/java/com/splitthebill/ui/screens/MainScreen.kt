@@ -20,9 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.ui.navigation.navgraphs.MainNavGraph
+import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.addbillscreen.AddBillScreen
 import com.splitthebill.ui.screens.billscreen.BillScreen
 import com.splitthebill.ui.screens.eventcollectionscreen.EventCollectionScreen
@@ -34,7 +37,7 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 
 
 @Composable
-fun MainScreen(){
+fun MainScreen(authNavController: NavHostController){
     val selected = remember { mutableStateOf(Icons.Default.Home) }
     val navController = rememberNavController()
 
@@ -46,7 +49,7 @@ fun MainScreen(){
                     IconButton(
                         onClick = {
                             selected.value = Icons.Default.Home
-                            navController.navigate("HomeScreen")
+                            navController.navigate(MainNavScreen.Home.route)
                         },
                         modifier = Modifier.weight(1f)){
                         Icon(Icons.Default.Home, contentDescription = null, modifier = Modifier.size(36.dp),
@@ -55,7 +58,7 @@ fun MainScreen(){
                     IconButton(
                         onClick = {
                             selected.value = Icons.Default.Groups
-                            navController.navigate("GroupScreen")
+                            navController.navigate(MainNavScreen.Group.route)
                         },
                         modifier = Modifier.weight(1f)){
                         Icon(Icons.Default.Groups, contentDescription = null, modifier = Modifier.size(36.dp),
@@ -64,7 +67,7 @@ fun MainScreen(){
                     IconButton(
                         onClick = {
                             selected.value = Icons.Default.Person
-                            navController.navigate("UserScreen")
+                            navController.navigate(MainNavScreen.User.route)
                         },
                         modifier = Modifier.weight(1f)){
                         Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(36.dp),
@@ -80,17 +83,7 @@ fun MainScreen(){
             bottom = paddingValues.calculateBottomPadding(),
             start = 0.dp, end = 0.dp
         )
-        NavHost(navController = navController, startDestination = "HomeScreen", modifier = Modifier.padding(padding)){
-            composable("HomeScreen") { HomeScreen(navController) }
-            composable("UserScreen") { UserScreen() }
-            composable("EventCollectionScreen") { EventCollectionScreen(navController) }
-            composable("EventScreen") { EventScreen(navController) }
-            composable("BillScreen") { BillScreen(navController) }
-            composable("AddBillScreen") { AddBillScreen(navController) }
-            composable("GroupScreen") { GroupScreen(navController) }
-            composable("GroupDetailsScreen") { GroupDetailsScreen(navController) }
-            composable("CreateGroupScreen") { CreateGroupScreen(navController) }
-        }
+        MainNavGraph(navController, authNavController, Modifier.padding(padding))
     }
 }
 
@@ -98,7 +91,7 @@ fun MainScreen(){
 @Composable
 fun MainScreenPreview(){
     SplitTheBillTheme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }
 

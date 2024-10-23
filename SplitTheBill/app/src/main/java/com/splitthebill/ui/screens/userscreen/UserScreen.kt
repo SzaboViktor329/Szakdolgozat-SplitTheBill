@@ -29,6 +29,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.FindFriendModal
 import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.screens.userscreen.listitems.FriendRequestListItem
@@ -52,12 +54,12 @@ enum class UserScreenComponentNavBarOption(override val label: String) : Compone
 }
 
 @Composable
-fun UserScreen(){
+fun UserScreen(authNavController: NavHostController){
     HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
-        topContent = { UserScreenHeader() }
+        topContent = { UserScreenHeader(authNavController) }
     ) {
         var selectedOption by remember { mutableStateOf(UserScreenComponentNavBarOption.FRIEND_REQUESTS) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -95,6 +97,6 @@ fun UserScreen(){
 @Composable
 fun UserScreenPreview(){
     SplitTheBillTheme {
-        UserScreen()
+        UserScreen(rememberNavController())
     }
 }

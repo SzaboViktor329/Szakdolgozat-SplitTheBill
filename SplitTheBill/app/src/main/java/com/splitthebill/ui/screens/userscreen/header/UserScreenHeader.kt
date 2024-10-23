@@ -21,12 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.splitthebill.ui.components.buttons.DialogIconButton
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.screens.userscreen.modals.UserSettingsModal
 
 @Composable
-fun UserScreenHeader() {
+fun UserScreenHeader(authNavController: NavHostController) {
     val iconSize = LocalConfiguration.current.screenWidthDp.dp / 6
 
     Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -47,7 +48,7 @@ fun UserScreenHeader() {
                     iconContentDescription = "User settings",
                     iconModifier = Modifier.size(30.dp)
                 ) { onDismiss ->
-                    UserSettingsModal(onDismiss)
+                    UserSettingsModal(onDismiss, authNavController)
                 }
             }
         }

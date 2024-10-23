@@ -26,6 +26,7 @@ import com.splitthebill.ui.screens.homescreen.listitems.CompactEventListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.buttons.BlueTextButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import kotlin.random.Random
@@ -69,7 +70,7 @@ fun HomeScreen(navController: NavHostController) {
                 }
                 Spacer(Modifier.height(16.dp))
                 BlueTextButton(
-                    onClick = { navController.navigate("EventCollectionScreen") },
+                    onClick = { navController.navigate(MainNavScreen.EventCollection.route) },
                     text = "Show More",
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     fontWeight = FontWeight.Bold

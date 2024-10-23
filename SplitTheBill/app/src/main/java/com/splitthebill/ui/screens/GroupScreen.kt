@@ -23,6 +23,7 @@ import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
 import com.splitthebill.ui.components.common.FriendNameWithIcon
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.eventcollectionscreen.listitems.DetailedEventListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -46,7 +47,7 @@ fun GroupScreen(navController: NavHostController){
                             .fillMaxWidth()
                             .padding(10.dp)
                             .clickable {
-                                navController.navigate("GroupDetailsScreen")
+                                navController.navigate(MainNavScreen.GroupDetails.route)
                             },
                         colors = CardDefaults.cardColors(containerColor = Color.White)
                     ) {
@@ -56,7 +57,7 @@ fun GroupScreen(navController: NavHostController){
             }
             BottomWhiteStrip {
                 BlueButton(
-                    onClick = { navController.navigate("CreateGroupScreen") },
+                    onClick = { navController.navigate(MainNavScreen.CreateGroup.route) },
                     text = "Create group",
                     iconFontSize = 16.sp,
                     modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp)

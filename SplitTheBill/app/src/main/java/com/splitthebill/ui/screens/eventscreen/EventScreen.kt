@@ -41,6 +41,7 @@ import com.splitthebill.ui.components.buttons.DialogIconButton
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
+import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.eventscreen.header.EventScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -80,7 +81,7 @@ fun EventScreen(navController: NavHostController) {
             }
             BottomWhiteStrip {
                 BlueButton(
-                    onClick = { navController.navigate("AddBillScreen") },
+                    onClick = { navController.navigate(MainNavScreen.AddBill.route) },
                     text = "Add Bill"
                 )
             }

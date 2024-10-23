@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
@@ -31,7 +32,7 @@ fun BillListItem(navController: NavHostController) {
         modifier = Modifier
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigate("BillScreen") },
+            .clickable { navController.navigate(MainNavScreen.Bill.route) },
         colors = CardDefaults.cardColors(containerColor = Color.White)
     )
     {

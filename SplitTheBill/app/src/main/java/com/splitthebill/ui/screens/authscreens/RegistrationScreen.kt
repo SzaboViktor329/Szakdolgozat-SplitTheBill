@@ -21,6 +21,7 @@ import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.buttons.BlueTextButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.components.textfields.TextFieldWithValidation
+import com.splitthebill.ui.navigation.navscreens.AuthNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
@@ -67,7 +68,7 @@ fun RegistrationScreen(navController: NavHostController){
             Spacer(modifier = Modifier.height(8.dp))
 
             BlueTextButton(
-                onClick = { navController.navigate("LoginScreen") },
+                onClick = { navController.navigate(AuthNavScreen.Login.route) },
                 text = "Already have an account? Log in",
             )
         }

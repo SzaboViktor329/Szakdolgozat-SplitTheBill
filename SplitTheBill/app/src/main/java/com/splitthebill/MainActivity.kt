@@ -9,12 +9,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.ui.navigation.navgraphs.AuthNavGraph
 import com.splitthebill.ui.screens.MainScreen
 import com.splitthebill.ui.screens.authscreens.LoginScreen
 import com.splitthebill.ui.screens.authscreens.RegistrationScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +29,7 @@ class MainActivity : ComponentActivity() {
             SplitTheBillTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "LoginScreen") {
-                    composable("LoginScreen") { LoginScreen(navController) }
-                    composable("RegistrationScreen") { RegistrationScreen(navController) }
-                    composable("MainScreen") { MainScreen() }
-                }
+                AuthNavGraph(navController)
             }
         }
     }
