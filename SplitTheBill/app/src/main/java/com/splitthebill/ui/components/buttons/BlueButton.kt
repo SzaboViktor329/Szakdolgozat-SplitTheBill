@@ -18,13 +18,15 @@ fun BlueButton(
     textModifier: Modifier = Modifier,
     iconImageVector: ImageVector? = null,
     iconFontSize: TextUnit = TextUnit.Unspecified,
-    iconModifier: Modifier = Modifier
+    iconModifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = BlueTheme
         ),
+        enabled = enabled,
         modifier = modifier
     ) {
         Text(text, fontSize = iconFontSize, modifier = textModifier)

@@ -16,6 +16,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,10 +37,17 @@ import com.splitthebill.ui.components.textfields.TextFieldWithValidation
 import com.splitthebill.ui.navigation.navscreens.AuthNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.isValidEmail
+import com.splitthebill.ui.utils.isValidPassword
 
 
 @Composable
 fun LoginScreen(navController: NavHostController){
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    var validFieldCounter by remember { mutableIntStateOf(0) }
+
     Box(modifier = Modifier.fillMaxSize().background(BlueTheme)){
         Column(modifier = Modifier.fillMaxSize()) {
             BoxWithConstraints(
@@ -72,21 +84,26 @@ fun LoginScreen(navController: NavHostController){
                 )
                 {
                     Spacer(modifier = Modifier.height(8.dp))
-                    TextFieldWithValidation(value = "",{},"Email","email Error")
+                    TextFieldWithValidation(value = email,{ email = it },"Email","Not a valid email address",
+                        { validCounterIncrementValue -> validFieldCounter+=validCounterIncrementValue }, ::isValidEmail)
                     Spacer(modifier = Modifier.height(8.dp))
-                    TextFieldWithValidation(value = "",{},"Password","password Error")
+                    TextFieldWithValidation(value = password,{ password = it },"Password","Password must be at least 6 character",
+                        { validCounterIncrementValue -> validFieldCounter+=validCounterIncrementValue }, ::isValidPassword)
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     BlueButton(
                         onClick = {
-                            navController.navigate(AuthNavScreen.Main.route) {
-                                popUpTo("AuthGraph") { inclusive = true }
+                            if(validFieldCounter == 2){
+                                navController.navigate(AuthNavScreen.Main.route) {
+                                    popUpTo("AuthGraph") { inclusive = true }
+                                }
                             }
                         },
                         text = "Login",
                         iconFontSize = 16.sp,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = validFieldCounter == 2
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
