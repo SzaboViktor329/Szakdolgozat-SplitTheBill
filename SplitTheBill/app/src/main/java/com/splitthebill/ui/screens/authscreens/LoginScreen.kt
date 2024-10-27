@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.R
@@ -39,14 +41,21 @@ import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.isValidEmail
 import com.splitthebill.ui.utils.isValidPassword
+import com.splitthebill.ui.viewmodels.AuthViewModel
 
 
 @Composable
 fun LoginScreen(navController: NavHostController){
+    val authViewModel : AuthViewModel = hiltViewModel()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     var validFieldCounter by remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        authViewModel.logout()
+    }
 
     Box(modifier = Modifier.fillMaxSize().background(BlueTheme)){
         Column(modifier = Modifier.fillMaxSize()) {

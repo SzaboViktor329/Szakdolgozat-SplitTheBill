@@ -1,5 +1,6 @@
 package com.splitthebill.ui.screens.authscreens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,11 +18,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.models.User
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.buttons.BlueTextButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
@@ -31,15 +35,20 @@ import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.isValidEmail
 import com.splitthebill.ui.utils.isValidPassword
+import com.splitthebill.ui.viewmodels.AuthViewModel
+import com.splitthebill.ui.viewmodels.RegistrationViewModel
 
 @Composable
 fun RegistrationScreen(navController: NavHostController){
+    val registrationViewModel: RegistrationViewModel = hiltViewModel()
+
     var email by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var fullName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     var validFieldCounter by remember { mutableIntStateOf(0) }
+    val context = LocalContext.current
 
     HeaderContentLayout(
         topColor = BlueTheme,
@@ -77,7 +86,17 @@ fun RegistrationScreen(navController: NavHostController){
             Spacer(modifier = Modifier.height(16.dp))
 
             BlueButton(
-                onClick = {},
+                onClick = {
+                    registrationViewModel.register(
+                        email,
+                        password,
+                        User(
+                            username = username,
+                            fullname = fullName
+                        )) { errorMessage ->
+                        if(errorMessage != "") { Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show() }
+                    }
+                },
                 text = "Register",
                 iconFontSize = 16.sp,
                 modifier = Modifier.fillMaxWidth(),
