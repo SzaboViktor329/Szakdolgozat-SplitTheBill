@@ -7,6 +7,7 @@ fun createMonogram(input: String): String {
 
     return when {
         words.size == 1 -> words[0].take(2).uppercase()
-        else -> words.joinToString("") { it.first().uppercase() }
+        words.size >= 2 -> "${words[0].first().uppercase()}${words[1].first().uppercase()}"
+        else -> ""
     }
 }

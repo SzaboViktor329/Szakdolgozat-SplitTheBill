@@ -24,32 +24,49 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.splitthebill.data.models.FriendRequest
+import com.splitthebill.data.models.User
 import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.listitems.FindFriendListItem
 import com.splitthebill.ui.components.templates.DialogWithTitle
+import com.splitthebill.ui.screens.userscreen.UserScreen
+import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.UserViewModel
 
 @Composable
 fun FindFriendModal(onDismiss: () -> Unit) {
     DialogWithTitle("",onDismiss) {
         var showResults by remember { mutableStateOf(false) }
+        val userViewModel: UserViewModel = hiltViewModel()
+        var searchedUser by remember { mutableStateOf(User()) }
+        var username by remember { mutableStateOf("") }
+
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             OutlinedTextField(
-                value = "",
-                onValueChange = {  },
+                value = username,
+                onValueChange = { username = it },
                 placeholder = { Text("Friend's @username") }
             )
             Spacer(Modifier.height(4.dp))
             if(showResults) {
-                LazyColumn {
-                    items(1) {
-                        FindFriendListItem { onDismiss() }
-                    }
-                }
+                FindFriendListItem(searchedUser) { onDismiss() }
                 Spacer(Modifier.height(4.dp))
             }
             Button(
-                onClick = { showResults = !showResults },
+                onClick = {
+                    userViewModel.searchUserByUsername(username) { success, resultUser ->
+                        if(success && resultUser != null){
+                            searchedUser = resultUser
+                            showResults = true
+                        }
+                        else {
+                            searchedUser = User()
+                            showResults = false
+                        }
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = BlueTheme
                 )) {

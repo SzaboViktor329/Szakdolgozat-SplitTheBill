@@ -28,6 +28,16 @@ class UserRepository @Inject constructor(private val firestore: FirebaseFirestor
         }
     }
 
+    fun getUserByUsername(username: String, onComplete: (User?) -> Unit) {
+        firestore.collection(userCollection).whereEqualTo("username", username).get().addOnSuccessListener { result ->
+            if(!result.isEmpty){
+                val user = result.documents.first().toObject(User::class.java)
+                onComplete(user)
+            }
+            else onComplete(null)
+        }
+    }
+
 
     suspend fun getUser(uid: String) : User? {
         return try {
