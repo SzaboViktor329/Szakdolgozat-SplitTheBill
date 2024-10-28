@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             SplitTheBillTheme {
                 val navController = rememberNavController()
-
                 AuthNavGraph(navController)
             }
         }

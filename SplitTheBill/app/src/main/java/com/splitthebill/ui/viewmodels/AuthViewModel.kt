@@ -15,14 +15,8 @@ class AuthViewModel @Inject constructor(private val authRepository: AuthReposito
     private val _currentUserAuth = mutableStateOf(authRepository.getCurrentUser())
     val currentUserAuth: State<FirebaseUser?> = _currentUserAuth
 
-    fun login(email: String, password: String) {
-        viewModelScope.launch {
-            _currentUserAuth.value = authRepository.login(email, password)
-        }
-    }
-
-    fun register(email: String, password: String, onSuccess: (FirebaseUser) -> Unit) {
-        authRepository.register(email, password, onSuccess)
+    fun login(email: String, password: String, onComplete: (message: String) ->Unit) {
+        authRepository.login(email, password, onComplete)
     }
 
     fun logout() {
@@ -30,8 +24,8 @@ class AuthViewModel @Inject constructor(private val authRepository: AuthReposito
         _currentUserAuth.value = null
     }
 
-    fun getEmail() : String? {
-        return _currentUserAuth.value?.email
+    fun getEmail() : String {
+        return _currentUserAuth.value?.email ?: "empty"
     }
 
 }

@@ -20,15 +20,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.components.templates.DialogWithTitle
 import com.splitthebill.ui.navigation.navscreens.AuthNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.AuthViewModel
 
 @Composable
 fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostController) {
+    val authViewModel : AuthViewModel = hiltViewModel()
+
     DialogWithTitle("",onDismiss) {
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
             Text("FullName", style = typography.titleLarge)
@@ -48,6 +52,7 @@ fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostControlle
             Spacer(Modifier.height(4.dp))
             Button(
                 onClick = {
+                    authViewModel.logout()
                     onDismiss()
                     authNavController.navigate(AuthNavScreen.Login.route) {
                         popUpTo("MainGraph") { inclusive = true }

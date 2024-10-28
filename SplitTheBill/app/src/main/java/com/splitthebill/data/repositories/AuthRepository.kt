@@ -6,16 +6,10 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(private val firebaseAuth: FirebaseAuth) {
-    suspend fun login(email: String, password: String): FirebaseUser? {
-        return firebaseAuth.signInWithEmailAndPassword(email,password).await().user
-    }
-
-    fun register(email: String, password: String, onSuccess: (FirebaseUser) -> Unit) {
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener {
-            val currentUserAuth = firebaseAuth.currentUser
-            if (currentUserAuth != null) {
-                onSuccess(currentUserAuth)
-            }
+    fun login(email: String, password: String, onComplete: (message: String) ->Unit) {
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task->
+            if(task.isSuccessful) onComplete("")
+            else onComplete("Incorrect email or password")
         }
     }
 

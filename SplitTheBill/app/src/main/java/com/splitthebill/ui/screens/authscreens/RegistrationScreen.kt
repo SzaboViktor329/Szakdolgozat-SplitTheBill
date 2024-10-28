@@ -95,6 +95,11 @@ fun RegistrationScreen(navController: NavHostController){
                             fullname = fullName
                         )) { errorMessage ->
                         if(errorMessage != "") { Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show() }
+                        else {
+                            navController.navigate(AuthNavScreen.Main.route) {
+                                popUpTo("AuthGraph") { inclusive = true }
+                            }
+                        }
                     }
                 },
                 text = "Register",
