@@ -28,18 +28,25 @@ import com.splitthebill.ui.navigation.navscreens.AuthNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
+import com.splitthebill.ui.viewmodels.UserViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostController) {
     val authViewModel : AuthViewModel = hiltViewModel()
+    val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+
+    val userName = userViewModel.currentUser.username
+    val fullName = userViewModel.currentUser.fullname
+    val email = userViewModel.email
 
     DialogWithTitle("",onDismiss) {
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
-            Text("FullName", style = typography.titleLarge)
-            Text("@UserName")
+            Text(fullName, style = typography.titleLarge)
+            Text("Username: $userName")
             Spacer(Modifier.height(4.dp))
             Text("Email:")
-            Text("user@randomeamail.com")
+            Text(email)
             Spacer(Modifier.height(4.dp))
             Button(
                 onClick = {  },

@@ -2,6 +2,7 @@ package com.splitthebill.data.repositories
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.splitthebill.data.models.User
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
@@ -27,10 +28,18 @@ class UserRepository @Inject constructor(private val firestore: FirebaseFirestor
         }
     }
 
-    /*
-    fun getUser(uid: String) : User {
 
+    suspend fun getUser(uid: String) : User? {
+        return try {
+            val user = firestore.collection(userCollection).document(uid).get().await()
+            if (user.exists()) {
+                user.toObject(User::class.java)
+            } else {
+                null
+            }
+        } catch (e: Exception){
+            null
+        }
     }
 
-     */
 }

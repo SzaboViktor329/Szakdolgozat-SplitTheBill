@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.screens.homescreen.listitems.CompactEventListItem
@@ -29,13 +30,19 @@ import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.UserViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import kotlin.random.Random
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
+    val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val paddingStart = screenWidth / 12
+
+    val userName = userViewModel.currentUser.username
 
     HeaderContentLayout(
         topColor = BlueTheme,
@@ -43,7 +50,7 @@ fun HomeScreen(navController: NavHostController) {
         mainColor = BlueTheme,
         topContent = {
             Text(
-                text = "Hi AverageJoe!",
+                text = "Hi $userName",
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
