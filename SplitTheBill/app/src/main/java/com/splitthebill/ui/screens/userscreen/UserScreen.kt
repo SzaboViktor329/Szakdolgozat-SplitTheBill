@@ -64,6 +64,7 @@ enum class UserScreenComponentNavBarOption(override val label: String) : Compone
 fun UserScreen(authNavController: NavHostController, ){
     val friendViewModel: FriendViewModel = hiltViewModel()
     val usersWithRequests by friendViewModel.usersWithRequests.collectAsState()
+    val friends by friendViewModel.friends.collectAsState()
 
     HeaderContentLayout(
         topColor = BlueTheme,
@@ -113,7 +114,9 @@ fun UserScreen(authNavController: NavHostController, ){
                     LazyColumn(
                         modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
                     ) {
-                        items(20) { FriendListItem() }
+                        items(friends) { friend ->
+                            FriendListItem(friend)
+                        }
                     }
                 }
             }

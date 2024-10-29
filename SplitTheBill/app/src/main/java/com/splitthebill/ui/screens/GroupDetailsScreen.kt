@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.models.User
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
@@ -49,7 +50,7 @@ fun GroupDetailsScreen(navController: NavHostController) {
             LazyColumn(
                 modifier = Modifier.weight(1f).padding(top = 10.dp)
             ) {
-                items(6) { FriendListItem() }
+                items(6) { FriendListItem(User()) }
             }
         }
     }

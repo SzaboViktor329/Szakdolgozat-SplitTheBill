@@ -11,18 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.splitthebill.data.models.User
 import com.splitthebill.ui.components.common.FriendNameWithIcon
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
-fun FriendListItem() {
+fun FriendListItem(user: User) {
     Card(
         modifier = Modifier
             .wrapContentSize()
             .padding(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        FriendNameWithIcon(Modifier.fillMaxWidth().padding(10.dp),Arrangement.SpaceBetween)
+        FriendNameWithIcon(Modifier.fillMaxWidth().padding(10.dp), user, Arrangement.SpaceBetween)
     }
 }
 
@@ -30,6 +31,6 @@ fun FriendListItem() {
 @Composable
 fun FriendListItemPreview(){
     SplitTheBillTheme {
-        FriendListItem()
+        FriendListItem(User("","username","FullName"))
     }
 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.models.User
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
 import com.splitthebill.ui.components.common.FriendNameWithIcon
@@ -73,7 +74,7 @@ fun CreateGroupScreen(navController: NavHostController) {
                         colors = CardDefaults.cardColors(containerColor = Color.White)
                     ) {
                         Row(Modifier.fillMaxWidth().padding(10.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                            FriendNameWithIcon(Modifier.weight(1f).padding(end = 20.dp), Arrangement.SpaceBetween)
+                            FriendNameWithIcon(Modifier.weight(1f).padding(end = 20.dp), User() ,Arrangement.SpaceBetween)
                             Checkbox(
                                 checked = isChecked.value,
                                 onCheckedChange = { isChecked.value = it },

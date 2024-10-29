@@ -11,15 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.splitthebill.data.models.User
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.createMonogram
 
 @Composable
-fun FriendNameWithIcon(modifier: Modifier, horizontal: Arrangement.Horizontal) {
+fun FriendNameWithIcon(modifier: Modifier, user: User, horizontal: Arrangement.Horizontal) {
     Row(modifier = modifier, horizontalArrangement = horizontal, verticalAlignment = Alignment.CenterVertically) {
-        Text("FullName", style = typography.titleLarge)
+        Text(user.fullname, style = typography.titleLarge)
         ProfilePicture(
-            placeholderText = "AD",
+            placeholderText = createMonogram(user.fullname),
             size = 40.dp
         )
     }
@@ -29,6 +31,6 @@ fun FriendNameWithIcon(modifier: Modifier, horizontal: Arrangement.Horizontal) {
 @Composable
 fun FriendNameWithIconPreview(){
     SplitTheBillTheme {
-        FriendNameWithIcon(Modifier.fillMaxWidth().wrapContentHeight(),Arrangement.SpaceBetween)
+        FriendNameWithIcon(Modifier.fillMaxWidth().wrapContentHeight(),User("","username","FullName"),Arrangement.SpaceBetween)
     }
 }

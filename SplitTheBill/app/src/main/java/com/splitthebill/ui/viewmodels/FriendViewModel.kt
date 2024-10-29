@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.splitthebill.data.models.FriendRequest
+import com.splitthebill.data.models.User
 import com.splitthebill.data.models.UserWithRequest
 import com.splitthebill.data.repositories.FriendRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,11 +19,24 @@ class FriendViewModel @Inject constructor(private val friendRepository: FriendRe
     private val _usersWithRequests = MutableStateFlow<List<UserWithRequest>>(emptyList())
     val usersWithRequests: StateFlow<List<UserWithRequest>> = _usersWithRequests
 
+    private val _friends = MutableStateFlow<List<User>>(emptyList())
+    val friends: StateFlow<List<User>> = _friends
+
+
+
     init {
         viewModelScope.launch {
+            /*
             friendRepository.fetchUsersWithFriendRequests().collect { usersWithRequestsList->
                 _usersWithRequests.value = usersWithRequestsList
             }
+
+             */
+            friendRepository.fetchFriends().collect { friendsList->
+                _friends.value = friendsList
+
+            }
+
         }
     }
 
