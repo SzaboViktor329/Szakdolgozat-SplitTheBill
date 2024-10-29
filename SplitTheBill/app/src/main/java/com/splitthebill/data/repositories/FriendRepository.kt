@@ -3,10 +3,14 @@ package com.splitthebill.data.repositories
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.splitthebill.data.enums.FriendRequestStatus
 import com.splitthebill.data.models.FriendRequest
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.UserWithRequest
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 import javax.inject.Inject
@@ -14,6 +18,7 @@ import javax.inject.Inject
 class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAuth, private val firestore: FirebaseFirestore) {
     private val friendRequestCollection: String = "friendRequests"
     private val userCollection: String = "users"
+    private var listenerRegistration: ListenerRegistration? = null
 
     private fun isFriendRequestExist(friendRequest: FriendRequest, onComplete: (friendRequestExist: Boolean)-> Unit) {
         val firstQuery = firestore.collection(friendRequestCollection)
@@ -40,30 +45,6 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
         }
     }
 
-    fun fetchUsersWithFriendRequests(onComplete: (List<UserWithRequest>) -> Unit) {
-        firestore.collection(friendRequestCollection)
-            .whereEqualTo("receiverUid", firebaseAuth.uid)
-            .whereEqualTo("status", FriendRequestStatus.PENDING)
-            .get()
-            .addOnSuccessListener { friendRequestDocuments ->
-                val friendRequests = friendRequestDocuments.toObjects(FriendRequest::class.java)
-                val senderUids = friendRequests.map { it.senderUid }
-                if(senderUids.isNotEmpty()) {
-                    firestore.collection(userCollection).whereIn(FieldPath.documentId(), senderUids)
-                        .get()
-                        .addOnSuccessListener { userDocuments->
-                            val users = userDocuments.toObjects(User::class.java)
-
-                            val usersWithRequests = users.map { user->
-                                val matchingRequest = friendRequests.firstOrNull() { it.senderUid == user.uid }
-                                UserWithRequest(user, matchingRequest!!)
-                            }
-                            onComplete(usersWithRequests)
-                        }
-                }
-            }
-    }
-
     fun createFriendRequest(friendRequest: FriendRequest, onComplete: (Boolean)-> Unit){
         isFriendRequestExist(friendRequest) { friendRequestExist->
             if(!friendRequestExist){
@@ -79,9 +60,47 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
         }
     }
 
+    fun fetchUsersWithFriendRequests() : Flow<List<UserWithRequest>> = callbackFlow {
+        listenerRegistration = firestore.collection(friendRequestCollection)
+            .whereEqualTo("receiverUid", firebaseAuth.uid)
+            .whereEqualTo("status", FriendRequestStatus.PENDING)
+            .addSnapshotListener { snapshot, error ->
+                if(error != null){
+                    close(error)
+                    return@addSnapshotListener
+                }
+                println("firendrequests fetch happened")
+                val friendRequests = snapshot?.toObjects(FriendRequest::class.java) ?: emptyList()
+                val senderUids = friendRequests.map { it.senderUid }
+                if(senderUids.isNotEmpty()) {
+                    println("user fetch happened")
+                    firestore.collection(userCollection).whereIn(FieldPath.documentId(), senderUids)
+                        .get()
+                        .addOnSuccessListener { userDocuments->
+                            val users = userDocuments.toObjects(User::class.java)
+
+                            val usersWithRequests = users.map { user->
+                                val matchingRequest = friendRequests.firstOrNull() { it.senderUid == user.uid }
+                                UserWithRequest(user, matchingRequest!!)
+                            }
+                            trySend(usersWithRequests).isSuccess
+                        }
+                }
+                else trySend(emptyList()).isSuccess
+            }
+        awaitClose { listenerRegistration?.remove() }
+    }
+
+
     fun updateFriendRequest(friendRequest: FriendRequest, onComplete: (Boolean)-> Unit) {
         firestore.collection(friendRequestCollection).document(friendRequest.id).set(friendRequest).addOnSuccessListener {
             onComplete(true)
         }
     }
+
+    fun stopListening() {
+        listenerRegistration?.remove()
+        listenerRegistration = null
+    }
+
 }

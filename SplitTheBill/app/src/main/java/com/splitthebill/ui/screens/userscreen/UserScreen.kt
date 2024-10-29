@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -62,11 +63,7 @@ enum class UserScreenComponentNavBarOption(override val label: String) : Compone
 @Composable
 fun UserScreen(authNavController: NavHostController, ){
     val friendViewModel: FriendViewModel = hiltViewModel()
-    val usersWithRequests by friendViewModel.usersWithRequests.observeAsState(initial = emptyList())
-
-    LaunchedEffect(Unit) {
-        friendViewModel.fetchUsersWithFriendRequests()
-    }
+    val usersWithRequests by friendViewModel.usersWithRequests.collectAsState()
 
     HeaderContentLayout(
         topColor = BlueTheme,
@@ -94,7 +91,7 @@ fun UserScreen(authNavController: NavHostController, ){
                                     friendViewModel.updateFriendRequest(friendRequest) { success->
                                         if(success) {
                                             println("update was successful")
-                                            friendViewModel.fetchUsersWithFriendRequests()
+                                            //friendViewModel.fetchUsersWithFriendRequests()
                                         }
                                     }
 
@@ -104,7 +101,7 @@ fun UserScreen(authNavController: NavHostController, ){
                                     friendViewModel.updateFriendRequest(friendRequest) { success->
                                         if(success) {
                                             println("update was successful")
-                                            friendViewModel.fetchUsersWithFriendRequests()
+                                            //friendViewModel.fetchUsersWithFriendRequests()
                                         }
                                     }
                                 }
