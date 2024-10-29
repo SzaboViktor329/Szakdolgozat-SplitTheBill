@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -29,12 +28,10 @@ import com.splitthebill.data.models.FriendRequest
 import com.splitthebill.data.models.User
 import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.listitems.FindFriendListItem
 import com.splitthebill.ui.components.templates.DialogWithTitle
-import com.splitthebill.ui.screens.userscreen.UserScreen
-import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
-import com.splitthebill.ui.viewmodels.FriendViewModel
+import com.splitthebill.ui.viewmodels.FriendRequestViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
 
 @Composable
@@ -46,7 +43,7 @@ fun FindFriendModal(onDismiss: () -> Unit) {
         var username by remember { mutableStateOf("") }
 
         val authViewModel : AuthViewModel = hiltViewModel()
-        val friendViewModel: FriendViewModel = hiltViewModel()
+        val friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
 
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             OutlinedTextField(
@@ -57,7 +54,7 @@ fun FindFriendModal(onDismiss: () -> Unit) {
             Spacer(Modifier.height(4.dp))
             if(showResults) {
                 FindFriendListItem(searchedUser) {
-                    friendViewModel.createFriendRequest(
+                    friendRequestViewModel.createFriendRequest(
                         FriendRequest(
                             senderUid = authViewModel.currentUserAuth.value!!.uid,
                             receiverUid = searchedUser.uid

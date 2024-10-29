@@ -115,6 +115,7 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
                         trySend(users).isSuccess
                     }
                 }
+                else trySend(emptyList()).isSuccess
 
             }
         awaitClose { friendsListListener?.remove() }

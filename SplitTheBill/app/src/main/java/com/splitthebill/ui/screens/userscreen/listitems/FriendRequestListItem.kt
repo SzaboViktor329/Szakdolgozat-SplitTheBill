@@ -26,8 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.splitthebill.data.models.FriendRequest
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.UserWithRequest
@@ -35,7 +33,6 @@ import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.DarkGreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.createMonogram
-import com.splitthebill.ui.viewmodels.FriendViewModel
 
 @Composable
 fun FriendRequestListItem(

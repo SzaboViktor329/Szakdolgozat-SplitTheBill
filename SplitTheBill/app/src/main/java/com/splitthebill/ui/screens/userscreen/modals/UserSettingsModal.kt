@@ -28,7 +28,7 @@ import com.splitthebill.ui.navigation.navscreens.AuthNavScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
-import com.splitthebill.ui.viewmodels.FriendViewModel
+import com.splitthebill.ui.viewmodels.FriendRequestViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
@@ -36,7 +36,7 @@ import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostController) {
     val authViewModel : AuthViewModel = hiltViewModel()
     val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val friendViewModel : FriendViewModel = hiltViewModel()
+    val friendRequestViewModel : FriendRequestViewModel = hiltViewModel()
 
     val userName = userViewModel.currentUser.username
     val fullName = userViewModel.currentUser.fullname
@@ -61,7 +61,7 @@ fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostControlle
             Spacer(Modifier.height(4.dp))
             Button(
                 onClick = {
-                    friendViewModel.stopListening()
+                    friendRequestViewModel.stopListening()
                     authViewModel.logout()
                     onDismiss()
                     authNavController.navigate(AuthNavScreen.Login.route) {
