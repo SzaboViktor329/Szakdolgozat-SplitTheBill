@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -19,7 +20,9 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,8 +32,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.models.UserWithRequest
 import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.FindFriendModal
 import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.screens.userscreen.listitems.FriendRequestListItem
@@ -45,7 +50,7 @@ import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 import com.splitthebill.ui.screens.userscreen.header.UserScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
-
+import com.splitthebill.ui.viewmodels.FriendViewModel
 
 
 enum class UserScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
@@ -54,7 +59,10 @@ enum class UserScreenComponentNavBarOption(override val label: String) : Compone
 }
 
 @Composable
-fun UserScreen(authNavController: NavHostController){
+fun UserScreen(authNavController: NavHostController, ){
+    val friendViewModel: FriendViewModel = hiltViewModel()
+    val usersWithRequests by friendViewModel.usersWithRequests.observeAsState(initial = emptyList())
+
     HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
@@ -68,14 +76,26 @@ fun UserScreen(authNavController: NavHostController){
                 selectedOption = selectedOption,
                 onOptionSelected = { option -> selectedOption = option }
             )
-            LazyColumn(
-                modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
-            ) {
-                when(selectedOption) {
-                    UserScreenComponentNavBarOption.FRIEND_REQUESTS -> { items(20) { FriendRequestListItem() } }
-                    UserScreenComponentNavBarOption.FRIENDS -> { items(20) { FriendListItem() } }
+
+            when(selectedOption) {
+                UserScreenComponentNavBarOption.FRIEND_REQUESTS -> {
+                    LazyColumn(
+                        modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
+                    ) {
+                        items(usersWithRequests) { userWithRequest ->
+                            FriendRequestListItem(userWithRequest)
+                        }
+                    }
+                }
+                UserScreenComponentNavBarOption.FRIENDS -> {
+                    LazyColumn(
+                        modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
+                    ) {
+                        items(20) { FriendListItem() }
+                    }
                 }
             }
+
             var showFindFriendDialog by remember { mutableStateOf(false) }
             BottomWhiteStrip {
                 BlueButton(

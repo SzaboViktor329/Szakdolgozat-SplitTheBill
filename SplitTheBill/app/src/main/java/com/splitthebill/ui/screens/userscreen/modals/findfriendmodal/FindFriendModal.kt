@@ -64,8 +64,8 @@ fun FindFriendModal(onDismiss: () -> Unit) {
                         )
                     ) { success->
                         println(success)
+                        onDismiss()
                     }
-                    onDismiss()
                 }
                 Spacer(Modifier.height(4.dp))
             }

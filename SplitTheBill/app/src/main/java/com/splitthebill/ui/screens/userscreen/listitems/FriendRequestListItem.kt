@@ -26,12 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.splitthebill.data.models.User
+import com.splitthebill.data.models.UserWithRequest
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.DarkGreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.createMonogram
 
 @Composable
-fun FriendRequestListItem() {
+fun FriendRequestListItem(userWithRequest: UserWithRequest) {
     Card(
         modifier = Modifier
             .wrapContentSize()
@@ -40,11 +43,11 @@ fun FriendRequestListItem() {
     ) {
         Row(Modifier.fillMaxWidth().padding(10.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Column {
-                Text("FullName", style = typography.titleLarge)
-                Text("@UserName")
+                Text(userWithRequest.user.fullname, style = typography.titleLarge)
+                Text(userWithRequest.user.username)
             }
             ProfilePicture(
-                placeholderText = "AD",
+                placeholderText = createMonogram(userWithRequest.user.fullname),
                 size = 40.dp
             )
             Row {
@@ -70,7 +73,7 @@ fun FriendRequestListItem() {
 @Composable
 fun FriendRequestListItemPreview(){
     SplitTheBillTheme {
-        FriendRequestListItem()
+        FriendRequestListItem(UserWithRequest(User("","Username","FullName")))
     }
 }
 
