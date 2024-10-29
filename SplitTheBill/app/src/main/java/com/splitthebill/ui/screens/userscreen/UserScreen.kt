@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.enums.FriendRequestStatus
 import com.splitthebill.data.models.UserWithRequest
 import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.FindFriendModal
 import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
@@ -63,6 +64,10 @@ fun UserScreen(authNavController: NavHostController, ){
     val friendViewModel: FriendViewModel = hiltViewModel()
     val usersWithRequests by friendViewModel.usersWithRequests.observeAsState(initial = emptyList())
 
+    LaunchedEffect(Unit) {
+        friendViewModel.fetchUsersWithFriendRequests()
+    }
+
     HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
@@ -76,14 +81,34 @@ fun UserScreen(authNavController: NavHostController, ){
                 selectedOption = selectedOption,
                 onOptionSelected = { option -> selectedOption = option }
             )
-
             when(selectedOption) {
                 UserScreenComponentNavBarOption.FRIEND_REQUESTS -> {
                     LazyColumn(
                         modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
                     ) {
                         items(usersWithRequests) { userWithRequest ->
-                            FriendRequestListItem(userWithRequest)
+                            FriendRequestListItem(
+                                userWithRequest,
+                                onAccept = { friendRequest ->
+                                    friendRequest.status = FriendRequestStatus.ACCEPTED
+                                    friendViewModel.updateFriendRequest(friendRequest) { success->
+                                        if(success) {
+                                            println("update was successful")
+                                            friendViewModel.fetchUsersWithFriendRequests()
+                                        }
+                                    }
+
+                                },
+                                onReject = { friendRequest ->
+                                    friendRequest.status = FriendRequestStatus.REJECTED
+                                    friendViewModel.updateFriendRequest(friendRequest) { success->
+                                        if(success) {
+                                            println("update was successful")
+                                            friendViewModel.fetchUsersWithFriendRequests()
+                                        }
+                                    }
+                                }
+                            )
                         }
                     }
                 }

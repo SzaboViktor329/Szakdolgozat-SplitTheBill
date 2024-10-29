@@ -26,15 +26,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.splitthebill.data.models.FriendRequest
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.UserWithRequest
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.DarkGreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.createMonogram
+import com.splitthebill.ui.viewmodels.FriendViewModel
 
 @Composable
-fun FriendRequestListItem(userWithRequest: UserWithRequest) {
+fun FriendRequestListItem(
+    userWithRequest: UserWithRequest,
+    onAccept: (FriendRequest) ->Unit,
+    onReject: (FriendRequest) -> Unit
+) {
     Card(
         modifier = Modifier
             .wrapContentSize()
@@ -52,14 +60,14 @@ fun FriendRequestListItem(userWithRequest: UserWithRequest) {
             )
             Row {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { onAccept(userWithRequest.friendRequest) },
                     modifier = Modifier.border(2.dp, DarkGreen, RoundedCornerShape(15.dp))
                 ) {
                     Icon(Icons.Default.Check, contentDescription = null, tint = DarkGreen, modifier = Modifier.size(30.dp))
                 }
                 Spacer(Modifier.width(6.dp))
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { onReject(userWithRequest.friendRequest) },
                     modifier = Modifier.border(2.dp, Color.Red, RoundedCornerShape(15.dp))
                 ) {
                     Icon(Icons.Default.Close, contentDescription = null, tint = Color.Red, modifier = Modifier.size(30.dp))
@@ -73,7 +81,7 @@ fun FriendRequestListItem(userWithRequest: UserWithRequest) {
 @Composable
 fun FriendRequestListItemPreview(){
     SplitTheBillTheme {
-        FriendRequestListItem(UserWithRequest(User("","Username","FullName")))
+        FriendRequestListItem(UserWithRequest(User("","Username","FullName")),{},{})
     }
 }
 

@@ -18,7 +18,7 @@ class FriendViewModel @Inject constructor(private val friendRepository: FriendRe
 
     init {
         viewModelScope.launch {
-            fetchUsersWithFriendRequests()
+            //fetchUsersWithFriendRequests()
         }
     }
 
@@ -26,7 +26,11 @@ class FriendViewModel @Inject constructor(private val friendRepository: FriendRe
         friendRepository.createFriendRequest(friendRequest, onComplete)
     }
 
-    private fun fetchUsersWithFriendRequests() {
+    fun updateFriendRequest(friendRequest: FriendRequest, onComplete: (Boolean)-> Unit) {
+        friendRepository.updateFriendRequest(friendRequest, onComplete)
+    }
+
+    fun fetchUsersWithFriendRequests() {
         friendRepository.fetchUsersWithFriendRequests { usersWithRequestsResult->
             _usersWithRequests.value = usersWithRequestsResult
         }

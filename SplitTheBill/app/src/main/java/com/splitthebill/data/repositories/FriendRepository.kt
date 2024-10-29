@@ -8,6 +8,7 @@ import com.splitthebill.data.models.FriendRequest
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.UserWithRequest
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 import javax.inject.Inject
 
 class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAuth, private val firestore: FirebaseFirestore) {
@@ -66,13 +67,21 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
     fun createFriendRequest(friendRequest: FriendRequest, onComplete: (Boolean)-> Unit){
         isFriendRequestExist(friendRequest) { friendRequestExist->
             if(!friendRequestExist){
-                firestore.collection(friendRequestCollection).add(friendRequest).addOnSuccessListener {
+                val friendRequestId = UUID.randomUUID().toString()
+                friendRequest.id = friendRequestId
+                firestore.collection(friendRequestCollection).document(friendRequestId).set(friendRequest).addOnSuccessListener {
                     onComplete(true)
                 }
             }
             else{
                 onComplete(false)
             }
+        }
+    }
+
+    fun updateFriendRequest(friendRequest: FriendRequest, onComplete: (Boolean)-> Unit) {
+        firestore.collection(friendRequestCollection).document(friendRequest.id).set(friendRequest).addOnSuccessListener {
+            onComplete(true)
         }
     }
 }
