@@ -33,6 +33,8 @@ import com.splitthebill.ui.screens.userscreen.UserScreen
 import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.AuthViewModel
+import com.splitthebill.ui.viewmodels.FriendViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
 
 @Composable
@@ -43,6 +45,9 @@ fun FindFriendModal(onDismiss: () -> Unit) {
         var searchedUser by remember { mutableStateOf(User()) }
         var username by remember { mutableStateOf("") }
 
+        val authViewModel : AuthViewModel = hiltViewModel()
+        val friendViewModel: FriendViewModel = hiltViewModel()
+
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             OutlinedTextField(
                 value = username,
@@ -51,7 +56,17 @@ fun FindFriendModal(onDismiss: () -> Unit) {
             )
             Spacer(Modifier.height(4.dp))
             if(showResults) {
-                FindFriendListItem(searchedUser) { onDismiss() }
+                FindFriendListItem(searchedUser) {
+                    friendViewModel.createFriendRequest(
+                        FriendRequest(
+                            senderUid = authViewModel.currentUserAuth.value!!.uid,
+                            receiverUid = searchedUser.uid
+                        )
+                    ) { success->
+                        println(success)
+                    }
+                    onDismiss()
+                }
                 Spacer(Modifier.height(4.dp))
             }
             Button(

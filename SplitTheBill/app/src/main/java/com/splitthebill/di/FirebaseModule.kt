@@ -3,6 +3,7 @@ package com.splitthebill.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.splitthebill.data.repositories.AuthRepository
+import com.splitthebill.data.repositories.FriendRepository
 import com.splitthebill.data.repositories.RegistrationRepository
 import com.splitthebill.data.repositories.UserRepository
 import dagger.Module
@@ -45,6 +46,13 @@ object FirebaseModule {
     fun provideRegistrationRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): RegistrationRepository {
         return  RegistrationRepository(firebaseAuth, firestore)
     }
+
+    @Singleton
+    @Provides
+    fun provideFriendRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): FriendRepository {
+        return FriendRepository(firebaseAuth, firestore)
+    }
+
 
 
 
