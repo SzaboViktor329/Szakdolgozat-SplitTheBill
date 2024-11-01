@@ -36,7 +36,7 @@ import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostController) {
     val authViewModel : AuthViewModel = hiltViewModel()
     val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val friendRequestViewModel : FriendRequestViewModel = hiltViewModel()
+    val friendRequestViewModel : FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
     val userName = userViewModel.currentUser.username
     val fullName = userViewModel.currentUser.fullname
@@ -61,9 +61,9 @@ fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostControlle
             Spacer(Modifier.height(4.dp))
             Button(
                 onClick = {
+                    onDismiss()
                     friendRequestViewModel.stopListening()
                     authViewModel.logout()
-                    onDismiss()
                     authNavController.navigate(AuthNavScreen.Login.route) {
                         popUpTo("MainGraph") { inclusive = true }
                     }

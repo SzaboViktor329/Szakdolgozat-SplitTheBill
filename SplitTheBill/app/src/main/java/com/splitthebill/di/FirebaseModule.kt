@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.splitthebill.data.repositories.AuthRepository
 import com.splitthebill.data.repositories.FriendRepository
+import com.splitthebill.data.repositories.GroupRepository
 import com.splitthebill.data.repositories.RegistrationRepository
 import com.splitthebill.data.repositories.UserRepository
 import dagger.Module
@@ -51,6 +52,12 @@ object FirebaseModule {
     @Provides
     fun provideFriendRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): FriendRepository {
         return FriendRepository(firebaseAuth, firestore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGroupRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): GroupRepository {
+        return GroupRepository(firebaseAuth, firestore)
     }
 
 

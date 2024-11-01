@@ -37,6 +37,7 @@ import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.FriendRequestViewModel
 import com.splitthebill.ui.viewmodels.FriendViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 
 enum class UserScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
@@ -46,8 +47,8 @@ enum class UserScreenComponentNavBarOption(override val label: String) : Compone
 
 @Composable
 fun UserScreen(authNavController: NavHostController, ){
-    val friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
-    val friendViewModel: FriendViewModel = hiltViewModel()
+    val friendRequestViewModel: FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val friendViewModel: FriendViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val usersWithRequests by friendRequestViewModel.usersWithRequests.collectAsState()
     val friends by friendViewModel.friends.collectAsState()
 

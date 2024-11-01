@@ -33,6 +33,7 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
 import com.splitthebill.ui.viewmodels.FriendRequestViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun FindFriendModal(onDismiss: () -> Unit) {
@@ -43,7 +44,7 @@ fun FindFriendModal(onDismiss: () -> Unit) {
         var username by remember { mutableStateOf("") }
 
         val authViewModel : AuthViewModel = hiltViewModel()
-        val friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
+        val friendRequestViewModel: FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             OutlinedTextField(
