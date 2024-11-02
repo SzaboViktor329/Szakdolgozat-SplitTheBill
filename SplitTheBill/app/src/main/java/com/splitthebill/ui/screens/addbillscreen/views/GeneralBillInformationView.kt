@@ -25,25 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.dialogs.DatePickerDialog
+import com.splitthebill.ui.components.textfields.TextFieldWithDatePicker
+import com.splitthebill.ui.components.textfields.TextFieldWithDropdown
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GeneralBillInformationView(
     onProceed: () -> Unit
 ){
-    val calendar = Calendar.getInstance()
     val dateFormater = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    var selectedDate by remember { mutableStateOf(dateFormater.format(calendar.time)) }
-    var showDatePicker by remember { mutableStateOf(false) }
-
-    var isExpanded by remember { mutableStateOf(false) }
-    var selectedGroup by remember { mutableStateOf("Select a Group") }
-    val options = listOf("Group 1", "Group 2", "Group 3", "Group 4", "Group 5", "Group 6", "Group 7")
-
+    var selectedDate by remember { mutableStateOf(dateFormater.format(Calendar.getInstance().time)) }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally) {
         Column {
@@ -53,56 +47,8 @@ fun GeneralBillInformationView(
                 label = { Text("Bill name") },
                 modifier = Modifier.fillMaxWidth()
             )
-            OutlinedTextField(
-                value = selectedDate,
-                onValueChange = {  },
-                readOnly = true,
-                label = { Text("Date") },
-                trailingIcon = {
-                    IconButton(onClick = { showDatePicker = !showDatePicker }) {
-                        Icon(
-                            imageVector = Icons.Default.DateRange,
-                            contentDescription = "Select date"
-                        )
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-            if(showDatePicker){
-                DatePickerDialog(
-                    onDateSelected = { dateInLong ->
-                        if(dateInLong != null){
-                            selectedDate = dateFormater.format(Date(dateInLong))
-                        }
-                    },
-                    onDismiss = { showDatePicker = false }
-                )
-            }
-
-
-            ExposedDropdownMenuBox(
-                expanded = isExpanded,
-                onExpandedChange = { isExpanded = !isExpanded },
-            ) {
-                OutlinedTextField(
-                    value = selectedGroup,
-                    onValueChange = {},
-                    label = { Text("Group") },
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(isExpanded) },
-                    modifier = Modifier.menuAnchor().fillMaxWidth()
-                )
-                ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
-                    options.forEachIndexed { index, group ->
-                        DropdownMenuItem(
-                            text = { Text(group) },
-                            onClick = {
-                                selectedGroup = options[index]
-                                isExpanded = false
-                            }
-                        )
-                    }
-                }
+            TextFieldWithDatePicker(selectedDate, dateFormater) { newDate->
+                selectedDate = newDate
             }
         }
         BlueButton(

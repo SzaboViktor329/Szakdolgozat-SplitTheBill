@@ -42,6 +42,7 @@ import com.splitthebill.ui.components.dialogs.FilterOptionsDialog
 import com.splitthebill.ui.components.templates.DialogWithTitle
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.screens.eventcollectionscreen.header.EventCollectionScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -66,12 +67,14 @@ fun EventCollectionScreen(navController: NavHostController) {
                     }
                 }
                 BottomWhiteStrip {
+                    var showAddEventDialog by remember { mutableStateOf(false) }
                     BlueButton(
-                        onClick = {},
+                        onClick = { showAddEventDialog = !showAddEventDialog },
                         text = "Add event",
                         iconFontSize = 16.sp,
                         modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp)
                     )
+                    if(showAddEventDialog) AddEventModal { showAddEventDialog = false }
                 }
             }
         }

@@ -11,6 +11,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +32,7 @@ import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.buttons.BlueTextButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
+import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.UserViewModel
@@ -83,12 +88,15 @@ fun HomeScreen(navController: NavHostController) {
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.height(16.dp))
+
+                var showAddEventDialog by remember { mutableStateOf(false) }
                 BlueButton(
-                    onClick = {},
+                    onClick = { showAddEventDialog = !showAddEventDialog },
                     text = "Add event",
                     iconFontSize = 16.sp,
                     modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp)
                 )
+                if(showAddEventDialog) AddEventModal { showAddEventDialog = false }
             }
         }
     )
