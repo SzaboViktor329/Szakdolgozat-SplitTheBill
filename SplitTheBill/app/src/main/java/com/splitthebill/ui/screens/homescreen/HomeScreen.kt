@@ -11,7 +11,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,6 +37,7 @@ import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.EventsViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import kotlin.random.Random
@@ -42,12 +45,19 @@ import kotlin.random.Random
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventsViewModel : EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+
+    val events by eventsViewModel.events.observeAsState(initial = emptyList())
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val paddingStart = screenWidth / 12
 
     val userName = userViewModel.currentUser.username
+
+    LaunchedEffect(Unit) {
+        eventsViewModel.fetchEvents()
+    }
 
     HeaderContentLayout(
         topColor = BlueTheme,
@@ -75,8 +85,8 @@ fun HomeScreen(navController: NavHostController) {
                 LazyColumn(
                     modifier = Modifier.wrapContentHeight()
                 ) {
-                    items(items = listOf("Event 1", "Event 2", "Event 3", "Event 4")) { eventName ->
-                        CompactEventListItem(eventName, Random.nextInt(0, 3))
+                    items(events) { event ->
+                        CompactEventListItem(event)
                         HorizontalDivider(thickness = 2.dp)
                     }
                 }

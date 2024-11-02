@@ -30,11 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.enums.EventStatus
+import com.splitthebill.data.models.Event
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
-fun DetailedEventListItem(eventName: String, startDate: String, endDate: String, eventStatus: Int, navController: NavHostController) {
+fun DetailedEventListItem(event: Event, navController: NavHostController) {
     Card(
         modifier = Modifier
             .wrapContentSize()
@@ -56,7 +58,7 @@ fun DetailedEventListItem(eventName: String, startDate: String, endDate: String,
                     .weight(1f)
             ) {
                 Text(
-                    text = eventName,
+                    text = event.eventName,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -64,7 +66,7 @@ fun DetailedEventListItem(eventName: String, startDate: String, endDate: String,
                 Spacer(modifier = Modifier.height(4.dp))
                 Row {
                     Text(
-                        text = startDate,
+                        text = event.startDate,
                         fontSize = 14.sp,
                         color = Color.Gray
                     )
@@ -76,7 +78,7 @@ fun DetailedEventListItem(eventName: String, startDate: String, endDate: String,
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = endDate,
+                        text = event.finishDate,
                         fontSize = 14.sp,
                         color = Color.Gray
                     )
@@ -84,11 +86,10 @@ fun DetailedEventListItem(eventName: String, startDate: String, endDate: String,
             }
 
             Icon(
-                imageVector = when(eventStatus){
-                    0 -> Icons.Default.Check
-                    1 -> Icons.Default.Payments
-                    2 -> Icons.Default.PendingActions
-                    else -> Icons.Default.Android
+                imageVector = when(event.status){
+                    EventStatus.FINISHED -> Icons.Default.Check
+                    EventStatus.PAYING -> Icons.Default.Payments
+                    EventStatus.PENDING -> Icons.Default.PendingActions
                 },
                 contentDescription = "Event Status",
                 modifier = Modifier.size(40.dp)
@@ -102,6 +103,6 @@ fun DetailedEventListItem(eventName: String, startDate: String, endDate: String,
 @Composable
 fun DetailedEventListItemPreview(){
     SplitTheBillTheme {
-        DetailedEventListItem("Event name", "2022.02.02", "2022.03.11", 0, rememberNavController())
+        DetailedEventListItem(Event(), rememberNavController())
     }
 }

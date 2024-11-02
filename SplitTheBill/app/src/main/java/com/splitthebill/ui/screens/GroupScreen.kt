@@ -39,12 +39,12 @@ import kotlin.random.Random
 
 @Composable
 fun GroupScreen(navController: NavHostController){
-    val groupViewModel : GroupViewModel = hiltViewModel()
+    val groupViewModel : GroupViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val groupDetailsViewModel : GroupDetailsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val groups by groupViewModel.groups.observeAsState(initial = emptyList())
 
     LaunchedEffect(Unit) {
-        groupViewModel.fetchGroups()
+        groupViewModel.fetchGroups{}
     }
 
     HeaderContentLayout(

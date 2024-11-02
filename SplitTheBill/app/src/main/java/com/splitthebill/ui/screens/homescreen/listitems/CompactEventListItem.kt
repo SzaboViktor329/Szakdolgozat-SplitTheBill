@@ -17,10 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.splitthebill.data.enums.EventStatus
+import com.splitthebill.data.models.Event
 
 
 @Composable
-fun CompactEventListItem(eventName: String, eventStatus: Int) {
+fun CompactEventListItem(event: Event) {
     Box(modifier = Modifier.fillMaxWidth()){
         Row(
             modifier = Modifier
@@ -30,15 +32,14 @@ fun CompactEventListItem(eventName: String, eventStatus: Int) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = eventName,
+                text = event.eventName,
                 fontSize = 18.sp
             )
             Icon(
-                imageVector = when(eventStatus){
-                    0 -> Icons.Default.Check
-                    1 -> Icons.Default.Payments
-                    2 -> Icons.Default.PendingActions
-                    else -> Icons.Default.Android
+                imageVector = when(event.status){
+                    EventStatus.FINISHED -> Icons.Default.Check
+                    EventStatus.PAYING -> Icons.Default.Payments
+                    EventStatus.PENDING -> Icons.Default.PendingActions
                 },
                 contentDescription = "Status Icon"
             )

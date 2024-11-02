@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.FilterList
@@ -20,7 +21,9 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.screens.eventcollectionscreen.listitems.DetailedEventListItem
@@ -46,10 +50,19 @@ import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.screens.eventcollectionscreen.header.EventCollectionScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.EventsViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import kotlin.random.Random
 
 @Composable
 fun EventCollectionScreen(navController: NavHostController) {
+    val eventsViewModel : EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val events by eventsViewModel.events.observeAsState(initial = emptyList())
+
+    LaunchedEffect(Unit) {
+        eventsViewModel.fetchEvents()
+    }
+
     HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
@@ -62,8 +75,11 @@ fun EventCollectionScreen(navController: NavHostController) {
                 LazyColumn(
                     modifier = Modifier.weight(1f).padding(top = 10.dp, start = 10.dp, end = 10.dp)
                 ) {
-                    items(20) {
-                        DetailedEventListItem("Event name","2022.02.20", "2022.04.04", Random.nextInt(0, 3), navController)
+                    items(events) { event ->
+                        DetailedEventListItem(
+                            event,
+                            navController
+                        )
                     }
                 }
                 BottomWhiteStrip {

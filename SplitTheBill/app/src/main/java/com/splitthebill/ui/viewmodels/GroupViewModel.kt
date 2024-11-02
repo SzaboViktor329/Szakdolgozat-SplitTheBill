@@ -15,10 +15,10 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
     private val _groups = MutableLiveData<List<Group>>(emptyList())
     val groups: LiveData<List<Group>> = _groups
 
-
-    fun fetchGroups() {
+    fun fetchGroups(onComplete: () -> Unit) {
         groupRepository.getGroups { groupsResults->
             _groups.value = groupsResults
+            onComplete()
         }
     }
 }
