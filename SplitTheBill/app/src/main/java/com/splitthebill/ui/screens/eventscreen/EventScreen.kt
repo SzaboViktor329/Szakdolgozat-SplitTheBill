@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.screens.eventscreen.listitems.BillListItem
@@ -45,6 +46,8 @@ import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.eventscreen.header.EventScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.EventDetailViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import kotlin.random.Random
 
 
@@ -56,12 +59,15 @@ enum class EventScreenComponentNavBarOption(override val label: String) : Compon
 
 @Composable
 fun EventScreen(navController: NavHostController) {
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val event = remember { eventDetailViewModel.event.value }
+
     HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
-            EventScreenHeader("Event name", "2022.02.02", "2023.03.03", navController)
+            EventScreenHeader(event.eventName, event.status ,event.startDate, event.finishDate, navController)
         }
     ) {
         var selectedOption by remember { mutableStateOf(EventScreenComponentNavBarOption.DEBTS) }

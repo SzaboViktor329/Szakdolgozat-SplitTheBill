@@ -50,6 +50,7 @@ import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.screens.eventcollectionscreen.header.EventCollectionScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.EventsViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import kotlin.random.Random
@@ -58,6 +59,8 @@ import kotlin.random.Random
 fun EventCollectionScreen(navController: NavHostController) {
     val eventsViewModel : EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val events by eventsViewModel.events.observeAsState(initial = emptyList())
+
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
     LaunchedEffect(Unit) {
         eventsViewModel.fetchEvents()
@@ -79,7 +82,7 @@ fun EventCollectionScreen(navController: NavHostController) {
                         DetailedEventListItem(
                             event,
                             navController
-                        )
+                        ) { eventDetailViewModel.setEvent(event) }
                     }
                 }
                 BottomWhiteStrip {

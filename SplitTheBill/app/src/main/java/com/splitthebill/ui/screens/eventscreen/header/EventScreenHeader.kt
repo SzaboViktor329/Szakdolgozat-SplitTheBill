@@ -24,12 +24,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.splitthebill.data.enums.EventStatus
 import com.splitthebill.ui.components.buttons.DialogIconButton
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import kotlin.random.Random
 
 @Composable
-fun EventScreenHeader(eventName: String, startDate: String, endDate: String, navController: NavHostController){
+fun EventScreenHeader(eventName: String, eventStatus: EventStatus, startDate: String, endDate: String, navController: NavHostController){
     HeaderWithBackButton(navController) {
         Box(modifier = Modifier.weight(1f).wrapContentHeight()){
             Column(
@@ -45,11 +46,10 @@ fun EventScreenHeader(eventName: String, startDate: String, endDate: String, nav
         }
         DialogIconButton(
             modifier = Modifier.padding(end = 4.dp).clip(RoundedCornerShape(15.dp)).background(Color.White),
-            iconImageVector = when(Random.nextInt(0,3)){
-                0 -> Icons.Default.Check
-                1 -> Icons.Default.Payments
-                2 -> Icons.Default.PendingActions
-                else -> Icons.Default.Android
+            iconImageVector = when(eventStatus){
+                EventStatus.FINISHED -> Icons.Default.Check
+                EventStatus.PAYING -> Icons.Default.Payments
+                EventStatus.PENDING -> Icons.Default.PendingActions
             },
             iconColor = Color.Black,
             iconContentDescription = "Event Status",

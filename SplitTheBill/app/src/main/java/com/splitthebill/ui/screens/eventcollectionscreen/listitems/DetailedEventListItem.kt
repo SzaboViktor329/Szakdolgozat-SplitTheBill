@@ -36,12 +36,15 @@ import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
-fun DetailedEventListItem(event: Event, navController: NavHostController) {
+fun DetailedEventListItem(event: Event, navController: NavHostController, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigate(MainNavScreen.Event.route) },
+            .clickable {
+                onClick()
+                navController.navigate(MainNavScreen.Event.route)
+            },
         elevation = CardDefaults.elevatedCardElevation(),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     )
@@ -103,6 +106,6 @@ fun DetailedEventListItem(event: Event, navController: NavHostController) {
 @Composable
 fun DetailedEventListItemPreview(){
     SplitTheBillTheme {
-        DetailedEventListItem(Event(), rememberNavController())
+        DetailedEventListItem(Event(), rememberNavController(),{})
     }
 }
