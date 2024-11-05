@@ -56,7 +56,7 @@ fun HomeScreen(navController: NavHostController) {
     val userName = userViewModel.currentUser.username
 
     LaunchedEffect(Unit) {
-        eventsViewModel.fetchEvents()
+        eventsViewModel.fetchRecentEvents()
     }
 
     HeaderContentLayout(
