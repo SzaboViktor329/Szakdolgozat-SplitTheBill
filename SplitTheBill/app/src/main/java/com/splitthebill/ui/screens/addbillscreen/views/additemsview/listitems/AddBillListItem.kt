@@ -20,10 +20,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,23 +33,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.splitthebill.data.models.User
+import com.splitthebill.data.models.bill.Item
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.screens.addbillscreen.UserPickerModal
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.createMonogram
 
 @Composable
 fun AddBillListItem(
+    item: Item,
+    users: List<User>,
     onDestroy: () -> Unit
 ) {
-    var itemName by remember { mutableStateOf("") }
-    var priceText by remember { mutableStateOf("") }
-    var price by remember { mutableDoubleStateOf(0.0) }
+    var itemName by rememberSaveable { mutableStateOf("") }
+    var priceText by rememberSaveable { mutableStateOf("") }
+    var price by rememberSaveable { mutableDoubleStateOf(0.0) }
+    var user by remember { mutableStateOf(User()) }
+    var userId by rememberSaveable { mutableStateOf("") }
 
     var showUserPickerModal by remember { mutableStateOf(false) }
 
-
-
+    LaunchedEffect(Unit) {
+        users.forEach { userInList ->
+            if(userInList.uid == userId) user = userInList
+        }
+    }
     Card(
         modifier = Modifier
             .wrapContentSize()
@@ -65,7 +76,10 @@ fun AddBillListItem(
         Column {
             OutlinedTextField(
                 value = itemName,
-                onValueChange = { itemName = it },
+                onValueChange = {
+                    itemName = it
+                    item.itemName = it
+                },
                 label = { Text("Item name") },
                 modifier = Modifier.fillMaxWidth().padding(top = 0.dp, start = 16.dp, end = 16.dp)
             )
@@ -81,14 +95,17 @@ fun AddBillListItem(
                     modifier = Modifier.clickable {
                         showUserPickerModal = true
                     },
-                    placeholderText = "",
+                    placeholderText = createMonogram(user.fullname),
                     size = 50.dp
                 )
                 OutlinedTextField(
                     value = priceText,
                     onValueChange = {
                         priceText = it
-                        if(it !="") price = it.toDouble()
+                        if(it !="") {
+                            price = it.toDouble()
+                            item.price = it.toDouble()
+                        }
                     },
                     label = { Text("Price") },
                     modifier = Modifier.padding(start = 20.dp)
@@ -97,8 +114,10 @@ fun AddBillListItem(
         }
     }
 
-    if(showUserPickerModal) UserPickerModal(listOf(User(), User())) { selectedUser->
-
+    if(showUserPickerModal) UserPickerModal(users) { selectedUser->
+        userId = selectedUser.uid
+        item.userId = selectedUser.uid
+        user = selectedUser
         showUserPickerModal = false
     }
 }
@@ -107,6 +126,6 @@ fun AddBillListItem(
 @Composable
 fun BillItemPreview(){
     SplitTheBillTheme {
-        AddBillListItem({})
+        AddBillListItem(Item(), listOf(),{})
     }
 }
