@@ -1,6 +1,7 @@
 package com.splitthebill.ui.screens.addbillscreen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.typography
@@ -23,6 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.data.models.Event
 import com.splitthebill.data.models.User
+import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.data.models.bill.Item
 import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.ui.screens.addbillscreen.views.additemsview.AddItemsView
@@ -70,7 +72,13 @@ fun AddBillScreen(navController: NavHostController) {
         topContent = {
             HeaderWithBackButton(navController) {
                 Box(Modifier.fillMaxWidth().padding(0.dp, 16.dp), contentAlignment = Alignment.Center){
-                    Text("Add bill", style = typography.headlineLarge, color = Color.White)
+                    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Add bill", style = typography.headlineLarge, color = Color.White)
+                        if(progressCounter == 2){
+                            Text("Total: $total", style = typography.headlineMedium, color = Color.White)
+                        }
+                    }
+
                 }
             }
         }
@@ -81,13 +89,27 @@ fun AddBillScreen(navController: NavHostController) {
                 selectedDate = newSelectedDate
                 progressCounter = 1
             }
-            1 -> AddItemsView(users) { totalResult ,itemsResult->
+            1 -> AddItemsView(users) { totalResult ,itemsResult ->
                 items.clear()
                 items.addAll(itemsResult)
                 total = totalResult
                 progressCounter = 2
             }
-            2 -> AddPayersView { navController.popBackStack() }
+            2 -> AddPayersView(users, total) { payersResult ->
+                payers.clear()
+                payers.addAll(payersResult)
+                val bill = Bill(
+                    eventId = event.eventId,
+                    billName = billName,
+                    date = selectedDate,
+                    total = total,
+                    payers = payers,
+                    items = items
+                )
+                val k = 0
+
+                navController.popBackStack()
+            }
         }
     }
 }

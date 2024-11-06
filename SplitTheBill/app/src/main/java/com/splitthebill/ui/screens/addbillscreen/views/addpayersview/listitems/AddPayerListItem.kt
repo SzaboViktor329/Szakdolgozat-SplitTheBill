@@ -1,6 +1,7 @@
 package com.splitthebill.ui.screens.addbillscreen.views.addpayersview.listitems
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,21 +19,46 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.splitthebill.data.models.User
+import com.splitthebill.data.models.bill.Item
+import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.ui.components.icons.ProfilePicture
+import com.splitthebill.ui.screens.addbillscreen.UserPickerModal
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.createMonogram
 
 @Composable
 fun AddPayerListItem(
+    payer: Payer,
+    users: List<User>,
     onDestroy: () -> Unit
 ) {
-    val isChecked = remember { mutableStateOf(false) }
+
+    var amountText by rememberSaveable { mutableStateOf("") }
+    var amount by rememberSaveable { mutableDoubleStateOf(0.0) }
+
+    var user by remember { mutableStateOf(User()) }
+    var userId by rememberSaveable { mutableStateOf("") }
+
+    var showUserPickerModal by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        users.forEach { userInList ->
+            if(userInList.uid == userId) user = userInList
+        }
+    }
 
     Card(
         modifier = Modifier
@@ -58,16 +84,31 @@ fun AddPayerListItem(
         ) {
 
             ProfilePicture(
-                placeholderText = "",
+                modifier = Modifier.clickable {
+                    showUserPickerModal = true
+                },
+                placeholderText = createMonogram(user.fullname),
                 size = 50.dp
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = {  },
+                value = amountText,
+                onValueChange = {
+                    amountText = it
+                    if(it !="") {
+                        amount = it.toDouble()
+                        payer.amount = it.toDouble()
+                    }
+                },
                 label = { Text("Amount") },
                 modifier = Modifier.padding(start = 20.dp)
             )
         }
+    }
+    if(showUserPickerModal) UserPickerModal(users) { selectedUser->
+        userId = selectedUser.uid
+        payer.userId = selectedUser.uid
+        user = selectedUser
+        showUserPickerModal = false
     }
 }
 
@@ -75,6 +116,6 @@ fun AddPayerListItem(
 @Composable
 fun PayerItemPreview(){
     SplitTheBillTheme {
-        AddPayerListItem({})
+        AddPayerListItem(Payer(), listOf(),{})
     }
 }

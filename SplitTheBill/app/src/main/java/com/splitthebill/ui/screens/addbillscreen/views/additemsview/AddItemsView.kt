@@ -70,6 +70,7 @@ fun AddItemsView(
                     items.forEach { item ->
                         total += item.price
                     }
+                    //TODO check if items are correct
                     onProceed(total ,items)
                 },
                 text = "Continue"
