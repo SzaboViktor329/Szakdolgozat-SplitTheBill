@@ -3,6 +3,7 @@ package com.splitthebill.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.splitthebill.data.repositories.AuthRepository
+import com.splitthebill.data.repositories.BillRepository
 import com.splitthebill.data.repositories.EventRepository
 import com.splitthebill.data.repositories.FriendRepository
 import com.splitthebill.data.repositories.GroupRepository
@@ -65,6 +66,12 @@ object FirebaseModule {
     @Provides
     fun provideEventRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): EventRepository {
         return EventRepository(firebaseAuth, firestore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBillRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): BillRepository {
+        return BillRepository(firebaseAuth, firestore)
     }
 
 

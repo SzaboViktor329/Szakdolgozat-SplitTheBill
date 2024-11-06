@@ -16,9 +16,9 @@ import com.splitthebill.ui.components.common.FriendNameWithIcon
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
-fun FriendListItem(user: User) {
+fun FriendListItem(user: User, modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .wrapContentSize()
             .padding(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)

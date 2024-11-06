@@ -17,15 +17,17 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ProfilePicture(
+    modifier: Modifier = Modifier,
     placeholderText: String,
     size: Dp,
     borderWidth: Dp = 1.dp,
     borderColor: Color = Color.Black,
     backgroundColor: Color = Color.LightGray,
-    placeholderStyle: TextStyle = LocalTextStyle.current
+    placeholderStyle: TextStyle = LocalTextStyle.current,
+
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(size)
             .border(borderWidth, borderColor, shape = RoundedCornerShape(size/2))
             .background(backgroundColor, shape = RoundedCornerShape(size/2)),

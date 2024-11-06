@@ -34,16 +34,18 @@ import java.util.Locale
 
 @Composable
 fun GeneralBillInformationView(
-    onProceed: () -> Unit
+    onProceed: (billName: String, selectedDate: String) -> Unit
 ){
+    var billName by remember { mutableStateOf("") }
+
     val dateFormater = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     var selectedDate by remember { mutableStateOf(dateFormater.format(Calendar.getInstance().time)) }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally) {
         Column {
             OutlinedTextField(
-                value = "",
-                onValueChange = {  },
+                value = billName,
+                onValueChange = { billName = it },
                 label = { Text("Bill name") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -52,7 +54,7 @@ fun GeneralBillInformationView(
             }
         }
         BlueButton(
-            onClick = { onProceed() },
+            onClick = { onProceed(billName, selectedDate) },
             text = "Continue",
             modifier = Modifier.padding(bottom = 30.dp)
         )
