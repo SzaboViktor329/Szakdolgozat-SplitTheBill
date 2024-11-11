@@ -118,6 +118,10 @@ fun AddBillListItem(
         userId = selectedUser.uid
         item.userId = selectedUser.uid
         user = selectedUser
+        if(itemName =="") {
+            itemName = "${user.fullname}'s part"
+            item.itemName = itemName
+        }
         showUserPickerModal = false
     }
 }

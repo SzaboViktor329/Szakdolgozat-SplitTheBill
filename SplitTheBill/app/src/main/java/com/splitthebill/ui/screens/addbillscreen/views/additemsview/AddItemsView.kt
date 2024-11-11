@@ -28,6 +28,7 @@ import com.splitthebill.data.models.bill.Item
 import com.splitthebill.ui.screens.addbillscreen.views.additemsview.listitems.AddBillListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.isAdBillItemsValid
 
 @Composable
 fun AddItemsView(
@@ -70,8 +71,7 @@ fun AddItemsView(
                     items.forEach { item ->
                         total += item.price
                     }
-                    //TODO check if items are correct
-                    onProceed(total ,items)
+                    if(isAdBillItemsValid(items)) onProceed(total ,items)
                 },
                 text = "Continue"
             )

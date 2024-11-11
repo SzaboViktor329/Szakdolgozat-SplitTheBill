@@ -59,7 +59,6 @@ fun AddPayerListItem(
             if(userInList.uid == userId) user = userInList
         }
     }
-
     Card(
         modifier = Modifier
             .wrapContentSize()

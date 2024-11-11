@@ -27,6 +27,7 @@ import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.ui.screens.addbillscreen.views.addpayersview.listitems.AddPayerListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.isAdBillPayersValid
 
 @Composable
 fun AddPayersView(
@@ -64,8 +65,7 @@ fun AddPayersView(
             )
             BlueButton(
                 onClick = {
-                    //TODO check if payers are correct
-                    onProceed(payers)
+                    if(isAdBillPayersValid(payers,total)) onProceed(payers)
                 },
                 text = "Continue"
             )

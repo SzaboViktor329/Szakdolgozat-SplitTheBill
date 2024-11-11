@@ -106,8 +106,7 @@ fun AddBillScreen(navController: NavHostController) {
                     payers = payers,
                     items = items
                 )
-                val k = 0
-
+                addBillViewModel.addBill(bill) {}
                 navController.popBackStack()
             }
         }
