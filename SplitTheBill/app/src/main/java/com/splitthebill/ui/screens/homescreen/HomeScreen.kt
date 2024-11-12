@@ -37,6 +37,7 @@ import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.EventsViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
@@ -48,6 +49,8 @@ fun HomeScreen(navController: NavHostController) {
     val eventsViewModel : EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
     val events by eventsViewModel.events.observeAsState(initial = emptyList())
+
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -86,7 +89,9 @@ fun HomeScreen(navController: NavHostController) {
                     modifier = Modifier.wrapContentHeight()
                 ) {
                     items(events) { event ->
-                        CompactEventListItem(event)
+                        CompactEventListItem(event, navController) {
+                            eventDetailViewModel.setEvent(event)
+                        }
                         HorizontalDivider(thickness = 2.dp)
                     }
                 }
