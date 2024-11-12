@@ -12,6 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -19,14 +20,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.BillViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
-fun BillListItem(navController: NavHostController) {
-    val isChecked = remember { mutableStateOf(false) }
+fun BillListItem(bill: Bill ,navController: NavHostController) {
+    val billViewModel: BillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+
+    LaunchedEffect(Unit) {
+        billViewModel.setBill(bill)
+    }
 
     Card(
         modifier = Modifier
@@ -44,8 +54,8 @@ fun BillListItem(navController: NavHostController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Bill name", style = typography.titleLarge)
-            Text(text = "2022.02.02", style = typography.titleMedium)
+            Text(text = bill.billName, style = typography.titleLarge)
+            Text(text = bill.date, style = typography.titleMedium)
         }
     }
 }
@@ -54,6 +64,6 @@ fun BillListItem(navController: NavHostController) {
 @Composable
 fun BillListItemPreview(){
     SplitTheBillTheme {
-        BillListItem(rememberNavController())
+        BillListItem(Bill(),rememberNavController())
     }
 }

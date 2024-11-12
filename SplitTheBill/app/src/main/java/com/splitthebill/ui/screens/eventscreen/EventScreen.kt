@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Android
@@ -20,7 +21,9 @@ import androidx.compose.material.icons.filled.PendingActions
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -46,6 +49,7 @@ import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.eventscreen.header.EventScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.BillListViewModel
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import kotlin.random.Random
@@ -61,6 +65,13 @@ enum class EventScreenComponentNavBarOption(override val label: String) : Compon
 fun EventScreen(navController: NavHostController) {
     val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val event = remember { eventDetailViewModel.event.value }
+
+    val billListViewModel: BillListViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val bills by billListViewModel.bills.observeAsState(initial = emptyList())
+
+    LaunchedEffect(Unit) {
+        billListViewModel.fetchBills(event)
+    }
 
     HeaderContentLayout(
         topColor = BlueTheme,
@@ -82,7 +93,9 @@ fun EventScreen(navController: NavHostController) {
             ) {
                 when(selectedOption) {
                     EventScreenComponentNavBarOption.DEBTS -> { items(20) { DebtListItem() } }
-                    EventScreenComponentNavBarOption.BILLS -> { items(20) { BillListItem(navController) } }
+                    EventScreenComponentNavBarOption.BILLS -> { items(bills) { bill->
+                        BillListItem(bill, navController) }
+                    }
                 }
             }
             BottomWhiteStrip {

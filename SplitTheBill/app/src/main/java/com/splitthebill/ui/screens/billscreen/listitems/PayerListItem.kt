@@ -11,41 +11,61 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.splitthebill.data.models.User
+import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.DarkGreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.createMonogram
+import com.splitthebill.ui.viewmodels.BillViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
-fun PayerListItem() {
-    val isChecked = remember { mutableStateOf(false) }
+fun PayerListItem(payer: Payer) {
+    val billViewModel: BillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    var user by remember { mutableStateOf(User()) }
+    var loaded by remember { mutableStateOf(false) }
 
-    Card(
-        modifier = Modifier
-            .wrapContentSize()
-            .padding(10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
-    )
-    {
-        Row(
+
+    LaunchedEffect(Unit) {
+        user = billViewModel.getUserById(payer.userId)
+        loaded = true
+    }
+
+    if(loaded){
+        Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(32.dp, 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            ProfilePicture(
-                placeholderText = "AD",
-                size = 40.dp
-            )
-            Text(text = "10000 Ft", style = typography.titleLarge, color = DarkGreen)
+                .wrapContentSize()
+                .padding(10.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
+        )
+        {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(32.dp, 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                ProfilePicture(
+                    placeholderText = createMonogram(user.fullname),
+                    size = 40.dp
+                )
+                Text(text = "${payer.amount} Ft", style = typography.titleLarge, color = DarkGreen)
+            }
         }
     }
 }
@@ -54,6 +74,6 @@ fun PayerListItem() {
 @Composable
 fun PayerListItemPreview(){
     SplitTheBillTheme {
-        PayerListItem()
+        PayerListItem(Payer())
     }
 }

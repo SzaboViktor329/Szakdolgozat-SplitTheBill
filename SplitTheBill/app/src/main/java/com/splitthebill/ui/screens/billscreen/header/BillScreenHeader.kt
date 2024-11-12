@@ -16,7 +16,7 @@ import androidx.navigation.NavHostController
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 
 @Composable
-fun BillScreenHeader(billName: String, date: String, navController: NavHostController){
+fun BillScreenHeader(billName: String, date: String, total: Double, navController: NavHostController){
     HeaderWithBackButton(navController) {
         Box(modifier =  Modifier.weight(1f).wrapContentHeight()){
             Column(
@@ -28,7 +28,7 @@ fun BillScreenHeader(billName: String, date: String, navController: NavHostContr
             ) {
                 Text(text = billName, style = typography.headlineLarge, color = Color.White)
                 Text(text = date, style = typography.titleMedium, color = Color.White)
-                Text(text = "Total: 10000 Ft", style = typography.headlineMedium, color = Color.White)
+                Text(text = "Total: $total Ft", style = typography.headlineMedium, color = Color.White)
             }
         }
     }

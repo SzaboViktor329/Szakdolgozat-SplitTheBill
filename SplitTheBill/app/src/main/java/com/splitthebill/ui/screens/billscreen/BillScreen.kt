@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.screens.billscreen.listitems.ItemsListItem
@@ -32,6 +35,8 @@ import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 import com.splitthebill.ui.screens.billscreen.header.BillScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.viewmodels.BillViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 enum class BillScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
     PAYERS("Payers"),
@@ -40,12 +45,15 @@ enum class BillScreenComponentNavBarOption(override val label: String) : Compone
 
 @Composable
 fun BillScreen(navController: NavHostController) {
+    val billViewModel: BillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val bill = remember { billViewModel.bill.value }
+
     HeaderContentLayout(
         topColor = BlueTheme,
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
-            BillScreenHeader("Bill name", "2022.02.02", navController)
+            BillScreenHeader(bill.billName, bill.date, bill.total, navController)
         }
     ) {
         var selectedOption by remember { mutableStateOf(BillScreenComponentNavBarOption.PAYERS) }
@@ -59,8 +67,12 @@ fun BillScreen(navController: NavHostController) {
                 modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
             ) {
                 when(selectedOption) {
-                    BillScreenComponentNavBarOption.PAYERS -> { items(20) { PayerListItem() } }
-                    BillScreenComponentNavBarOption.ITEMS -> { items(20) { ItemsListItem() } }
+                    BillScreenComponentNavBarOption.PAYERS -> { items(bill.payers) { payer ->
+                        PayerListItem(payer) }
+                    }
+                    BillScreenComponentNavBarOption.ITEMS -> { items(bill.items) { item ->
+                        ItemsListItem(item) }
+                    }
                 }
             }
         }
