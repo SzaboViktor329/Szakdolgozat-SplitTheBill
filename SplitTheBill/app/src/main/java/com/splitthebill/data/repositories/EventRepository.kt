@@ -21,6 +21,12 @@ class EventRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
         }
     }
 
+    fun updateEventStatus(eventId: String, onSuccess: () -> Unit) {
+        firestore.collection(eventCollection).document(eventId).update("status", EventStatus.PAYING).addOnSuccessListener {
+            onSuccess()
+        }
+    }
+
     fun getEvents(queryLimit: Long = -1, eventStatuses: MutableList<EventStatus> = mutableListOf(), onSuccess: (events: List<Event>) -> Unit) {
         val currentUid = firebaseAuth.uid ?: ""
         var eventQuery: Query  = firestore.collection(eventCollection)

@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
+import com.splitthebill.data.enums.EventStatus
 import com.splitthebill.data.models.Event
 import com.splitthebill.data.repositories.EventRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,5 +17,13 @@ class EventDetailViewModel @Inject constructor(private val eventRepository: Even
 
     fun setEvent(newEvent: Event) {
         _event.value = newEvent
+    }
+
+    fun setEventStatus(eventStatus: EventStatus) {
+        _event.value.status = eventStatus
+    }
+
+    fun updateEventStatus(eventId: String, onSuccess: () -> Unit) {
+        eventRepository.updateEventStatus(eventId, onSuccess)
     }
 }

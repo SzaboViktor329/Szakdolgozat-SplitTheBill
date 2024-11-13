@@ -18,6 +18,10 @@ import androidx.compose.material.icons.filled.PendingActions
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,12 +29,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.splitthebill.data.enums.EventStatus
+import com.splitthebill.data.models.Event
 import com.splitthebill.ui.components.buttons.DialogIconButton
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
+import com.splitthebill.ui.screens.eventscreen.dialogs.ProceedToPayDialog
 import kotlin.random.Random
 
 @Composable
-fun EventScreenHeader(eventName: String, eventStatus: EventStatus, startDate: String, endDate: String, navController: NavHostController){
+fun EventScreenHeader(event: Event, navController: NavHostController){
+    var eventStatus by remember { mutableStateOf(event.status) }
+
     HeaderWithBackButton(navController) {
         Box(modifier = Modifier.weight(1f).wrapContentHeight()){
             Column(
@@ -40,8 +48,8 @@ fun EventScreenHeader(eventName: String, eventStatus: EventStatus, startDate: St
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = eventName, style = typography.headlineLarge, color = Color.White)
-                Text(text = "$startDate - $endDate", style = typography.titleMedium, color = Color.White)
+                Text(text = event.eventName, style = typography.headlineLarge, color = Color.White)
+                Text(text = "${event.startDate} - ${event.finishDate}", style = typography.titleMedium, color = Color.White)
             }
         }
         DialogIconButton(
@@ -54,6 +62,12 @@ fun EventScreenHeader(eventName: String, eventStatus: EventStatus, startDate: St
             iconColor = Color.Black,
             iconContentDescription = "Event Status",
             iconModifier = Modifier.size(30.dp),
-        ) { }
+        ) { onDismiss ->
+            if(event.status==EventStatus.PENDING) {
+                ProceedToPayDialog(event, onDismiss) { newStatus->
+                    eventStatus = newStatus
+                }
+            }
+        }
     }
 }

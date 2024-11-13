@@ -78,7 +78,7 @@ fun EventScreen(navController: NavHostController) {
         bottomColor = Color.LightGray,
         mainColor = Color.LightGray,
         topContent = {
-            EventScreenHeader(event.eventName, event.status ,event.startDate, event.finishDate, navController)
+            EventScreenHeader(event, navController)
         }
     ) {
         var selectedOption by remember { mutableStateOf(EventScreenComponentNavBarOption.DEBTS) }
