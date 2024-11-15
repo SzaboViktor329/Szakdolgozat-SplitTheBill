@@ -51,6 +51,7 @@ class EventRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
         var eventQuery: Query  = firestore.collection(eventCollection)
         if(queryLimit.toInt() != -1) eventQuery = eventQuery.limit(queryLimit)
         if(eventStatuses.isNotEmpty()) eventQuery = eventQuery.whereIn("status", eventStatuses)
+        eventQuery = eventQuery.orderBy("startDate", Query.Direction.DESCENDING)
         firestore.collection(groupCollection).whereArrayContains("userIds", currentUid).get().addOnSuccessListener { groupDocuments->
             if(!groupDocuments.isEmpty) {
                 val groupIds = groupDocuments.documents.map { it.id }
