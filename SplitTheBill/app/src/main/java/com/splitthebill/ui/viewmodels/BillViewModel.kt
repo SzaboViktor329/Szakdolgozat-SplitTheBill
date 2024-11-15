@@ -3,7 +3,6 @@ package com.splitthebill.ui.viewmodels
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.splitthebill.data.models.Event
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.data.repositories.UserRepository

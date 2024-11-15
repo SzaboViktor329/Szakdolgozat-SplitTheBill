@@ -23,13 +23,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.splitthebill.data.enums.EventStatus
+import com.splitthebill.data.models.User
+import com.splitthebill.data.models.event.Debt
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.SplitTheBillTheme
+import com.splitthebill.ui.utils.createMonogram
+import com.splitthebill.ui.viewmodels.AuthViewModel
 
 
 @Composable
-fun DebtListItem() {
+fun DebtListItem(eventStatus: EventStatus, debt: Debt, users: List<User>) {
     val isChecked = remember { mutableStateOf(false) }
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val currentUID = remember { authViewModel.currentUserAuth.value?.uid ?: "" }
 
     Card(
         modifier = Modifier
@@ -49,7 +57,7 @@ fun DebtListItem() {
             Spacer(modifier = Modifier.width(8.dp))
 
             ProfilePicture(
-                placeholderText = "AD",
+                placeholderText = createMonogram(users.find { it.uid == debt.fromUserId }?.fullname ?: ""),
                 size = 40.dp
             )
 
@@ -58,21 +66,24 @@ fun DebtListItem() {
             Spacer(modifier = Modifier.width(8.dp))
 
             ProfilePicture(
-                placeholderText = "DA",
+                placeholderText = createMonogram(users.find { it.uid == debt.toUserId }?.fullname ?: ""),
                 size = 40.dp
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Text(text = "$50", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 24.sp)
+            Text(text = "${debt.amount} Ft", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 24.sp)
 
             //Spacer(modifier = Modifier.width(8.dp))
 
-            Checkbox(
-                checked = isChecked.value,
-                onCheckedChange = { isChecked.value = it },
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
+            if(eventStatus == EventStatus.PAYING) {
+                Checkbox(
+                    checked = isChecked.value,
+                    onCheckedChange = { isChecked.value = it },
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    enabled = (debt.fromUserId == currentUID || debt.toUserId == currentUID)
+                )
+            }
         }
     }
 }
@@ -84,6 +95,6 @@ fun DebtListItem() {
 @Composable
 fun DebtListItemPreview(){
     SplitTheBillTheme {
-        DebtListItem()
+        DebtListItem(eventStatus = EventStatus.PENDING, Debt(), emptyList())
     }
 }

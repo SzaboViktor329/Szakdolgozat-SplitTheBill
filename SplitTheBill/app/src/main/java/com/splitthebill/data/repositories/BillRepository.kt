@@ -2,7 +2,7 @@ package com.splitthebill.data.repositories
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.splitthebill.data.models.Event
+import com.splitthebill.data.models.event.Event
 import com.splitthebill.data.models.bill.Bill
 import java.util.UUID
 import javax.inject.Inject

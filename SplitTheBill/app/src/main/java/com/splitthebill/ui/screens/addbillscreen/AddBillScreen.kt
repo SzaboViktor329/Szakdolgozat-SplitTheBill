@@ -9,8 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -22,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.splitthebill.data.models.Event
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.data.models.bill.Item
 import com.splitthebill.data.models.bill.Payer
+import com.splitthebill.data.models.event.Event
 import com.splitthebill.ui.screens.addbillscreen.views.additemsview.AddItemsView
 import com.splitthebill.ui.screens.addbillscreen.views.addpayersview.AddPayersView
 import com.splitthebill.ui.screens.addbillscreen.views.GeneralBillInformationView
@@ -37,9 +39,6 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AddBillViewModel
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 @Composable
 fun AddBillScreen(navController: NavHostController) {
@@ -48,9 +47,9 @@ fun AddBillScreen(navController: NavHostController) {
     val addBillViewModel: AddBillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
-    val users = remember { mutableListOf<User>() }
+    val users = remember { mutableStateListOf<User>() }
 
-    val event = remember { eventDetailViewModel.event.value }
+    val event by eventDetailViewModel.event.observeAsState(Event())
     var billName by remember { mutableStateOf("") }
     var selectedDate by remember { mutableStateOf("") }
     var total by remember { mutableDoubleStateOf(0.0) }
@@ -58,10 +57,8 @@ fun AddBillScreen(navController: NavHostController) {
     val items = remember { mutableListOf<Item>() }
 
     LaunchedEffect(Unit) {
-        addBillViewModel.getUsersFromGroup(event.groupId) { usersResult->
-            usersResult.forEach { user->
-                users.add(user)
-            }
+        eventDetailViewModel.getUsersFromEvent(event) { usersListResult->
+            users.addAll(usersListResult)
         }
     }
 
@@ -106,6 +103,11 @@ fun AddBillScreen(navController: NavHostController) {
                     payers = payers,
                     items = items
                 )
+                val newDebts = eventDetailViewModel.optimizeCashFlow(bill, event.debts)
+                eventDetailViewModel.updateDebts(event.eventId, newDebts) {
+                    event.debts = newDebts
+                    eventDetailViewModel.setEvent(event)
+                }
                 addBillViewModel.addBill(bill) {}
                 navController.popBackStack()
             }

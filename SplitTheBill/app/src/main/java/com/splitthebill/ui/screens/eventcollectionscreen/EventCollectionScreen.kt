@@ -93,7 +93,10 @@ fun EventCollectionScreen(navController: NavHostController) {
                         iconFontSize = 16.sp,
                         modifier = Modifier.fillMaxWidth().padding(16.dp,0.dp)
                     )
-                    if(showAddEventDialog) AddEventModal { showAddEventDialog = false }
+                    if(showAddEventDialog) AddEventModal {
+                        eventsViewModel.fetchEvents()
+                        showAddEventDialog = false
+                    }
                 }
             }
         }

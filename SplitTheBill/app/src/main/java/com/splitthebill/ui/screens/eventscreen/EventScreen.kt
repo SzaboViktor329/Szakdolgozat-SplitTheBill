@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.models.User
+import com.splitthebill.data.models.event.Event
 import com.splitthebill.ui.screens.eventscreen.listitems.BillListItem
 import com.splitthebill.ui.screens.eventscreen.listitems.DebtListItem
 import com.splitthebill.ui.components.buttons.BlueButton
@@ -64,13 +67,18 @@ enum class EventScreenComponentNavBarOption(override val label: String) : Compon
 @Composable
 fun EventScreen(navController: NavHostController) {
     val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val event = remember { eventDetailViewModel.event.value }
+    val event by eventDetailViewModel.event.observeAsState(Event())
+
+    val users = remember { mutableStateListOf<User>() }
 
     val billListViewModel: BillListViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val bills by billListViewModel.bills.observeAsState(initial = emptyList())
 
     LaunchedEffect(Unit) {
         billListViewModel.fetchBills(event)
+        eventDetailViewModel.getUsersFromEvent(event) { usersListResult->
+            users.addAll(usersListResult)
+        }
     }
 
     HeaderContentLayout(
@@ -92,7 +100,9 @@ fun EventScreen(navController: NavHostController) {
                 modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
             ) {
                 when(selectedOption) {
-                    EventScreenComponentNavBarOption.DEBTS -> { items(20) { DebtListItem() } }
+                    EventScreenComponentNavBarOption.DEBTS -> { items(event.debts) { debt->
+                        DebtListItem(event.status, debt, users) }
+                    }
                     EventScreenComponentNavBarOption.BILLS -> { items(bills) { bill->
                         BillListItem(bill, navController) }
                     }

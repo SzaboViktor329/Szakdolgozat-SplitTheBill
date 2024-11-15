@@ -9,6 +9,7 @@ import com.splitthebill.data.repositories.FriendRepository
 import com.splitthebill.data.repositories.GroupRepository
 import com.splitthebill.data.repositories.RegistrationRepository
 import com.splitthebill.data.repositories.UserRepository
+import com.splitthebill.services.CashFlowOptimizationService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -72,6 +73,12 @@ object FirebaseModule {
     @Provides
     fun provideBillRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): BillRepository {
         return BillRepository(firebaseAuth, firestore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCashFlowOptimizationService(): CashFlowOptimizationService {
+        return CashFlowOptimizationService()
     }
 
 

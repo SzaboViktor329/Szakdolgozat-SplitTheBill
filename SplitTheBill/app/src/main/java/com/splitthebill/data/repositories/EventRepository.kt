@@ -4,8 +4,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.splitthebill.data.enums.EventStatus
-import com.splitthebill.data.models.Event
-import com.splitthebill.data.models.Group
+import com.splitthebill.data.models.event.Debt
+import com.splitthebill.data.models.event.Event
 import java.util.UUID
 import javax.inject.Inject
 
@@ -27,6 +27,19 @@ class EventRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
         }
     }
 
+    fun updateDebts(eventId: String, debts: List<Debt> , onSuccess: () -> Unit) {
+        firestore.collection(eventCollection).document(eventId).update("debts", debts).addOnSuccessListener {
+            onSuccess()
+        }
+    }
+
+    fun getEvent(eventId: String, onSuccess: (Event) -> Unit) {
+        firestore.collection(eventCollection).document(eventId).get().addOnSuccessListener { eventDocument ->
+            onSuccess(eventDocument.toObject(Event::class.java) ?: Event())
+        }
+    }
+
+
     fun getEvents(queryLimit: Long = -1, eventStatuses: MutableList<EventStatus> = mutableListOf(), onSuccess: (events: List<Event>) -> Unit) {
         val currentUid = firebaseAuth.uid ?: ""
         var eventQuery: Query  = firestore.collection(eventCollection)
@@ -46,6 +59,5 @@ class EventRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
             else onSuccess(emptyList())
         }
     }
-
 
 }

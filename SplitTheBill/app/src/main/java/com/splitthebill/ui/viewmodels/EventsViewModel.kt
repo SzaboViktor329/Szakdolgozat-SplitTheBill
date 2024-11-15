@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.splitthebill.data.enums.EventStatus
-import com.splitthebill.data.models.Event
-import com.splitthebill.data.models.Group
+import com.splitthebill.data.models.event.Event
 import com.splitthebill.data.repositories.EventRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

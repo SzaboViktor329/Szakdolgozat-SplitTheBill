@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Payments
 import androidx.compose.material.icons.filled.PendingActions
@@ -27,17 +26,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.splitthebill.data.enums.EventStatus
-import com.splitthebill.data.models.Event
+import com.splitthebill.data.models.event.Event
 import com.splitthebill.ui.components.buttons.DialogIconButton
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.screens.eventscreen.dialogs.ProceedToPayDialog
-import kotlin.random.Random
+import com.splitthebill.ui.viewmodels.EventDetailViewModel
+import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun EventScreenHeader(event: Event, navController: NavHostController){
     var eventStatus by remember { mutableStateOf(event.status) }
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
     HeaderWithBackButton(navController) {
         Box(modifier = Modifier.weight(1f).wrapContentHeight()){
@@ -65,6 +67,7 @@ fun EventScreenHeader(event: Event, navController: NavHostController){
         ) { onDismiss ->
             if(event.status==EventStatus.PENDING) {
                 ProceedToPayDialog(event, onDismiss) { newStatus->
+                    eventDetailViewModel.refreshEvent()
                     eventStatus = newStatus
                 }
             }

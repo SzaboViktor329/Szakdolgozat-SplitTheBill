@@ -3,7 +3,7 @@ package com.splitthebill.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.splitthebill.data.models.Event
+import com.splitthebill.data.models.event.Event
 import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.data.repositories.BillRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

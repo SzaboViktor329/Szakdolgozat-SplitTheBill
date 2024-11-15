@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.splitthebill.data.enums.EventStatus
-import com.splitthebill.data.models.Event
+import com.splitthebill.data.models.event.Event
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.templates.DialogWithTitle
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
