@@ -1,25 +1,11 @@
 package com.splitthebill.ui.screens.eventscreen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Android
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Payments
-import androidx.compose.material.icons.filled.PendingActions
-import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,22 +16,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.splitthebill.data.enums.DebtStatus
+import com.splitthebill.data.enums.EventStatus
 import com.splitthebill.data.models.User
+import com.splitthebill.data.models.event.Debt
 import com.splitthebill.data.models.event.Event
 import com.splitthebill.ui.screens.eventscreen.listitems.BillListItem
 import com.splitthebill.ui.screens.eventscreen.listitems.DebtListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
 import com.splitthebill.ui.components.navbars.ComponentNavBar
-import com.splitthebill.ui.components.buttons.DialogIconButton
-import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
@@ -55,7 +41,9 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.BillListViewModel
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
-import kotlin.random.Random
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 enum class EventScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
@@ -101,7 +89,22 @@ fun EventScreen(navController: NavHostController) {
             ) {
                 when(selectedOption) {
                     EventScreenComponentNavBarOption.DEBTS -> { items(event.debts) { debt->
-                        DebtListItem(event.status, debt, users) }
+                        DebtListItem(event.status, debt, users) { newDebtStatus ->
+                            debt.status = newDebtStatus
+                            val shouldProceedToFinish = isAllDebtsPayed(event.debts)
+
+                            eventDetailViewModel.updateDebts(event.eventId, event.debts) {
+                                if(shouldProceedToFinish){
+                                    eventDetailViewModel.updateEventStatus(event.eventId, EventStatus.FINISHED) {
+                                        val dateFormater = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                        val finishDate = dateFormater.format(Calendar.getInstance().time)
+                                        eventDetailViewModel.updateFinishDate(event.eventId,finishDate) {
+                                            eventDetailViewModel.refreshEvent()
+                                        }
+                                    }
+                                }
+                            }
+                        } }
                     }
                     EventScreenComponentNavBarOption.BILLS -> { items(bills) { bill->
                         BillListItem(bill, navController) }
@@ -117,6 +120,13 @@ fun EventScreen(navController: NavHostController) {
 
         }
     }
+}
+
+fun isAllDebtsPayed(debts: List<Debt>): Boolean {
+    debts.forEach { debt ->
+        if(debt.status != DebtStatus.PAYED) return false
+    }
+    return true
 }
 
 

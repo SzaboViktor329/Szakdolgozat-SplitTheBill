@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,8 +39,8 @@ import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun EventScreenHeader(event: Event, navController: NavHostController){
-    var eventStatus by remember { mutableStateOf(event.status) }
     val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventStatus = eventDetailViewModel.event.observeAsState(Event()).value.status
 
     HeaderWithBackButton(navController) {
         Box(modifier = Modifier.weight(1f).wrapContentHeight()){
@@ -66,9 +67,8 @@ fun EventScreenHeader(event: Event, navController: NavHostController){
             iconModifier = Modifier.size(30.dp),
         ) { onDismiss ->
             if(event.status==EventStatus.PENDING) {
-                ProceedToPayDialog(event, onDismiss) { newStatus->
+                ProceedToPayDialog(event, onDismiss) {
                     eventDetailViewModel.refreshEvent()
-                    eventStatus = newStatus
                 }
             }
         }

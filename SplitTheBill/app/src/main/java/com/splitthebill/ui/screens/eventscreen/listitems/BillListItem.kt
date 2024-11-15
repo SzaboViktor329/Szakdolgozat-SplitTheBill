@@ -34,15 +34,14 @@ import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 fun BillListItem(bill: Bill ,navController: NavHostController) {
     val billViewModel: BillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
-    LaunchedEffect(Unit) {
-        billViewModel.setBill(bill)
-    }
-
     Card(
         modifier = Modifier
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigate(MainNavScreen.Bill.route) },
+            .clickable {
+                billViewModel.setBill(bill)
+                navController.navigate(MainNavScreen.Bill.route)
+            },
         colors = CardDefaults.cardColors(containerColor = Color.White)
     )
     {

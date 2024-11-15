@@ -21,14 +21,20 @@ class EventRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
         }
     }
 
-    fun updateEventStatus(eventId: String, onSuccess: () -> Unit) {
-        firestore.collection(eventCollection).document(eventId).update("status", EventStatus.PAYING).addOnSuccessListener {
+    fun updateEventStatus(eventId: String, newEventStatus: EventStatus, onSuccess: () -> Unit) {
+        firestore.collection(eventCollection).document(eventId).update("status", newEventStatus).addOnSuccessListener {
             onSuccess()
         }
     }
 
     fun updateDebts(eventId: String, debts: List<Debt> , onSuccess: () -> Unit) {
         firestore.collection(eventCollection).document(eventId).update("debts", debts).addOnSuccessListener {
+            onSuccess()
+        }
+    }
+
+    fun updateFinishDate(eventId: String, finishDate: String, onSuccess: () -> Unit) {
+        firestore.collection(eventCollection).document(eventId).update("finishDate", finishDate).addOnSuccessListener {
             onSuccess()
         }
     }

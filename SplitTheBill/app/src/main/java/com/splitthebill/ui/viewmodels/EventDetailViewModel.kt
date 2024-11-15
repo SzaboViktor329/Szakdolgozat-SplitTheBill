@@ -29,12 +29,16 @@ class EventDetailViewModel @Inject constructor(private val eventRepository: Even
         //_event.value.status = eventStatus
     }
 
-    fun updateEventStatus(eventId: String, onSuccess: () -> Unit) {
-        eventRepository.updateEventStatus(eventId, onSuccess)
+    fun updateEventStatus(eventId: String, newEventStatus: EventStatus, onSuccess: () -> Unit) {
+        eventRepository.updateEventStatus(eventId, newEventStatus, onSuccess)
     }
 
     fun updateDebts(eventId: String, debts: List<Debt>, onSuccess: () -> Unit) {
         eventRepository.updateDebts(eventId, debts, onSuccess)
+    }
+
+    fun updateFinishDate(eventId: String, finishDate: String, onSuccess: () -> Unit) {
+        eventRepository.updateFinishDate(eventId, finishDate, onSuccess)
     }
 
     fun optimizeCashFlow(bill: Bill, earlierDebts: List<Debt>) : List<Debt> {

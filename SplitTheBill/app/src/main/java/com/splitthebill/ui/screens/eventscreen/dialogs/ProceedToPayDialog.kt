@@ -21,7 +21,7 @@ import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
-fun ProceedToPayDialog(event: Event, onDismiss: () -> Unit, onStatusUpdated: (EventStatus) -> Unit) {
+fun ProceedToPayDialog(event: Event, onDismiss: () -> Unit, onStatusUpdated: () -> Unit) {
     val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
     DialogWithTitle("Proceed to pay?",onDismiss) {
@@ -32,9 +32,9 @@ fun ProceedToPayDialog(event: Event, onDismiss: () -> Unit, onStatusUpdated: (Ev
                 Text("No")
             }
             BlueButton(text = "Yes", onClick = {
-                eventDetailViewModel.updateEventStatus(event.eventId) {
+                eventDetailViewModel.updateEventStatus(event.eventId, EventStatus.PAYING) {
                     eventDetailViewModel.setEventStatus(EventStatus.PAYING)
-                    onStatusUpdated(EventStatus.PAYING)
+                    onStatusUpdated()
                     onDismiss()
                 }
             })
