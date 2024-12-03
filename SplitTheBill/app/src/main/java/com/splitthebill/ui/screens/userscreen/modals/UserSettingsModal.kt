@@ -1,5 +1,6 @@
 package com.splitthebill.ui.screens.userscreen.modals
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,6 +44,8 @@ fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostControlle
     val fullName = userViewModel.currentUser.fullname
     val email = userViewModel.email
 
+    val context = LocalContext.current
+
     DialogWithTitle("",onDismiss) {
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
             Text(fullName, style = typography.titleLarge)
@@ -51,7 +55,14 @@ fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostControlle
             Text(email)
             Spacer(Modifier.height(4.dp))
             Button(
-                onClick = {  },
+                onClick = {
+                    authViewModel.sendPasswordResetEmail(email) { message ->
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        authNavController.navigate(AuthNavScreen.Login.route) {
+                            popUpTo("MainGraph") { inclusive = true }
+                        }
+                    }
+                },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = BlueTheme

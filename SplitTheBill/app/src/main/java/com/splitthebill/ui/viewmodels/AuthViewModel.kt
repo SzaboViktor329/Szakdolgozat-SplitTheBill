@@ -24,8 +24,7 @@ class AuthViewModel @Inject constructor(private val authRepository: AuthReposito
         _currentUserAuth.value = null
     }
 
-    fun getEmail() : String {
-        return _currentUserAuth.value?.email ?: "empty"
+    fun sendPasswordResetEmail(email: String, onComplete: (message: String) ->Unit){
+        authRepository.sendPasswordResetEmail(email, onComplete)
     }
-
 }

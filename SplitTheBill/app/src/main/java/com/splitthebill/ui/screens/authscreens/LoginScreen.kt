@@ -56,12 +56,6 @@ fun LoginScreen(navController: NavHostController){
     val context = LocalContext.current
     var validFieldCounter by remember { mutableIntStateOf(0) }
 
-    /*
-    LaunchedEffect(Unit) {
-        authViewModel.logout()
-    }
-
-     */
 
     Box(modifier = Modifier.fillMaxSize().background(BlueTheme)){
         Column(modifier = Modifier.fillMaxSize()) {
@@ -73,10 +67,10 @@ fun LoginScreen(navController: NavHostController){
             ) {
                 val boxWidth = maxWidth
                 Image(
-                    painter = painterResource(id = R.drawable.logo2), // Your logo resource
+                    painter = painterResource(id = R.drawable.logo2),
                     contentDescription = "Logo",
                     modifier = Modifier
-                        .size(boxWidth/2) // Adjust size as needed
+                        .size(boxWidth/2)
                         .align(Alignment.Center)
                         .padding(bottom = 16.dp)
                 )
@@ -128,12 +122,22 @@ fun LoginScreen(navController: NavHostController){
                         enabled = validFieldCounter == 2
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    BlueTextButton(
+                        onClick = {
+                            authViewModel.sendPasswordResetEmail(email) { message ->
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        enabled = email!="",
+                        text = "Reset password",
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
 
                     BlueTextButton(
                         onClick = { navController.navigate(AuthNavScreen.Registration.route) },
                         text = "Create a new account",
                     )
+                    Spacer(modifier = Modifier.height(4.dp))
                 }
             }
         }
