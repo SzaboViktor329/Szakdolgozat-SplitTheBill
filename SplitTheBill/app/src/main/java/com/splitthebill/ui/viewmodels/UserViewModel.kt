@@ -1,14 +1,8 @@
 package com.splitthebill.ui.viewmodels
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.protobuf.Internal.BooleanList
 import com.splitthebill.data.models.User
 import com.splitthebill.data.repositories.AuthRepository
 import com.splitthebill.data.repositories.UserRepository
@@ -41,5 +35,4 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
             else onComplete(true, userResult)
         }
     }
-
 }

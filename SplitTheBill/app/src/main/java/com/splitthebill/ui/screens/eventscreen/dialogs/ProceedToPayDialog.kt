@@ -33,7 +33,6 @@ fun ProceedToPayDialog(event: Event, onDismiss: () -> Unit, onStatusUpdated: () 
             }
             BlueButton(text = "Yes", onClick = {
                 eventDetailViewModel.updateEventStatus(event.eventId, EventStatus.PAYING) {
-                    eventDetailViewModel.setEventStatus(EventStatus.PAYING)
                     onStatusUpdated()
                     onDismiss()
                 }

@@ -3,7 +3,6 @@ package com.splitthebill.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import com.splitthebill.data.models.User
 import com.splitthebill.data.repositories.RegistrationRepository
-import com.splitthebill.data.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

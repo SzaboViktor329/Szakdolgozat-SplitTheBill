@@ -22,9 +22,4 @@ class FriendViewModel @Inject constructor(private val friendRepository: FriendRe
             }
         }
     }
-
-    fun stopListening() {
-        friendRepository.stopListening()
-    }
-
 }

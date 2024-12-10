@@ -3,7 +3,6 @@ package com.splitthebill.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.splitthebill.data.models.FriendRequest
-import com.splitthebill.data.models.User
 import com.splitthebill.data.models.UserWithRequest
 import com.splitthebill.data.repositories.FriendRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +35,4 @@ class FriendRequestViewModel @Inject constructor(private val friendRepository: F
     fun stopListening() {
         friendRepository.stopListening()
     }
-
-
 }

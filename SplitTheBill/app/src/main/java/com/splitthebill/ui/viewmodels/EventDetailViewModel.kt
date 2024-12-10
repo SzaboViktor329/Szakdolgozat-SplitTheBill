@@ -1,7 +1,5 @@
 package com.splitthebill.ui.viewmodels
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,10 +21,6 @@ class EventDetailViewModel @Inject constructor(private val eventRepository: Even
 
     fun setEvent(newEvent: Event) {
         _event.value = newEvent
-    }
-
-    fun setEventStatus(eventStatus: EventStatus) {
-        //_event.value.status = eventStatus
     }
 
     fun updateEventStatus(eventId: String, newEventStatus: EventStatus, onSuccess: () -> Unit) {
@@ -56,5 +50,4 @@ class EventDetailViewModel @Inject constructor(private val eventRepository: Even
             }
         }
     }
-
 }
