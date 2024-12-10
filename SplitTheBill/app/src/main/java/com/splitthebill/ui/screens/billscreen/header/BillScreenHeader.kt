@@ -32,5 +32,4 @@ fun BillScreenHeader(billName: String, date: String, total: Double, navControlle
             }
         }
     }
-
 }

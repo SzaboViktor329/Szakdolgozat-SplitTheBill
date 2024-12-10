@@ -72,6 +72,6 @@ fun FindFriendListItem(user: User, onSelect: () -> Unit) {
 @Composable
 fun FindFriendListItemPreview(){
     SplitTheBillTheme {
-        FindFriendListItem(User("d","username", "FullName"),{})
+        FindFriendListItem(User("d","username", "FullName")) {}
     }
 }

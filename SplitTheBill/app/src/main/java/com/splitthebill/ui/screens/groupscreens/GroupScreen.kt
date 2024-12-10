@@ -1,11 +1,9 @@
-package com.splitthebill.ui.screens
+package com.splitthebill.ui.screens.groupscreens
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -26,16 +24,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
-import com.splitthebill.ui.components.common.FriendNameWithIcon
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
-import com.splitthebill.ui.screens.eventcollectionscreen.listitems.DetailedEventListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.GroupDetailsViewModel
 import com.splitthebill.ui.viewmodels.GroupViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
-import kotlin.random.Random
 
 @Composable
 fun GroupScreen(navController: NavHostController){

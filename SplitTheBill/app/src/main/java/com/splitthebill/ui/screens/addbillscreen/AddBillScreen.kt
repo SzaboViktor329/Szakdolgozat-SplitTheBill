@@ -29,9 +29,9 @@ import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.data.models.bill.Item
 import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.data.models.event.Event
-import com.splitthebill.ui.screens.addbillscreen.views.additemsview.AddItemsView
-import com.splitthebill.ui.screens.addbillscreen.views.addpayersview.AddPayersView
-import com.splitthebill.ui.screens.addbillscreen.views.GeneralBillInformationView
+import com.splitthebill.ui.screens.addbillscreen.tabs.additemstab.AddItemsTab
+import com.splitthebill.ui.screens.addbillscreen.tabs.addpayerstab.AddPayersTab
+import com.splitthebill.ui.screens.addbillscreen.tabs.GeneralBillInformationTab
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.theme.BlueTheme
@@ -81,18 +81,18 @@ fun AddBillScreen(navController: NavHostController) {
         }
     ) {
         when(progressCounter) {
-            0 -> GeneralBillInformationView { newBillName, newSelectedDate ->
+            0 -> GeneralBillInformationTab { newBillName, newSelectedDate ->
                 billName = newBillName
                 selectedDate = newSelectedDate
                 progressCounter = 1
             }
-            1 -> AddItemsView(users) { totalResult ,itemsResult ->
+            1 -> AddItemsTab(users) { totalResult, itemsResult ->
                 items.clear()
                 items.addAll(itemsResult)
                 total = totalResult
                 progressCounter = 2
             }
-            2 -> AddPayersView(users, total) { payersResult ->
+            2 -> AddPayersTab(users, total) { payersResult ->
                 payers.clear()
                 payers.addAll(payersResult)
                 val bill = Bill(
@@ -114,10 +114,6 @@ fun AddBillScreen(navController: NavHostController) {
         }
     }
 }
-
-
-
-
 
 @Preview(showBackground = true, widthDp = 360, heightDp = 640)
 @Composable

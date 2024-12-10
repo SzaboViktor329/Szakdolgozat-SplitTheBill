@@ -1,7 +1,6 @@
-package com.splitthebill.ui.screens
+package com.splitthebill.ui.screens.groupscreens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,14 +35,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.data.models.Group
-import com.splitthebill.data.models.User
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
 import com.splitthebill.ui.components.common.FriendNameWithIcon
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
-import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
@@ -108,7 +104,6 @@ fun CreateGroupScreen(navController: NavHostController) {
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
                         }
-
                     }
                 }
             }

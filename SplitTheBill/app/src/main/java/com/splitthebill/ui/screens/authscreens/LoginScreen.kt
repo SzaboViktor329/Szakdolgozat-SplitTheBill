@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -45,7 +44,6 @@ import com.splitthebill.ui.utils.isValidEmail
 import com.splitthebill.ui.utils.isValidPassword
 import com.splitthebill.ui.viewmodels.AuthViewModel
 
-
 @Composable
 fun LoginScreen(navController: NavHostController){
     val authViewModel : AuthViewModel = hiltViewModel()
@@ -55,7 +53,6 @@ fun LoginScreen(navController: NavHostController){
 
     val context = LocalContext.current
     var validFieldCounter by remember { mutableIntStateOf(0) }
-
 
     Box(modifier = Modifier.fillMaxSize().background(BlueTheme)){
         Column(modifier = Modifier.fillMaxSize()) {
@@ -112,8 +109,6 @@ fun LoginScreen(navController: NavHostController){
                                     }
                                     else Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                                 }
-
-
                             }
                         },
                         text = "Login",

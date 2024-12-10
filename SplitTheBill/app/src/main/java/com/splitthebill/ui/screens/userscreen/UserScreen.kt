@@ -46,7 +46,7 @@ enum class UserScreenTabNavBarOption(override val label: String) : TabNavBarOpti
 }
 
 @Composable
-fun UserScreen(authNavController: NavHostController, ){
+fun UserScreen(authNavController: NavHostController){
     val friendRequestViewModel: FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val friendViewModel: FriendViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val usersWithRequests by friendRequestViewModel.usersWithRequests.collectAsState()
@@ -78,17 +78,14 @@ fun UserScreen(authNavController: NavHostController, ){
                                     friendRequestViewModel.updateFriendRequest(friendRequest) { success->
                                         if(success) {
                                             println("update was successful")
-                                            //friendViewModel.fetchUsersWithFriendRequests()
                                         }
                                     }
-
                                 },
                                 onReject = { friendRequest ->
                                     friendRequest.status = FriendRequestStatus.REJECTED
                                     friendRequestViewModel.updateFriendRequest(friendRequest) { success->
                                         if(success) {
                                             println("update was successful")
-                                            //friendViewModel.fetchUsersWithFriendRequests()
                                         }
                                     }
                                 }
@@ -119,7 +116,6 @@ fun UserScreen(authNavController: NavHostController, ){
             if(showFindFriendDialog) {
                 FindFriendModal { showFindFriendDialog = false }
             }
-
         }
     }
 }

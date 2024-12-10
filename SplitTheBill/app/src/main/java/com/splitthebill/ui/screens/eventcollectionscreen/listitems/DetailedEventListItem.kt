@@ -98,13 +98,12 @@ fun DetailedEventListItem(event: Event, navController: NavHostController, onClic
             )
         }
     }
-
 }
 
 @Preview(showBackground = true, widthDp = 360, heightDp = 640)
 @Composable
 fun DetailedEventListItemPreview(){
     SplitTheBillTheme {
-        DetailedEventListItem(Event(), rememberNavController(),{})
+        DetailedEventListItem(Event(), rememberNavController()) {}
     }
 }

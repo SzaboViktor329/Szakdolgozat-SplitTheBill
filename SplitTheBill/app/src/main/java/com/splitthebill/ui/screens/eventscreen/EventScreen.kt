@@ -45,12 +45,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-
 enum class EventScreenTabNavBarOption(override val label: String) : TabNavBarOptionLabel {
     DEBTS("Debts"),
     BILLS("Bills")
 }
-
 
 @Composable
 fun EventScreen(navController: NavHostController) {
@@ -128,8 +126,6 @@ fun isAllDebtsPayed(debts: List<Debt>): Boolean {
     }
     return true
 }
-
-
 
 @Preview(showBackground = true, widthDp = 360, heightDp = 640)
 @Composable

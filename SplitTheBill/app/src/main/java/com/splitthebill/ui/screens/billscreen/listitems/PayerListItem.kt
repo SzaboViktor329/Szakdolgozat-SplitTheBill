@@ -37,7 +37,6 @@ fun PayerListItem(payer: Payer) {
     var user by remember { mutableStateOf(User()) }
     var loaded by remember { mutableStateOf(false) }
 
-
     LaunchedEffect(Unit) {
         user = billViewModel.getUserById(payer.userId)
         loaded = true

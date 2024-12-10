@@ -1,4 +1,4 @@
-package com.splitthebill.ui.screens.addbillscreen.views.addpayersview
+package com.splitthebill.ui.screens.addbillscreen.tabs.addpayerstab
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,13 +24,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.bill.Payer
-import com.splitthebill.ui.screens.addbillscreen.views.addpayersview.listitems.AddPayerListItem
+import com.splitthebill.ui.screens.addbillscreen.tabs.addpayerstab.listitems.AddPayerListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.isAdBillPayersValid
 
 @Composable
-fun AddPayersView(
+fun AddPayersTab(
     users: List<User>,
     total: Double,
     onProceed: (List<Payer>) -> Unit
@@ -77,6 +77,6 @@ fun AddPayersView(
 @Composable
 fun AddPayersComponentPreview(){
     SplitTheBillTheme {
-        AddPayersView(listOf(),2.0) {}
+        AddPayersTab(listOf(),2.0) {}
     }
 }

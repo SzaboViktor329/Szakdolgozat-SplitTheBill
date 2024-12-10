@@ -21,20 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.navigation.navgraphs.MainNavGraph
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
-import com.splitthebill.ui.screens.addbillscreen.AddBillScreen
-import com.splitthebill.ui.screens.billscreen.BillScreen
-import com.splitthebill.ui.screens.eventcollectionscreen.EventCollectionScreen
-import com.splitthebill.ui.screens.eventscreen.EventScreen
-import com.splitthebill.ui.screens.homescreen.HomeScreen
-import com.splitthebill.ui.screens.userscreen.UserScreen
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
-
 
 @Composable
 fun MainScreen(authNavController: NavHostController){
@@ -75,7 +66,6 @@ fun MainScreen(authNavController: NavHostController){
                     }
                 }
             }
-
         }
     ) { paddingValues ->
         val padding = PaddingValues(

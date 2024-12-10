@@ -1,10 +1,9 @@
-package com.splitthebill.ui.screens.addbillscreen.views.additemsview.listitems
+package com.splitthebill.ui.screens.addbillscreen.tabs.addpayerstab.listitems
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,21 +34,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.splitthebill.data.models.User
-import com.splitthebill.data.models.bill.Item
+import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.screens.addbillscreen.UserPickerModal
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.createMonogram
 
 @Composable
-fun AddBillListItem(
-    item: Item,
+fun AddPayerListItem(
+    payer: Payer,
     users: List<User>,
     onDestroy: () -> Unit
 ) {
-    var itemName by rememberSaveable { mutableStateOf("") }
-    var priceText by rememberSaveable { mutableStateOf("") }
-    var price by rememberSaveable { mutableDoubleStateOf(0.0) }
+
+    var amountText by rememberSaveable { mutableStateOf("") }
+    var amount by rememberSaveable { mutableDoubleStateOf(0.0) }
+
     var user by remember { mutableStateOf(User()) }
     var userId by rememberSaveable { mutableStateOf("") }
 
@@ -74,67 +74,52 @@ fun AddBillListItem(
                 Icon(imageVector = Icons.Default.Close, contentDescription = null, modifier = Modifier.size(30.dp))
             }
         }
-        Column {
-            OutlinedTextField(
-                value = itemName,
-                onValueChange = {
-                    itemName = it
-                    item.itemName = it
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            ProfilePicture(
+                modifier = Modifier.clickable {
+                    showUserPickerModal = true
                 },
-                label = { Text("Item name") },
-                modifier = Modifier.fillMaxWidth().padding(top = 0.dp, start = 16.dp, end = 16.dp)
+                placeholderText = createMonogram(user.fullName),
+                size = 50.dp
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                ProfilePicture(
-                    modifier = Modifier.clickable {
-                        showUserPickerModal = true
-                    },
-                    placeholderText = createMonogram(user.fullName),
-                    size = 50.dp
-                )
-                OutlinedTextField(
-                    value = priceText,
-                    onValueChange = {
-                        val parsedPrice = it.toDoubleOrNull()
-                        if(parsedPrice != null) {
-                            priceText = it
-                            price = parsedPrice
-                            item.price = parsedPrice
-                        }
-                    },
-                    label = { Text("Price") },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number
-                    ),
-                    modifier = Modifier.padding(start = 20.dp)
-                )
-            }
+            OutlinedTextField(
+                value = amountText,
+                onValueChange = {
+                    val parsedAmount = it.toDoubleOrNull()
+                    if(parsedAmount != null) {
+                        amountText = it
+                        amount = parsedAmount
+                        payer.amount = parsedAmount
+                    }
+                },
+                label = { Text("Amount") },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number
+                ),
+                modifier = Modifier.padding(start = 20.dp)
+            )
         }
     }
-
     if(showUserPickerModal) UserPickerModal(users) { selectedUser->
         userId = selectedUser.uid
-        item.userId = selectedUser.uid
+        payer.userId = selectedUser.uid
         user = selectedUser
-        if(itemName =="") {
-            itemName = "${user.fullName}'s part"
-            item.itemName = itemName
-        }
         showUserPickerModal = false
     }
 }
 
 @Preview(showBackground = false, widthDp = 360, heightDp = 640)
 @Composable
-fun BillItemPreview(){
+fun PayerItemPreview(){
     SplitTheBillTheme {
-        AddBillListItem(Item(), listOf(),{})
+        AddPayerListItem(Payer(), listOf()) {}
     }
 }

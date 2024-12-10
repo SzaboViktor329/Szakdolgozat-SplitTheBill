@@ -2,9 +2,9 @@ package com.splitthebill.ui.navigation.navscreens
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.splitthebill.ui.screens.CreateGroupScreen
-import com.splitthebill.ui.screens.GroupDetailsScreen
-import com.splitthebill.ui.screens.GroupScreen
+import com.splitthebill.ui.screens.groupscreens.CreateGroupScreen
+import com.splitthebill.ui.screens.groupscreens.GroupDetailsScreen
+import com.splitthebill.ui.screens.groupscreens.GroupScreen
 import com.splitthebill.ui.screens.addbillscreen.AddBillScreen
 import com.splitthebill.ui.screens.billscreen.BillScreen
 import com.splitthebill.ui.screens.eventcollectionscreen.EventCollectionScreen

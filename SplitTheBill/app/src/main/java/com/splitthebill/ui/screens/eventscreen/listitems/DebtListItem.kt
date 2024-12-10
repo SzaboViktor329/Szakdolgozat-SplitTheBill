@@ -33,7 +33,6 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.createMonogram
 import com.splitthebill.ui.viewmodels.AuthViewModel
 
-
 @Composable
 fun DebtListItem(eventStatus: EventStatus, debt: Debt, users: List<User>, onDebtStatusChange: (DebtStatus)-> Unit) {
     val isChecked = remember { mutableStateOf(debt.status == DebtStatus.PAYED) }
@@ -75,8 +74,6 @@ fun DebtListItem(eventStatus: EventStatus, debt: Debt, users: List<User>, onDebt
 
             Text(text = "${debt.amount} Ft", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 24.sp)
 
-            //Spacer(modifier = Modifier.width(8.dp))
-
             if(eventStatus == EventStatus.PAYING) {
                 Checkbox(
                     checked = isChecked.value,
@@ -93,13 +90,10 @@ fun DebtListItem(eventStatus: EventStatus, debt: Debt, users: List<User>, onDebt
     }
 }
 
-
-
-
 @Preview(showBackground = false, widthDp = 360, heightDp = 640)
 @Composable
 fun DebtListItemPreview(){
     SplitTheBillTheme {
-        DebtListItem(eventStatus = EventStatus.PENDING, Debt(), emptyList(), {})
+        DebtListItem(eventStatus = EventStatus.PENDING, Debt(), emptyList()) {}
     }
 }

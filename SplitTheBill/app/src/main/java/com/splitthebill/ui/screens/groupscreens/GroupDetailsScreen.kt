@@ -1,14 +1,11 @@
-package com.splitthebill.ui.screens
+package com.splitthebill.ui.screens.groupscreens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,9 +21,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.splitthebill.data.models.User
-import com.splitthebill.ui.components.buttons.BlueButton
-import com.splitthebill.ui.components.common.BottomWhiteStrip
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem

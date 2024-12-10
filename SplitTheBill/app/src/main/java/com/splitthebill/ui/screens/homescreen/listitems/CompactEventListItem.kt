@@ -22,7 +22,6 @@ import com.splitthebill.data.enums.EventStatus
 import com.splitthebill.data.models.event.Event
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 
-
 @Composable
 fun CompactEventListItem(event: Event, navController: NavHostController, onClick: () -> Unit) {
     Box(
@@ -55,9 +54,4 @@ fun CompactEventListItem(event: Event, navController: NavHostController, onClick
             )
         }
     }
-
-
 }
-
-
-
