@@ -1,13 +1,12 @@
 package com.splitthebill.data.repositories
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.splitthebill.data.models.event.Event
 import com.splitthebill.data.models.bill.Bill
 import java.util.UUID
 import javax.inject.Inject
 
-class BillRepository @Inject constructor(private val firebaseAuth: FirebaseAuth, private val firestore: FirebaseFirestore) {
+class BillRepository @Inject constructor(private val firestore: FirebaseFirestore) {
     private val billCollection: String = "bills"
 
     fun addBill(bill: Bill, onSuccess: () -> Unit) {
@@ -27,5 +26,4 @@ class BillRepository @Inject constructor(private val firebaseAuth: FirebaseAuth,
             else onSuccess(emptyList())
         }
     }
-
 }

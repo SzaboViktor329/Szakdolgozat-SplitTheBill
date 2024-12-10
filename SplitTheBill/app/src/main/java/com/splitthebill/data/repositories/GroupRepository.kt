@@ -1,6 +1,5 @@
 package com.splitthebill.data.repositories
 
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.splitthebill.data.models.Group
@@ -44,6 +43,4 @@ class GroupRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
             }
         }
     }
-
-
 }

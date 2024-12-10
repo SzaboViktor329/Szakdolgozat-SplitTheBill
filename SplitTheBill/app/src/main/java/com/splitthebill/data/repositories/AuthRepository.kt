@@ -1,9 +1,7 @@
 package com.splitthebill.data.repositories
 
-import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(private val firebaseAuth: FirebaseAuth) {
@@ -23,7 +21,6 @@ class AuthRepository @Inject constructor(private val firebaseAuth: FirebaseAuth)
     }
 
     fun sendPasswordResetEmail(email: String, onComplete: (message: String) ->Unit) {
-
         firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener{ task ->
             if(task.isSuccessful) onComplete("The reset link has been sent to your email address")
             else onComplete("Incorrect email")

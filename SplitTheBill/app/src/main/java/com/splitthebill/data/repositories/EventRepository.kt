@@ -45,7 +45,6 @@ class EventRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
         }
     }
 
-
     fun getEvents(queryLimit: Long = -1, eventStatuses: MutableList<EventStatus> = mutableListOf(), onSuccess: (events: List<Event>) -> Unit) {
         val currentUid = firebaseAuth.uid ?: ""
         var eventQuery: Query  = firestore.collection(eventCollection)
@@ -66,5 +65,4 @@ class EventRepository @Inject constructor(private val firebaseAuth: FirebaseAuth
             else onSuccess(emptyList())
         }
     }
-
 }

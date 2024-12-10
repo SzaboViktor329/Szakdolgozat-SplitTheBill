@@ -14,7 +14,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import java.util.Objects
 import javax.inject.Singleton
 
 @Module
@@ -72,7 +71,7 @@ object FirebaseModule {
     @Singleton
     @Provides
     fun provideBillRepository(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): BillRepository {
-        return BillRepository(firebaseAuth, firestore)
+        return BillRepository(firestore)
     }
 
     @Singleton
@@ -80,9 +79,4 @@ object FirebaseModule {
     fun provideCashFlowOptimizationService(): CashFlowOptimizationService {
         return CashFlowOptimizationService()
     }
-
-
-
-
-
 }

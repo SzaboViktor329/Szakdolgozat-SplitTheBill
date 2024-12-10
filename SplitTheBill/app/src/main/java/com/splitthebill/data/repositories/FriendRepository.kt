@@ -82,7 +82,7 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
                             val users = userDocuments.toObjects(User::class.java)
 
                             val usersWithRequests = users.map { user->
-                                val matchingRequest = friendRequests.firstOrNull() { it.senderUid == user.uid }
+                                val matchingRequest = friendRequests.firstOrNull { it.senderUid == user.uid }
                                 UserWithRequest(user, matchingRequest!!)
                             }
                             trySend(usersWithRequests).isSuccess
@@ -92,7 +92,6 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
             }
         awaitClose { friendRequestListener?.remove() }
     }
-
 
     fun fetchFriends() : Flow<List<User>> = callbackFlow {
         println("Does this even called?")
@@ -116,11 +115,9 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
                     }
                 }
                 else trySend(emptyList()).isSuccess
-
             }
         awaitClose { friendsListListener?.remove() }
     }
-
 
     fun updateFriendRequest(friendRequest: FriendRequest, onComplete: (Boolean)-> Unit) {
         firestore.collection(friendRequestCollection).document(friendRequest.friendRequestId).set(friendRequest).addOnSuccessListener {
@@ -135,5 +132,4 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
         friendsListListener?.remove()
         friendsListListener = null
     }
-
 }

@@ -5,28 +5,8 @@ import com.splitthebill.data.models.User
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-
 class UserRepository @Inject constructor(private val firestore: FirebaseFirestore) {
     private val userCollection: String = "users"
-
-    fun isUsernameAvailable(userName: String, onComplete: (Boolean) -> Unit) {
-        firestore.collection(userCollection)
-            .whereEqualTo("userName",userName)
-            .get()
-            .addOnCompleteListener{ task ->
-                if(task.isSuccessful) {
-                    onComplete(task.result.isEmpty)
-                } else {
-                    onComplete(false)
-                }
-            }
-    }
-
-    fun createUser(user: User) {
-        firestore.collection(userCollection).document(user.uid).set(user).addOnFailureListener{ task ->
-            println(("A baj: " + task.message))
-        }
-    }
 
     fun getUserByUsername(userName: String, onComplete: (User?) -> Unit) {
         firestore.collection(userCollection).whereEqualTo("userName", userName).get().addOnSuccessListener { result ->
@@ -37,7 +17,6 @@ class UserRepository @Inject constructor(private val firestore: FirebaseFirestor
             else onComplete(null)
         }
     }
-
 
     suspend fun getUser(uid: String) : User? {
         return try {
@@ -51,5 +30,4 @@ class UserRepository @Inject constructor(private val firestore: FirebaseFirestor
             null
         }
     }
-
 }
