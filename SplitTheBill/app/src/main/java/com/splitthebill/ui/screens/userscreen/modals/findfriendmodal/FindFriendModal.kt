@@ -60,8 +60,7 @@ fun FindFriendModal(onDismiss: () -> Unit) {
                             senderUid = authViewModel.currentUserAuth.value!!.uid,
                             receiverUid = searchedUser.uid
                         )
-                    ) { success->
-                        println(success)
+                    ) {
                         onDismiss()
                     }
                 }

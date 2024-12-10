@@ -71,11 +71,9 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
                     close(error)
                     return@addSnapshotListener
                 }
-                println("firendrequests fetch happened")
                 val friendRequests = snapshot?.toObjects(FriendRequest::class.java) ?: emptyList()
                 val senderUids = friendRequests.map { it.senderUid }
                 if(senderUids.isNotEmpty()) {
-                    println("user fetch happened")
                     firestore.collection(userCollection).whereIn(FieldPath.documentId(), senderUids)
                         .get()
                         .addOnSuccessListener { userDocuments->
@@ -94,7 +92,6 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
     }
 
     fun fetchFriends() : Flow<List<User>> = callbackFlow {
-        println("Does this even called?")
         val currentUid = firebaseAuth.uid
         friendsListListener = firestore.collection(friendRequestCollection)
             .whereEqualTo("status", FriendRequestStatus.ACCEPTED)

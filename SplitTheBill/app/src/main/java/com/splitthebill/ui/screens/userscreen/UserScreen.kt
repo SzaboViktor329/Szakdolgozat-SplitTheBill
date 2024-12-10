@@ -75,19 +75,11 @@ fun UserScreen(authNavController: NavHostController){
                                 userWithRequest,
                                 onAccept = { friendRequest ->
                                     friendRequest.status = FriendRequestStatus.ACCEPTED
-                                    friendRequestViewModel.updateFriendRequest(friendRequest) { success->
-                                        if(success) {
-                                            println("update was successful")
-                                        }
-                                    }
+                                    friendRequestViewModel.updateFriendRequest(friendRequest) {}
                                 },
                                 onReject = { friendRequest ->
                                     friendRequest.status = FriendRequestStatus.REJECTED
-                                    friendRequestViewModel.updateFriendRequest(friendRequest) { success->
-                                        if(success) {
-                                            println("update was successful")
-                                        }
-                                    }
+                                    friendRequestViewModel.updateFriendRequest(friendRequest) {}
                                 }
                             )
                         }
