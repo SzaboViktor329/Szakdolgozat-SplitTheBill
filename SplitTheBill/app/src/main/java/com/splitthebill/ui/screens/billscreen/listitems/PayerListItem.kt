@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.ui.components.icons.ProfilePicture
@@ -61,7 +60,7 @@ fun PayerListItem(payer: Payer) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 ProfilePicture(
-                    placeholderText = createMonogram(user.fullname),
+                    placeholderText = createMonogram(user.fullName),
                     size = 40.dp
                 )
                 Text(text = "${payer.amount} Ft", style = typography.titleLarge, color = DarkGreen)

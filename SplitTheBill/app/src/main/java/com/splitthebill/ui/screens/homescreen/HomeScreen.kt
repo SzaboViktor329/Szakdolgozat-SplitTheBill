@@ -41,7 +41,6 @@ import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.EventsViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
-import kotlin.random.Random
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
@@ -56,7 +55,7 @@ fun HomeScreen(navController: NavHostController) {
     val screenWidth = configuration.screenWidthDp.dp
     val paddingStart = screenWidth / 12
 
-    val userName = userViewModel.currentUser.username
+    val userName = userViewModel.currentUser.userName
 
     LaunchedEffect(Unit) {
         eventsViewModel.fetchRecentEvents()

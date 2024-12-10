@@ -34,7 +34,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.splitthebill.data.models.User
-import com.splitthebill.data.models.bill.Item
 import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.screens.addbillscreen.UserPickerModal
@@ -88,7 +87,7 @@ fun AddPayerListItem(
                 modifier = Modifier.clickable {
                     showUserPickerModal = true
                 },
-                placeholderText = createMonogram(user.fullname),
+                placeholderText = createMonogram(user.fullName),
                 size = 50.dp
             )
             OutlinedTextField(

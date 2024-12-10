@@ -58,7 +58,7 @@ fun DebtListItem(eventStatus: EventStatus, debt: Debt, users: List<User>, onDebt
             Spacer(modifier = Modifier.width(8.dp))
 
             ProfilePicture(
-                placeholderText = createMonogram(users.find { it.uid == debt.fromUserId }?.fullname ?: ""),
+                placeholderText = createMonogram(users.find { it.uid == debt.fromUserId }?.fullName ?: ""),
                 size = 40.dp
             )
 
@@ -67,7 +67,7 @@ fun DebtListItem(eventStatus: EventStatus, debt: Debt, users: List<User>, onDebt
             Spacer(modifier = Modifier.width(8.dp))
 
             ProfilePicture(
-                placeholderText = createMonogram(users.find { it.uid == debt.toUserId }?.fullname ?: ""),
+                placeholderText = createMonogram(users.find { it.uid == debt.toUserId }?.fullName ?: ""),
                 size = 40.dp
             )
 

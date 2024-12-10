@@ -36,8 +36,8 @@ fun UserScreenHeader(authNavController: NavHostController) {
 
     val iconSize = LocalConfiguration.current.screenWidthDp.dp / 6
 
-    val userName = userViewModel.currentUser.username
-    val fullName = userViewModel.currentUser.fullname
+    val userName = userViewModel.currentUser.userName
+    val fullName = userViewModel.currentUser.fullName
 
     Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
         ProfilePicture(

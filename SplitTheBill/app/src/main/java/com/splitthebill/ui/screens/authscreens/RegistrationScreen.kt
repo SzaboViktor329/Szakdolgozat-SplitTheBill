@@ -35,7 +35,6 @@ import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.isValidEmail
 import com.splitthebill.ui.utils.isValidPassword
-import com.splitthebill.ui.viewmodels.AuthViewModel
 import com.splitthebill.ui.viewmodels.RegistrationViewModel
 
 @Composable
@@ -91,8 +90,8 @@ fun RegistrationScreen(navController: NavHostController){
                         email,
                         password,
                         User(
-                            username = username,
-                            fullname = fullName
+                            userName = username,
+                            fullName = fullName
                         )) { errorMessage ->
                         if(errorMessage != "") { Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show() }
                         else {

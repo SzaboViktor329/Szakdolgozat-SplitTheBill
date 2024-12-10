@@ -19,9 +19,9 @@ import com.splitthebill.ui.utils.createMonogram
 @Composable
 fun FriendNameWithIcon(modifier: Modifier, user: User, horizontal: Arrangement.Horizontal) {
     Row(modifier = modifier, horizontalArrangement = horizontal, verticalAlignment = Alignment.CenterVertically) {
-        Text(user.fullname, style = typography.titleLarge)
+        Text(user.fullName, style = typography.titleLarge)
         ProfilePicture(
-            placeholderText = createMonogram(user.fullname),
+            placeholderText = createMonogram(user.fullName),
             size = 40.dp
         )
     }

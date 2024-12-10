@@ -45,16 +45,16 @@ fun FindFriendListItem(user: User, onSelect: () -> Unit) {
         Row(Modifier.fillMaxWidth().padding(10.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    user.fullname,
+                    user.fullName,
                     style = typography.titleLarge,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(user.username)
+                Text(user.userName)
             }
             Spacer(modifier = Modifier.width(10.dp))
             ProfilePicture(
-                placeholderText = createMonogram(user.fullname),
+                placeholderText = createMonogram(user.fullName),
                 size = 40.dp
             )
             Spacer(modifier = Modifier.width(20.dp))

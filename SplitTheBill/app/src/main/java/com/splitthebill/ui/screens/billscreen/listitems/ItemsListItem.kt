@@ -61,7 +61,7 @@ fun ItemsListItem(item: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     ProfilePicture(
-                        placeholderText = createMonogram(user.fullname),
+                        placeholderText = createMonogram(user.fullName),
                         size = 40.dp
                     )
                     Text(text = "${item.price} Ft", style = typography.titleLarge, color = Color.Red)

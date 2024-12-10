@@ -9,9 +9,9 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(private val firestore: FirebaseFirestore) {
     private val userCollection: String = "users"
 
-    fun isUsernameAvailable(username: String, onComplete: (Boolean) -> Unit) {
+    fun isUsernameAvailable(userName: String, onComplete: (Boolean) -> Unit) {
         firestore.collection(userCollection)
-            .whereEqualTo("username",username)
+            .whereEqualTo("userName",userName)
             .get()
             .addOnCompleteListener{ task ->
                 if(task.isSuccessful) {
@@ -28,8 +28,8 @@ class UserRepository @Inject constructor(private val firestore: FirebaseFirestor
         }
     }
 
-    fun getUserByUsername(username: String, onComplete: (User?) -> Unit) {
-        firestore.collection(userCollection).whereEqualTo("username", username).get().addOnSuccessListener { result ->
+    fun getUserByUsername(userName: String, onComplete: (User?) -> Unit) {
+        firestore.collection(userCollection).whereEqualTo("userName", userName).get().addOnSuccessListener { result ->
             if(!result.isEmpty){
                 val user = result.documents.first().toObject(User::class.java)
                 onComplete(user)

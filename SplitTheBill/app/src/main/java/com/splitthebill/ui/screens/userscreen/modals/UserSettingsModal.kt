@@ -40,8 +40,8 @@ fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostControlle
     val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
     val friendRequestViewModel : FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
 
-    val userName = userViewModel.currentUser.username
-    val fullName = userViewModel.currentUser.fullname
+    val userName = userViewModel.currentUser.userName
+    val fullName = userViewModel.currentUser.fullName
     val email = userViewModel.email
 
     val context = LocalContext.current

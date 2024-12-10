@@ -23,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.bill.Item
 import com.splitthebill.ui.components.icons.ProfilePicture
-import com.splitthebill.ui.screens.AddEventModal
 import com.splitthebill.ui.screens.addbillscreen.UserPickerModal
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.createMonogram
@@ -98,7 +96,7 @@ fun AddBillListItem(
                     modifier = Modifier.clickable {
                         showUserPickerModal = true
                     },
-                    placeholderText = createMonogram(user.fullname),
+                    placeholderText = createMonogram(user.fullName),
                     size = 50.dp
                 )
                 OutlinedTextField(
@@ -126,7 +124,7 @@ fun AddBillListItem(
         item.userId = selectedUser.uid
         user = selectedUser
         if(itemName =="") {
-            itemName = "${user.fullname}'s part"
+            itemName = "${user.fullName}'s part"
             item.itemName = itemName
         }
         showUserPickerModal = false

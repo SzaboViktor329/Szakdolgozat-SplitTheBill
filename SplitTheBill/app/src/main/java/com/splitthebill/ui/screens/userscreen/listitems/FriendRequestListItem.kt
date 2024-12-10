@@ -48,11 +48,11 @@ fun FriendRequestListItem(
     ) {
         Row(Modifier.fillMaxWidth().padding(10.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Column {
-                Text(userWithRequest.user.fullname, style = typography.titleLarge)
-                Text(userWithRequest.user.username)
+                Text(userWithRequest.user.fullName, style = typography.titleLarge)
+                Text(userWithRequest.user.userName)
             }
             ProfilePicture(
-                placeholderText = createMonogram(userWithRequest.user.fullname),
+                placeholderText = createMonogram(userWithRequest.user.fullName),
                 size = 40.dp
             )
             Row {
