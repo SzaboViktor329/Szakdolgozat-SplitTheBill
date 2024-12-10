@@ -51,7 +51,7 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
         isFriendRequestExist(friendRequest) { friendRequestExist->
             if(!friendRequestExist){
                 val friendRequestId = UUID.randomUUID().toString()
-                friendRequest.id = friendRequestId
+                friendRequest.friendRequestId = friendRequestId
                 firestore.collection(friendRequestCollection).document(friendRequestId).set(friendRequest).addOnSuccessListener {
                     onComplete(true)
                 }
@@ -123,7 +123,7 @@ class FriendRepository @Inject constructor(private val firebaseAuth: FirebaseAut
 
 
     fun updateFriendRequest(friendRequest: FriendRequest, onComplete: (Boolean)-> Unit) {
-        firestore.collection(friendRequestCollection).document(friendRequest.id).set(friendRequest).addOnSuccessListener {
+        firestore.collection(friendRequestCollection).document(friendRequest.friendRequestId).set(friendRequest).addOnSuccessListener {
             onComplete(true)
         }
     }
