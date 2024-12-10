@@ -17,7 +17,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.protobuf.Internal.BooleanList
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
 @Composable
@@ -51,7 +50,6 @@ fun TextFieldWithValidation(
                     if(!focusState.isFocused){
                         valueOnFocusChange = value
                         isValidOnFocusChange = validationFunction(value)
-
                     }
                 }
         )

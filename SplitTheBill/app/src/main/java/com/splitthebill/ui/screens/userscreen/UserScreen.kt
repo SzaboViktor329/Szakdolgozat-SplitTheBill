@@ -29,9 +29,9 @@ import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.screens.userscreen.listitems.FriendRequestListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
-import com.splitthebill.ui.components.navbars.ComponentNavBar
+import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
-import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
+import com.splitthebill.ui.components.navbars.TabNavBarOptionLabel
 import com.splitthebill.ui.screens.userscreen.header.UserScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
@@ -40,7 +40,7 @@ import com.splitthebill.ui.viewmodels.FriendViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 
-enum class UserScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
+enum class UserScreenTabNavBarOption(override val label: String) : TabNavBarOptionLabel {
     FRIEND_REQUESTS("Friend Requests"),
     FRIENDS("Friends")
 }
@@ -58,15 +58,15 @@ fun UserScreen(authNavController: NavHostController, ){
         mainColor = Color.LightGray,
         topContent = { UserScreenHeader(authNavController) }
     ) {
-        var selectedOption by remember { mutableStateOf(UserScreenComponentNavBarOption.FRIEND_REQUESTS) }
+        var selectedOption by remember { mutableStateOf(UserScreenTabNavBarOption.FRIEND_REQUESTS) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-            ComponentNavBar(
-                options = UserScreenComponentNavBarOption.entries.toTypedArray(),
+            TabNavBar(
+                options = UserScreenTabNavBarOption.entries.toTypedArray(),
                 selectedOption = selectedOption,
                 onOptionSelected = { option -> selectedOption = option }
             )
             when(selectedOption) {
-                UserScreenComponentNavBarOption.FRIEND_REQUESTS -> {
+                UserScreenTabNavBarOption.FRIEND_REQUESTS -> {
                     LazyColumn(
                         modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
                     ) {
@@ -96,7 +96,7 @@ fun UserScreen(authNavController: NavHostController, ){
                         }
                     }
                 }
-                UserScreenComponentNavBarOption.FRIENDS -> {
+                UserScreenTabNavBarOption.FRIENDS -> {
                     LazyColumn(
                         modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
                     ) {

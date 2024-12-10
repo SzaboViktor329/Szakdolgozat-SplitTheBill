@@ -15,9 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.splitthebill.ui.components.dialogs.DatePickerDialog
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 @Composable
 fun TextFieldWithDatePicker(selectedDate: String, dateFormater: SimpleDateFormat, label: String = "Date", onDateSelected: (date: String) -> Unit) {

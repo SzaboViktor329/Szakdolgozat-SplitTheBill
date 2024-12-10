@@ -21,7 +21,6 @@ import com.splitthebill.ui.components.templates.DialogWithTitle
 import com.splitthebill.ui.viewmodels.EventsViewModel
 import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
-
 @Composable
 fun FilterOptionsDialog(onDismiss: () -> Unit) {
     val eventsViewModel: EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
@@ -53,7 +52,6 @@ fun FilterOptionsDialog(onDismiss: () -> Unit) {
         }
 
         Column(modifier = Modifier.padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)) {
-            // Example filter options
             FilterOption("Pending", Icons.Default.PendingActions,selectedPending) {
                 selectedPending = !selectedPending
             }

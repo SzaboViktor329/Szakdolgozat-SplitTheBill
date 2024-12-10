@@ -21,6 +21,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
+
+//Gives a basic frame to the header, which consist a back button on it's top left corner.
 @Composable
 fun HeaderWithBackButton(
     navController: NavHostController,
@@ -47,7 +49,6 @@ fun HeaderWithBackButton(
         Row(modifier = Modifier.wrapContentHeight().weight(1f), verticalAlignment = Alignment.CenterVertically) {
             contents()
         }
-
     }
 }
 
@@ -56,7 +57,6 @@ fun HeaderWithBackButton(
 fun TitleBarWithBackButtonPreview(){
     SplitTheBillTheme {
         HeaderWithBackButton(rememberNavController()){
-
         }
     }
 }

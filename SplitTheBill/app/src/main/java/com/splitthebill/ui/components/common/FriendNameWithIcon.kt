@@ -16,6 +16,7 @@ import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.createMonogram
 
+//A row composable which contains the name of a user and it's profile picture.
 @Composable
 fun FriendNameWithIcon(modifier: Modifier, user: User, horizontal: Arrangement.Horizontal) {
     Row(modifier = modifier, horizontalArrangement = horizontal, verticalAlignment = Alignment.CenterVertically) {

@@ -11,8 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-//BottomBarLayout
-
+//This composable is being used to hold several buttons on the bottom of the screen.
 @Composable
 fun BottomWhiteStrip(
     content: @Composable () -> Unit,

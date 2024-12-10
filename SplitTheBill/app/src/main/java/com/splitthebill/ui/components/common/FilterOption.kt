@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.splitthebill.ui.theme.BlueTheme
 
+//It's the composable which is used for event filtering. It's made up from a status icon and a checkbox.
 @Composable
 fun FilterOption(label: String, icon: ImageVector, isChecked: Boolean, onClick: () -> Unit) {
     Row(

@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.splitthebill.ui.theme.SplitTheBillTheme
 
+//A template to dialogs, which gives a frame to it's dialog content. It consists a title for the dialog on the top, and a close button.
 @Composable
 fun DialogWithTitle(
     title: String,

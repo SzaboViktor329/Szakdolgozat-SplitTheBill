@@ -15,20 +15,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
 
+/*
+    This composable is responsible to hold the tab options, and to notify the screen if another tab option is selected.
+    After that the selected tab will be shown on the screen.
+ */
 @Composable
-fun <T : ComponentNavBarOptionLabel> ComponentNavBar(
+fun <T : TabNavBarOptionLabel> TabNavBar(
     options: Array<T>,
     selectedOption: T,
     onOptionSelected: (T) -> Unit
 ) {
-
     Row(Modifier.fillMaxWidth().background(Color.White).padding(5.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
         options.forEach { option ->
             val isSelected = (option == selectedOption)
             Text(
-                text = option.label, // or option.label if you have a label in the enum
+                text = option.label,
                 modifier = Modifier
                     .then(if (isSelected) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier)
                     .padding(5.dp)
@@ -39,18 +41,5 @@ fun <T : ComponentNavBarOptionLabel> ComponentNavBar(
                     )
             )
         }
-        /*
-        Text("Friend requests", modifier = Modifier.then(if(showFriendRequests) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-            .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                showFriendRequests = true
-            })
-        )
-        Text("Friends", modifier = Modifier.then(if(!showFriendRequests) Modifier.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else Modifier).padding(5.dp)
-            .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }, onClick = {
-                showFriendRequests = false
-            })
-        )
-
-         */
     }
 }

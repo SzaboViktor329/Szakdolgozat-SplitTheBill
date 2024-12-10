@@ -31,9 +31,9 @@ import com.splitthebill.ui.screens.eventscreen.listitems.BillListItem
 import com.splitthebill.ui.screens.eventscreen.listitems.DebtListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
-import com.splitthebill.ui.components.navbars.ComponentNavBar
+import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
-import com.splitthebill.ui.interfaces.ComponentNavBarOptionLabel
+import com.splitthebill.ui.components.navbars.TabNavBarOptionLabel
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.eventscreen.header.EventScreenHeader
 import com.splitthebill.ui.theme.BlueTheme
@@ -46,7 +46,7 @@ import java.util.Calendar
 import java.util.Locale
 
 
-enum class EventScreenComponentNavBarOption(override val label: String) : ComponentNavBarOptionLabel {
+enum class EventScreenTabNavBarOption(override val label: String) : TabNavBarOptionLabel {
     DEBTS("Debts"),
     BILLS("Bills")
 }
@@ -77,10 +77,10 @@ fun EventScreen(navController: NavHostController) {
             EventScreenHeader(event, navController)
         }
     ) {
-        var selectedOption by remember { mutableStateOf(EventScreenComponentNavBarOption.DEBTS) }
+        var selectedOption by remember { mutableStateOf(EventScreenTabNavBarOption.DEBTS) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-            ComponentNavBar(
-                EventScreenComponentNavBarOption.entries.toTypedArray(),
+            TabNavBar(
+                EventScreenTabNavBarOption.entries.toTypedArray(),
                 selectedOption = selectedOption,
                 onOptionSelected = { option -> selectedOption = option }
             )
@@ -88,7 +88,7 @@ fun EventScreen(navController: NavHostController) {
                 modifier = Modifier.weight(1f).padding(top = 0.dp, start = 10.dp, end = 10.dp)
             ) {
                 when(selectedOption) {
-                    EventScreenComponentNavBarOption.DEBTS -> { items(event.debts) { debt->
+                    EventScreenTabNavBarOption.DEBTS -> { items(event.debts) { debt->
                         DebtListItem(event.status, debt, users) { newDebtStatus ->
                             debt.status = newDebtStatus
                             val shouldProceedToFinish = isAllDebtsPayed(event.debts)
@@ -106,7 +106,7 @@ fun EventScreen(navController: NavHostController) {
                             }
                         } }
                     }
-                    EventScreenComponentNavBarOption.BILLS -> { items(bills) { bill->
+                    EventScreenTabNavBarOption.BILLS -> { items(bills) { bill->
                         BillListItem(bill, navController) }
                     }
                 }
