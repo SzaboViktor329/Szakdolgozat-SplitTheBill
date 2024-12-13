@@ -46,13 +46,12 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
 import com.splitthebill.ui.viewmodels.CreateGroupViewModel
 import com.splitthebill.ui.viewmodels.FriendViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun CreateGroupScreen(navController: NavHostController) {
     var groupName by remember { mutableStateOf("") }
     val selectedUIDs = remember { mutableListOf<String>() }
-    val friendViewModel: FriendViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val friendViewModel: FriendViewModel = hiltViewModel()
     val createGroupViewModel: CreateGroupViewModel = hiltViewModel()
     val authViewModel: AuthViewModel = hiltViewModel()
     val friends by friendViewModel.friends.collectAsState()

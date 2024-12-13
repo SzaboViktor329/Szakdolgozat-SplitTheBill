@@ -24,20 +24,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.splitthebill.data.enums.FriendRequestStatus
-import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.FindFriendModal
-import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
-import com.splitthebill.ui.screens.userscreen.listitems.FriendRequestListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
-import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.navbars.TabNavBarOptionLabel
 import com.splitthebill.ui.screens.userscreen.header.UserScreenHeader
+import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
+import com.splitthebill.ui.screens.userscreen.listitems.FriendRequestListItem
+import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.FindFriendModal
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.FriendRequestViewModel
 import com.splitthebill.ui.viewmodels.FriendViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 
 enum class UserScreenTabNavBarOption(override val label: String) : TabNavBarOptionLabel {
@@ -47,8 +46,8 @@ enum class UserScreenTabNavBarOption(override val label: String) : TabNavBarOpti
 
 @Composable
 fun UserScreen(authNavController: NavHostController){
-    val friendRequestViewModel: FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val friendViewModel: FriendViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
+    val friendViewModel: FriendViewModel = hiltViewModel()
     val usersWithRequests by friendRequestViewModel.usersWithRequests.collectAsState()
     val friends by friendViewModel.friends.collectAsState()
 

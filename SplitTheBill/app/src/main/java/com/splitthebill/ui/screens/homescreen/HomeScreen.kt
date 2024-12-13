@@ -29,27 +29,26 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.splitthebill.ui.screens.homescreen.listitems.CompactEventListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.buttons.BlueTextButton
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.AddEventModal
+import com.splitthebill.ui.screens.homescreen.listitems.CompactEventListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.EventsViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val eventsViewModel : EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val userViewModel : UserViewModel = hiltViewModel()
+    val eventsViewModel : EventsViewModel = hiltViewModel()
 
     val events by eventsViewModel.events.observeAsState(initial = emptyList())
 
-    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel()
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp

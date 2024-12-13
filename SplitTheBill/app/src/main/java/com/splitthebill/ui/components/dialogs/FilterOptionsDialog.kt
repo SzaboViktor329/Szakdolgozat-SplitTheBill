@@ -19,11 +19,10 @@ import com.splitthebill.data.enums.EventStatus
 import com.splitthebill.ui.components.common.FilterOption
 import com.splitthebill.ui.components.templates.DialogWithTitle
 import com.splitthebill.ui.viewmodels.EventsViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun FilterOptionsDialog(onDismiss: () -> Unit) {
-    val eventsViewModel: EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventsViewModel: EventsViewModel = hiltViewModel()
 
     var selectedPending by remember { mutableStateOf(false) }
     var selectedPaying by remember { mutableStateOf(false) }

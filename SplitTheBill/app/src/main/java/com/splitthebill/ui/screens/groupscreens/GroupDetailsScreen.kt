@@ -27,11 +27,10 @@ import com.splitthebill.ui.screens.userscreen.listitems.FriendListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.GroupDetailsViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun GroupDetailsScreen(navController: NavHostController) {
-    val groupDetailsViewModel : GroupDetailsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val groupDetailsViewModel : GroupDetailsViewModel = hiltViewModel()
     val users by groupDetailsViewModel.usersFromGroup.collectAsState()
 
     LaunchedEffect(Unit) {

@@ -28,11 +28,10 @@ import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.screens.userscreen.modals.UserSettingsModal
 import com.splitthebill.ui.utils.createMonogram
 import com.splitthebill.ui.viewmodels.UserViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun UserScreenHeader(authNavController: NavHostController) {
-    val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val userViewModel : UserViewModel = hiltViewModel()
 
     val iconSize = LocalConfiguration.current.screenWidthDp.dp / 6
 

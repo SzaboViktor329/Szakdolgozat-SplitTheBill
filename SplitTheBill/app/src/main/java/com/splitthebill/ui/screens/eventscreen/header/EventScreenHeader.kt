@@ -31,11 +31,10 @@ import com.splitthebill.ui.components.buttons.DialogIconButton
 import com.splitthebill.ui.components.templates.HeaderWithBackButton
 import com.splitthebill.ui.screens.eventscreen.dialogs.ProceedToPayDialog
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun EventScreenHeader(event: Event, navController: NavHostController){
-    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel()
     val eventStatus = eventDetailViewModel.event.observeAsState(Event()).value.status
 
     HeaderWithBackButton(navController) {

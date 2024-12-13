@@ -32,13 +32,12 @@ import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
 import com.splitthebill.ui.viewmodels.FriendRequestViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun UserSettingsModal(onDismiss: () -> Unit, authNavController: NavHostController) {
     val authViewModel : AuthViewModel = hiltViewModel()
-    val userViewModel : UserViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val friendRequestViewModel : FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val userViewModel : UserViewModel = hiltViewModel()
+    val friendRequestViewModel : FriendRequestViewModel = hiltViewModel()
 
     val userName = userViewModel.currentUser.userName
     val fullName = userViewModel.currentUser.fullName

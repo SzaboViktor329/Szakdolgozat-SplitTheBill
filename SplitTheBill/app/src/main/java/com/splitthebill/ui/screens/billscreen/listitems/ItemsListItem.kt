@@ -29,11 +29,10 @@ import com.splitthebill.ui.components.icons.ProfilePicture
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.utils.createMonogram
 import com.splitthebill.ui.viewmodels.BillViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun ItemsListItem(item: Item) {
-    val billViewModel: BillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val billViewModel: BillViewModel = hiltViewModel()
     var user by remember { mutableStateOf(User()) }
     var loaded by remember { mutableStateOf(false) }
 

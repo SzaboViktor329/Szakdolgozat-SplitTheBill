@@ -29,23 +29,22 @@ import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.data.models.bill.Item
 import com.splitthebill.data.models.bill.Payer
 import com.splitthebill.data.models.event.Event
+import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.components.templates.HeaderWithBackButton
+import com.splitthebill.ui.screens.addbillscreen.tabs.GeneralBillInformationTab
 import com.splitthebill.ui.screens.addbillscreen.tabs.additemstab.AddItemsTab
 import com.splitthebill.ui.screens.addbillscreen.tabs.addpayerstab.AddPayersTab
-import com.splitthebill.ui.screens.addbillscreen.tabs.GeneralBillInformationTab
-import com.splitthebill.ui.components.templates.HeaderWithBackButton
-import com.splitthebill.ui.components.layouts.HeaderContentLayout
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AddBillViewModel
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun AddBillScreen(navController: NavHostController) {
     var progressCounter by remember { mutableIntStateOf(0) }
 
-    val addBillViewModel: AddBillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val addBillViewModel: AddBillViewModel = hiltViewModel()
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel()
 
     val users = remember { mutableStateListOf<User>() }
 

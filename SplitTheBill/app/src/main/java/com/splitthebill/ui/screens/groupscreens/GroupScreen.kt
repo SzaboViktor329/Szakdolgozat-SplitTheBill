@@ -30,12 +30,11 @@ import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.GroupDetailsViewModel
 import com.splitthebill.ui.viewmodels.GroupViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun GroupScreen(navController: NavHostController){
-    val groupViewModel : GroupViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val groupDetailsViewModel : GroupDetailsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val groupViewModel : GroupViewModel = hiltViewModel()
+    val groupDetailsViewModel : GroupDetailsViewModel = hiltViewModel()
     val groups by groupViewModel.groups.observeAsState(initial = emptyList())
 
     LaunchedEffect(Unit) {

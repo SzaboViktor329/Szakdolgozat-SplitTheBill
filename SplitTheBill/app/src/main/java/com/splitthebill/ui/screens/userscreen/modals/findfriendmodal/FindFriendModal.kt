@@ -26,14 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.splitthebill.data.models.FriendRequest
 import com.splitthebill.data.models.User
-import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.listitems.FindFriendListItem
 import com.splitthebill.ui.components.templates.DialogWithTitle
+import com.splitthebill.ui.screens.userscreen.modals.findfriendmodal.listitems.FindFriendListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.AuthViewModel
 import com.splitthebill.ui.viewmodels.FriendRequestViewModel
 import com.splitthebill.ui.viewmodels.UserViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun FindFriendModal(onDismiss: () -> Unit) {
@@ -44,7 +43,7 @@ fun FindFriendModal(onDismiss: () -> Unit) {
         var username by remember { mutableStateOf("") }
 
         val authViewModel : AuthViewModel = hiltViewModel()
-        val friendRequestViewModel: FriendRequestViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+        val friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
 
         Column(Modifier.fillMaxWidth().wrapContentHeight().padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             OutlinedTextField(

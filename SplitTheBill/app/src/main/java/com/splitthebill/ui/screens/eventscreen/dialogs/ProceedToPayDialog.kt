@@ -18,11 +18,10 @@ import com.splitthebill.data.models.event.Event
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.templates.DialogWithTitle
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun ProceedToPayDialog(event: Event, onDismiss: () -> Unit, onStatusUpdated: () -> Unit) {
-    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel()
 
     DialogWithTitle("Proceed to pay?",onDismiss) {
         Row(Modifier.fillMaxWidth().wrapContentHeight().padding(8.dp), horizontalArrangement = Arrangement.SpaceEvenly) {

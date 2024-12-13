@@ -28,15 +28,14 @@ import com.splitthebill.ui.components.textfields.TextFieldWithDropdown
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.EventsViewModel
 import com.splitthebill.ui.viewmodels.GroupViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 @Composable
 fun AddEventModal(onDismiss: () -> Unit) {
-    val groupViewModel : GroupViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
-    val eventsViewModel : EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val groupViewModel : GroupViewModel = hiltViewModel()
+    val eventsViewModel : EventsViewModel = hiltViewModel()
     val groups by groupViewModel.groups.observeAsState(initial = emptyList())
 
     var eventName by remember { mutableStateOf("") }

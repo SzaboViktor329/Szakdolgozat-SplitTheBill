@@ -24,11 +24,10 @@ import com.splitthebill.data.models.bill.Bill
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.BillViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun BillListItem(bill: Bill ,navController: NavHostController) {
-    val billViewModel: BillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val billViewModel: BillViewModel = hiltViewModel()
 
     Card(
         modifier = Modifier

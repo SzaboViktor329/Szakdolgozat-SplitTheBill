@@ -30,14 +30,13 @@ import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
 import com.splitthebill.ui.viewmodels.EventsViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 @Composable
 fun EventCollectionScreen(navController: NavHostController) {
-    val eventsViewModel : EventsViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventsViewModel : EventsViewModel = hiltViewModel()
     val events by eventsViewModel.events.observeAsState(initial = emptyList())
 
-    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel()
 
     LaunchedEffect(Unit) {
         eventsViewModel.fetchEvents()

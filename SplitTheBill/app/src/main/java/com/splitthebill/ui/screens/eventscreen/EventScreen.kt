@@ -27,20 +27,19 @@ import com.splitthebill.data.enums.EventStatus
 import com.splitthebill.data.models.User
 import com.splitthebill.data.models.event.Debt
 import com.splitthebill.data.models.event.Event
-import com.splitthebill.ui.screens.eventscreen.listitems.BillListItem
-import com.splitthebill.ui.screens.eventscreen.listitems.DebtListItem
 import com.splitthebill.ui.components.buttons.BlueButton
 import com.splitthebill.ui.components.common.BottomWhiteStrip
-import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.navbars.TabNavBarOptionLabel
 import com.splitthebill.ui.navigation.navscreens.MainNavScreen
 import com.splitthebill.ui.screens.eventscreen.header.EventScreenHeader
+import com.splitthebill.ui.screens.eventscreen.listitems.BillListItem
+import com.splitthebill.ui.screens.eventscreen.listitems.DebtListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.BillListViewModel
 import com.splitthebill.ui.viewmodels.EventDetailViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -52,12 +51,12 @@ enum class EventScreenTabNavBarOption(override val label: String) : TabNavBarOpt
 
 @Composable
 fun EventScreen(navController: NavHostController) {
-    val eventDetailViewModel: EventDetailViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val eventDetailViewModel: EventDetailViewModel = hiltViewModel()
     val event by eventDetailViewModel.event.observeAsState(Event())
 
     val users = remember { mutableStateListOf<User>() }
 
-    val billListViewModel: BillListViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val billListViewModel: BillListViewModel = hiltViewModel()
     val bills by billListViewModel.bills.observeAsState(initial = emptyList())
 
     LaunchedEffect(Unit) {

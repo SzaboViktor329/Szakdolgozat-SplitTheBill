@@ -19,16 +19,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.splitthebill.ui.screens.billscreen.listitems.ItemsListItem
-import com.splitthebill.ui.screens.billscreen.listitems.PayerListItem
-import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.layouts.HeaderContentLayout
+import com.splitthebill.ui.components.navbars.TabNavBar
 import com.splitthebill.ui.components.navbars.TabNavBarOptionLabel
 import com.splitthebill.ui.screens.billscreen.header.BillScreenHeader
+import com.splitthebill.ui.screens.billscreen.listitems.ItemsListItem
+import com.splitthebill.ui.screens.billscreen.listitems.PayerListItem
 import com.splitthebill.ui.theme.BlueTheme
 import com.splitthebill.ui.theme.SplitTheBillTheme
 import com.splitthebill.ui.viewmodels.BillViewModel
-import com.splitthebill.ui.viewmodels.scopeprovider.ViewModelScopeProvider
 
 enum class BillScreenTabNavBarOption(override val label: String) : TabNavBarOptionLabel {
     PAYERS("Payers"),
@@ -37,7 +36,7 @@ enum class BillScreenTabNavBarOption(override val label: String) : TabNavBarOpti
 
 @Composable
 fun BillScreen(navController: NavHostController) {
-    val billViewModel: BillViewModel = hiltViewModel(ViewModelScopeProvider.mainNavStoreOwner!!)
+    val billViewModel: BillViewModel = hiltViewModel()
     val bill = remember { billViewModel.bill.value }
 
     HeaderContentLayout(
