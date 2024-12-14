@@ -1,10 +1,7 @@
 package com.splitthebill
 
-import com.splitthebill.ui.viewmodels.UserViewModel
-import io.mockk.impl.annotations.MockK
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 
 /**
@@ -15,10 +12,6 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        //val mockuserViewModel: UserViewModel = Mockito.mock(UserViewModel::class.java, Mockito.RETURNS_DEEP_STUBS)
-        ///Mockito.`when`(mockuserViewModel.email).thenReturn("dasdsa@ssad.com")
-        ///val asdsa = mockuserViewModel.email
-        val k = 10
         assertEquals(4, 2 + 2)
     }
 }

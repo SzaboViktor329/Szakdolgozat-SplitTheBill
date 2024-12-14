@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "com.splitthebill.HiltTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -69,24 +69,18 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     testImplementation(libs.hilt.android.testing)
-    //testImplementation("org.mockito:mockito-inline:2.13.0")
-    //testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation("org.mockito:mockito-android:5.0.0")
-    androidTestImplementation("org.mockito:mockito-inline:5.2.0")
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.material.icons.extended)
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     kaptTest(libs.hilt.android.compiler)
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
+    implementation(libs.androidx.hilt.navigation.compose)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
 }
