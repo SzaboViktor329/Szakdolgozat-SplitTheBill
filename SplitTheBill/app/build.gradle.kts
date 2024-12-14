@@ -69,6 +69,8 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     testImplementation(libs.hilt.android.testing)
+    testImplementation("org.mockito:mockito-inline:2.13.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
